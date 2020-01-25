@@ -1,0 +1,47 @@
+@black: #111;
+@gray: rgb(173, 173, 173);
+@violet: rgb(255, 255, 255);
+@white: #fefefe;
+@light-red: #e00;
+
+
+.button {
+    padding: 12px 18px;
+    font-size: 18px;
+    margin: .5rem;
+
+    color: @black;
+    border-radius: 2px;
+    border: none;
+
+    transition: transform .2s ease-in-out,
+                box-shadow .2s ease-in-out,
+                color .4s ease-in-out;
+    &_warn {
+        background: transparent;
+        color: @light-red;
+        border: 1px solid @light-red;
+    }
+    &_apply {
+        background: @white;
+        color: @black;
+    }
+    &.disabled {
+        background: @gray;
+        color: darken(@gray, 30);
+        pointer-events: none;
+        border: none;
+    }
+}
+
+.button:active {
+    transform: scale(.98);
+    
+    text {
+        transform: scale(1 / .98);
+    }
+}
+
+.button:focus {
+    outline: none;
+}

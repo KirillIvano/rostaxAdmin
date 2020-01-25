@@ -1,0 +1,1 @@
+export {withLocationContent} from './withLocationContent';

@@ -1,0 +1,27 @@
+@text-color: #eee;
+
+.pathContainer {
+    position: relative;
+
+    padding: 10px;
+    width: 80%;
+
+    word-spacing: 20px;
+
+    .pathPart {
+        margin-left: 6px;
+        padding: 0 3px;
+        color: @text-color;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .pathPart::before {
+        content: '/';
+        color: @text-color;
+        position: absolute;
+        display: block;
+        top: 0;
+        left: -6px;
+    }
+}

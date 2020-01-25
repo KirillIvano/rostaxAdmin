@@ -1,0 +1,21 @@
+@keyframes load {
+    from {
+        stroke-dashoffset: 0px;
+        stroke: #0456d1;
+    }
+    50% {
+        stroke-dashoffset: 100px;
+        stroke: #07ece1;
+    }
+    to {
+        stroke-dashoffset: 0px;
+        stroke: #0456d1;
+    }
+}
+
+.path {
+    stroke-dasharray: 50px;
+    top: 10px;
+    left: 10px;
+    animation: load 2s 0s ease-in-out infinite;
+}

@@ -1,0 +1,28 @@
+.overlay {
+    background: rgba(0, 0, 0, .8);
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;    
+
+    &.active {
+        z-index: 1;
+    }
+
+    .modal {
+        background: white;
+        border-radius: 4px;
+
+        position: absolute;
+        top: 10%;
+        height: 80%;
+        right: 10%;
+        left: 10%;
+    }
+
+    .modal:focus {
+        outline: none;
+    }
+}
