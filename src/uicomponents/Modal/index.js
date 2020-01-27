@@ -5,6 +5,16 @@ import styles from './styles.less';
 
 const appEl = document.getElementById('root');
 
+const CloseIcon = () => 
+    <svg width="40" height="40" className="closeBtn" viewBox="0 0 40 40">
+        <path
+            stroke="black"
+            strokeWidth="3"
+            d="M5,5 L35,35 M5,35 L35 5"
+        />
+    </svg>
+
+
 const Modal = ({
     children,
     isOpen,
@@ -19,7 +29,16 @@ const Modal = ({
             overlayClassName={styles.overlay}
             appElement={appEl}
         >
-            {children}
+            <button
+                onClick={close}
+                className={styles.closeButton}
+            >
+                <CloseIcon />
+            </button>
+
+            <div className={styles.content}>
+                {children}
+            </div>
         </ModalWindow>
     );
 };

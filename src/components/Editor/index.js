@@ -2,22 +2,30 @@ import React from 'react';
 import classnames from 'classnames';
 
 import {Preloader} from '@/uicomponents';
-import {withLocationContent} from './containers'
+import {EditorPath} from './components';
+import {withLoadingState, withModals} from './containers'
 import styles from './styles.less';
 
 const Editor = ({
     isLoaded,
-    pathString,
+    openDeleteModal,
 }) => {
     if (!isLoaded) {
         return (
-            <div className={classnames(styles.editor, styles.notLoaded)}>
+            <div className={classnames(
+                styles.editor,
+                styles.notLoaded
+            )}>
                 <Preloader />
             </div>
         );
     }
     
-    return pathString;
+    return (
+        <>
+            <button onClick={openDeleteModal}></button>
+        </>
+    );
 };
 
-export default withLocationContent(Editor);
+export default withLoadingState(withModals(Editor));
