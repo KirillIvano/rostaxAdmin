@@ -1,5 +1,10 @@
 {
     "less.compile": {
         "out": null
+    },
+    "eslint.run": "onSave",
+    "eslint.format.enable": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
     }
 }

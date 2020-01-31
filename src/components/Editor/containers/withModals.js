@@ -15,21 +15,20 @@ const enchanceWithModalManager = Comp => {
         closeUpdateModal,
         closeAddModal,
         closeDeleteModal,
-
         ...props
     }) => (
-            <>
-                <Comp {...props} />
-                <ModalManager {...{
-                    isUpdateModalOpened,
-                    isAddModalOpened,
-                    isDeleteModalOpened,
-                    closeUpdateModal,
-                    closeAddModal,
-                    closeDeleteModal
-                }} />
-            </>
-        );
+        <>
+            <Comp {...props} />
+            <ModalManager {...{
+                isUpdateModalOpened,
+                isAddModalOpened,
+                isDeleteModalOpened,
+                closeUpdateModal,
+                closeAddModal,
+                closeDeleteModal,
+            }} />
+        </>
+    );
 
     return ModaledComp;
 };
@@ -40,6 +39,8 @@ export const withModals = compose(
             isUpdateModalOpened: false,
             isAddModalOpened: false,
             isDeleteModalOpened: false,
+            selectedId: null,
+            selectedType: null,
         },
         {
             openUpdateModal: () => () => ({isUpdateModalOpened: true}),
@@ -49,7 +50,7 @@ export const withModals = compose(
             closeUpdateModal: () => () => ({isUpdateModalOpened: false}),
             closeAddModal: () => () => ({isAddModalOpened: false}),
             closeDeleteModal: () => () => ({isDeleteModalOpened: false}),
-        }
+        },
     ),
     enchanceWithModalManager,
 );

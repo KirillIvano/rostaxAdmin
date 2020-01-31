@@ -3,29 +3,31 @@ import classnames from 'classnames';
 
 import {Preloader} from '@/uicomponents';
 import {EditorPath} from './components';
-import {withLoadingState, withModals} from './containers'
+import {withEditorProps} from './containers';
 import styles from './styles.less';
 
 const Editor = ({
     isLoaded,
-    openDeleteModal,
+    openAddModal,
+    dataHistory,
+    pushHisztory,
 }) => {
     if (!isLoaded) {
         return (
             <div className={classnames(
                 styles.editor,
-                styles.notLoaded
+                styles.notLoaded,
             )}>
                 <Preloader />
             </div>
         );
     }
-    
+
     return (
         <>
-            <button onClick={openDeleteModal}></button>
+            <button>Добавить</button>
         </>
     );
 };
 
-export default withLoadingState(withModals(Editor));
+export default withEditorProps(Editor);

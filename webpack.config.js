@@ -7,25 +7,25 @@ const autoprefixer = require('autoprefixer');
 
 module.exports = {
     devtool: 'source-map',
-    devServer:{
+    devServer: {
         contentBase: './dist',
         historyApiFallback: true,
         hot: true,
         hotOnly: true,
 
         headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
-        }
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+        },
 
     },
     entry: './src/index.js',
     resolve: {
         alias: {
-          '@': path.resolve(__dirname, 'src'),
-          'helpers': path.resolve(__dirname, 'src', 'helpers'),
-        }
+            '@': path.resolve(__dirname, 'src'),
+            'helpers': path.resolve(__dirname, 'src', 'helpers'),
+        },
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -37,7 +37,7 @@ module.exports = {
             new TerserJSPlugin({}),
             new OptimizeCssAssetsPlugin({}),
         ],
-    } : {}, 
+    } : {},
     plugins: [
         new webpack.DefinePlugin({
             SERVER_PATH: JSON.stringify('http://127.0.0.1:3000/'),
@@ -54,11 +54,11 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         exclude: [
-                            /node_modules/
+                            /node_modules/,
                         ],
-                        "presets": ["@babel/env", "@babel/react"],
-                    }
-                }
+                        'presets': ['@babel/env', '@babel/react'],
+                    },
+                },
             },
             {
                 test: /\.svg$/,
@@ -72,11 +72,11 @@ module.exports = {
                         loader: 'css-loader',
                         options: {
                             modules: true,
-                        }
+                        },
                     },
                     'less-loader',
-                ]
+                ],
             },
-        ]
-    }
+        ],
+    },
 };

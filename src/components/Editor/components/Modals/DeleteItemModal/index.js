@@ -1,9 +1,28 @@
 import React from 'react';
 import {Modal} from '@/uicomponents';
+import {connect} from 'react-redux';
 
-export const DeleteItemModal = ({
+import {addItemAction} from '@/redux/actions/template';
+
+const DeleteItemModal = ({
     isOpen,
     close,
 }) => {
-    return <Modal {...{close, isOpen}}>xxx</Modal>
+    return <Modal {...{close, isOpen}}>xxx</Modal>;
 };
+
+const mapStateToProps = () => ({
+    presentItem: 'lul',
+});
+
+const mapDispatchToProps = dispatch => ({
+    addItem: (
+        parentType,
+        parentId,
+    ) => dispatch(addItemAction()),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(DeleteItemModal);

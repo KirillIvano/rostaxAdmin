@@ -1,7 +1,7 @@
 import React from 'react';
-import {DeleteItemModal} from './DeleteItemModal';
-import {UpdateItemModal} from './UpdateItemModal';
-import {AddItemModal} from './AddItemModal';
+import DeleteItemModal from './DeleteItemModal';
+import UpdateItemModal from './UpdateItemModal';
+import AddItemModal from './AddItemModal';
 
 export const ModalManager = ({
     id,
@@ -31,4 +31,3 @@ export const ModalManager = ({
         </>
     );
 };
-

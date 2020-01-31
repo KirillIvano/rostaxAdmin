@@ -7,7 +7,7 @@ import {withAppInit} from './containers';
 const App = ({
     initApp,
 }) => {
-    useEffect(() => initApp(), []);
+    useEffect(() => {initApp();}, []);
 
     return (
         <>

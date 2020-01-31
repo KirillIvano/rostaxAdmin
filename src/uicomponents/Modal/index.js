@@ -5,14 +5,14 @@ import styles from './styles.less';
 
 const appEl = document.getElementById('root');
 
-const CloseIcon = () => 
+const CloseIcon = () =>
     <svg width="40" height="40" className="closeBtn" viewBox="0 0 40 40">
         <path
             stroke="black"
             strokeWidth="3"
             d="M5,5 L35,35 M5,35 L35 5"
         />
-    </svg>
+    </svg>;
 
 
 const Modal = ({
@@ -21,7 +21,7 @@ const Modal = ({
     close,
 }) => {
     return (
-        <ModalWindow 
+        <ModalWindow
             isOpen={isOpen}
             onRequestClose={close}
             closable={true}
