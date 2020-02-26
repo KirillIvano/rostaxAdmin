@@ -4,16 +4,21 @@ import {BrowserRouter} from 'react-router-dom';
 import './main.less';
 import {
     Header,
-    Modal,
+    Navbar,
 } from './parts';
+import {useNavbarState} from './hooks/useNavbarState';
 
 const App = () => {
+    const {
+        isMenuOpened,
+        toggleMenu,
+    } = useNavbarState();
+
     return (
         <>
-            <Header />
-            <Modal>
-                content
-            </Modal>
+            <Header toggleMenu={toggleMenu} />
+            <Navbar isMenuOpened={isMenuOpened} />
+            {/*<Modal></Modal> */}
         </>
     );
 };

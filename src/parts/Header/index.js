@@ -2,13 +2,15 @@ import React from 'react';
 
 import styles from './styles.less';
 import {ContentWrapper} from '@/components';
-import {HeaderLogo, BackBtn} from './components';
+import {HeaderLogo, HeaderBurger} from './components';
 
-const Header = () => (
+const Header = ({
+    toggleMenu,
+}) => (
     <header className={styles.header}>
         <ContentWrapper className={styles.headerContent}>
             <HeaderLogo />
-            <BackBtn to={'/admin'} />
+            <HeaderBurger toggleMenu={toggleMenu} />
         </ContentWrapper>
     </header>
 );
