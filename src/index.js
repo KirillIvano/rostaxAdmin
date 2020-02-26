@@ -2,11 +2,19 @@ import React from 'react';
 import {render} from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import './main.less';
-import {Header} from './parts';
+import {
+    Header,
+    Modal,
+} from './parts';
 
 const App = () => {
     return (
-        <Header />
+        <>
+            <Header />
+            <Modal>
+                content
+            </Modal>
+        </>
     );
 };
 
