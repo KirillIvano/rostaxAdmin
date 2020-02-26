@@ -8,7 +8,7 @@ module.exports = {
         },
     },
     output: {
-        path: path.resolve('C:\\Users\\ivann\\simros\\static', 'dist'),
+        path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
         filename: 'bundle.js',
         chunkFilename: '[name].bundle.js',
