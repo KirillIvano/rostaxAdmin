@@ -1,11 +1,14 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {Provider as StoreProvider} from 'react-redux';
 import {
     BrowserRouter,
     Switch,
     Route,
 } from 'react-router-dom';
 
+
+import store from './redux';
 import './main.less';
 import {
     Header,
@@ -36,8 +39,10 @@ const App = () => {
 };
 
 render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>,
+    <StoreProvider store={store()}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </StoreProvider>,
     document.getElementById('root'),
 );
