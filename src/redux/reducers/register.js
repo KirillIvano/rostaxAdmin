@@ -19,7 +19,10 @@ const registerReducer = (
 
     switch (type) {
     case REGISTER_START: {
-        return {...state, loading: true};
+        if (!state.loading) {
+            return {...state, loading: true};
+        }
+        return state;
     }
     case REGISTER_ERROR: {
         const {error} = payload;

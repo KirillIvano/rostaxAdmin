@@ -15,7 +15,10 @@ import {
     Navbar,
 } from '@/parts';
 import {PageWrapper} from '@/components';
-import {RegisterPage} from '@/pages';
+import {
+    RegisterPage,
+    LoginPage,
+} from '@/pages';
 import {useNavbarState} from './hooks/useNavbarState';
 
 const App = () => {
@@ -31,6 +34,7 @@ const App = () => {
             <PageWrapper>
                 <Switch>
                     <Route exact path="/register/:hash" component={RegisterPage} />
+                    <Route exact path="/login" component={LoginPage} />
                 </Switch>
             </PageWrapper>
             {/*<Modal></Modal> */}

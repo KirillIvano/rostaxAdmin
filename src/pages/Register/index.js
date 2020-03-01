@@ -4,7 +4,6 @@ import {
     Redirect,
     useParams,
 } from 'react-router-dom';
-import classnames from 'classnames';
 
 import {
     registerStartAction,
@@ -80,10 +79,10 @@ const Register = ({
             <form onSubmit={handleSubmit}>
                 <Input
                     labelText="Ваш логин"
-                    name="name"
+                    name="login"
                     placeholder="Имя"
 
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => setName(e.currentTarget.value)}
                     type="text"
                     value={name}
                 />
@@ -92,7 +91,7 @@ const Register = ({
                     name="password"
                     placeholder="Пароль"
 
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.currentTarget.value)}
                     type="password"
                     value={password}
                 />
@@ -101,16 +100,13 @@ const Register = ({
                     name="password"
                     placeholder="Повтор"
 
-                    onChange={e => setPasswordRepeat(e.target.value)}
+                    onChange={e => setPasswordRepeat(e.currentTarget.value)}
                     type="password"
                     value={passwordRepeat}
                 />
                 <Button
-                    className={classnames(
-                        styles.submitButton,
-                        {[styles.disabled]: loading},
-                    )}
-                    onSubmit={handleSubmit}
+                    className={styles.submitButton}
+                    disabled={loading}
                     type="submit"
                 >
                     Подтвердить
