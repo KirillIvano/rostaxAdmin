@@ -1,23 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
 import {
     Redirect,
     useParams,
 } from 'react-router-dom';
 
-import {
-    registerStartAction,
-    forgetRegisterErrorAction,
-} from '@/redux/actions/register';
+
+import {ContentWrapper} from '@/components';
 
 import {
-    Input,
-    ContentWrapper,
-    Button,
-    AppearingMessage,
-} from '@/components';
-import styles from './styles.less';
-
+    Inputs,
+    SubmitButton,
+    Messages,
+} from './components';
+import {withRegisterProps} from './containers/withRegisterProps';
 
 const Register = ({
     register,
@@ -27,9 +22,9 @@ const Register = ({
     loading,
     error,
 }) => {
-    const [name, setName] = useState('assasasasa');
-    const [password, setPassword] = useState('assasasasa');
-    const [passwordRepeat, setPasswordRepeat] = useState('assasasasa');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordRepeat, setPasswordRepeat] = useState('');
     const [validationError, setValidationError] = useState();
     const {hash} = useParams();
 
@@ -77,60 +72,26 @@ const Register = ({
     return (
         <ContentWrapper>
             <form onSubmit={handleSubmit}>
-                <Input
-                    labelText="Ваш логин"
-                    name="login"
-                    placeholder="Имя"
-
-                    onChange={e => setName(e.currentTarget.value)}
-                    type="text"
-                    value={name}
+                <Inputs
+                    {...{
+                        name,
+                        setName,
+                        password,
+                        setPassword,
+                        passwordRepeat,
+                        setPasswordRepeat,
+                    }}
                 />
-                <Input
-                    labelText="Ваш пароль"
-                    name="password"
-                    placeholder="Пароль"
-
-                    onChange={e => setPassword(e.currentTarget.value)}
-                    type="password"
-                    value={password}
-                />
-                <Input
-                    labelText="Повторите пароль"
-                    name="password"
-                    placeholder="Повтор"
-
-                    onChange={e => setPasswordRepeat(e.currentTarget.value)}
-                    type="password"
-                    value={passwordRepeat}
-                />
-                <Button
-                    className={styles.submitButton}
+                <SubmitButton
                     disabled={loading}
-                    type="submit"
-                >
-                    Подтвердить
-                </Button>
-                <AppearingMessage
-                    styling='error'
-                >
-                    {validationError}
-                </AppearingMessage>
-                <AppearingMessage
-                    styling='error'
-                >
-                    {error}
-                </AppearingMessage>
+                />
+                <Messages
+                    error={error}
+                    validationError={validationError}
+                />
             </form>
         </ContentWrapper>
     );
 };
 
-const mapStateToProps = ({register}) => (register);
-
-const mapDispatchToProps = dispatch => ({
-    register: (body, hash) => dispatch(registerStartAction(body, hash)),
-    forgetError: () => dispatch(forgetRegisterErrorAction()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withRegisterProps(Register);

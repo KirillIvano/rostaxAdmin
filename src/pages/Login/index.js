@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
 import {Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
 
-import styles from './styles.less';
+import {ContentWrapper} from '@/components';
+
+import {withLoginProps} from './containers/withLoginProps';
 import {
-    loginStartAction,
-    forgetLoginErrorAction,
-} from '@/redux/actions/login';
-import {
-    Button,
-    Input,
-    AppearingMessage,
-    ContentWrapper,
-} from '@/components';
+    Inputs,
+    SubmitButton,
+    Messages,
+} from './components';
 
 const Login = ({
     forgetLoginError,
@@ -50,53 +46,24 @@ const Login = ({
     return (
         <ContentWrapper>
             <form onSubmit={handleSubmit} action="">
-                <Input
-                    labelText='Ваш логин'
-                    onChange={e => setName(e.currentTarget.value)}
-                    value={name}
-
-                    placeholder='логин'
-                    name='login'
-                    type='text'
+                <Inputs
+                    {...{
+                        name,
+                        setName,
+                        password,
+                        setPassword,
+                    }}
                 />
-                <Input
-                    labelText='Ваш пароль'
-                    onChange={e => setPassword(e.currentTarget.value)}
-                    value={password}
-
-                    placeholder='пароль'
-                    name='password'
-                    type='password'
-                />
-
-                <Button
-                    className={styles.submitButton}
-                    type='submit'
+                <SubmitButton
                     disabled={loading}
-                >
-                    Подтвердить
-                </Button>
-
-                <AppearingMessage
-                    styling='error'
-                >
-                    {validationError}
-                </AppearingMessage>
-                <AppearingMessage
-                    styling='error'
-                >
-                    {error}
-                </AppearingMessage>
+                />
+                <Messages
+                    error={error}
+                    validationError={validationError}
+                />
             </form>
         </ContentWrapper>
     );
 };
 
-const mapStateToProps = ({login}) => login;
-
-const mapDispatchToProps = dispatch => ({
-    login: body => dispatch(loginStartAction(body)),
-    forgetLoginError: () => dispatch(forgetLoginErrorAction()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withLoginProps(Login);
