@@ -64,7 +64,7 @@ const Register = ({
             return;
         }
 
-        setValidationError(null);
+        setValidationError('');
         register(
             {
                 name,
@@ -111,10 +111,14 @@ const Register = ({
                 >
                     Подтвердить
                 </Button>
-                <AppearingMessage className={styles.errorMessage}>
+                <AppearingMessage
+                    styling='error'
+                >
                     {validationError}
                 </AppearingMessage>
-                <AppearingMessage className={styles.errorMessage}>
+                <AppearingMessage
+                    styling='error'
+                >
                     {error}
                 </AppearingMessage>
             </form>
@@ -122,9 +126,7 @@ const Register = ({
     );
 };
 
-const mapStateToProps = ({register}) => ({
-    ...register,
-});
+const mapStateToProps = ({register}) => (register);
 
 const mapDispatchToProps = dispatch => ({
     register: (body, hash) => dispatch(registerStartAction(body, hash)),

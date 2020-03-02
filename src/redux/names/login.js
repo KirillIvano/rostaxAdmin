@@ -1,4 +1,4 @@
-export const LOGIN_START = 'START_REGISTER';
-export const LOGIN_ERROR = 'REGISTER_ERROR';
-export const LOGIN_SUCCESS = 'REGISTER_SUCCESS';
-export const LOGIN_REJECT = 'REGISTER_REJECT';
+export const LOGIN_START = 'LOGIN_START';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const FORGET_LOGIN_ERROR = 'FORGET_LOGIN_ERROR';

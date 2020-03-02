@@ -11,7 +11,7 @@ const INITIAL_STATE = {
     error: null,
 };
 
-const registerReducer = (
+export const registerReducer = (
     state=INITIAL_STATE,
     action,
 ) => {
