@@ -13,12 +13,14 @@ import {
 const Login = ({
     forgetLoginError,
     login,
+    showMessage,
 
     success,
     error,
     loading,
 }) => {
     if (success) {
+        showMessage('Вход', 'Вы успешно вошли в систему');
         return <Redirect to='/main' />;
     }
 

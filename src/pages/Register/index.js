@@ -17,11 +17,17 @@ import {withRegisterProps} from './containers/withRegisterProps';
 const Register = ({
     register,
     forgetError,
+    showMessage,
 
     success,
     loading,
     error,
 }) => {
+    if (success) {
+        showMessage('Регистрация', 'Вы были успешно зарегистрированы');
+        return <Redirect to="/" />;
+    }
+
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
@@ -35,10 +41,6 @@ const Register = ({
             setName(name);
         }
     }, []);
-
-    if (success) {
-        return <Redirect to="/" />;
-    }
 
     const handleSubmit = e => {
         e.preventDefault();
