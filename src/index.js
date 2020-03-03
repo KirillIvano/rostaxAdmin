@@ -13,6 +13,7 @@ import './main.less';
 import {
     Header,
     Navbar,
+    MessageBox,
 } from '@/parts';
 import {PageWrapper} from '@/components';
 import {
@@ -31,10 +32,12 @@ const App = () => {
         <>
             <Header toggleMenu={toggleMenu} />
             <Navbar isMenuOpened={isMenuOpened} />
+            <MessageBox />
             <PageWrapper>
                 <Switch>
                     <Route exact path="/register/:hash" component={RegisterPage} />
                     <Route exact path="/login" component={LoginPage} />
+                    <Route exact path="/" component={LoginPage} />
                 </Switch>
             </PageWrapper>
             {/*<Modal></Modal> */}
