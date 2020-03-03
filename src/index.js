@@ -19,6 +19,8 @@ import {PageWrapper} from '@/components';
 import {
     RegisterPage,
     LoginPage,
+    MainPage,
+    CategoriesPage,
 } from '@/pages';
 import {useNavbarState} from './hooks/useNavbarState';
 
@@ -35,9 +37,10 @@ const App = () => {
             <MessageBox />
             <PageWrapper>
                 <Switch>
+                    <Route exact path="/categories" component={CategoriesPage} />
                     <Route exact path="/register/:hash" component={RegisterPage} />
                     <Route exact path="/login" component={LoginPage} />
-                    <Route exact path="/" component={LoginPage} />
+                    <Route exact path="/" component={MainPage} />
                 </Switch>
             </PageWrapper>
             {/*<Modal></Modal> */}
