@@ -17,7 +17,7 @@ const Button = ({
                 styles.button,
                 className,
                 {
-                    [styles.error]: styling === 'error',
+                    [styles.danger]: styling === 'danger',
                     [styles.normal]: styling === 'normal',
                     [styles.success]: styling === 'success',
                 },
