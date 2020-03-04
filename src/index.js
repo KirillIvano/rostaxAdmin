@@ -7,7 +7,6 @@ import {
     Route,
 } from 'react-router-dom';
 
-
 import store from './redux';
 import './main.less';
 import {
@@ -43,7 +42,6 @@ const App = () => {
                     <Route exact path="/" component={MainPage} />
                 </Switch>
             </PageWrapper>
-            {/*<Modal></Modal> */}
         </>
     );
 };

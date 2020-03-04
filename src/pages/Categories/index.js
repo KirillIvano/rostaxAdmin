@@ -3,15 +3,53 @@ import styles from './styles.less';
 
 import {
     ContentWrapper,
-    Card,
+    EntityCard,
 } from '@/components';
-
+import {
+    CardBox,
+} from '@/parts';
 const Categories = () => {
     return (
         <ContentWrapper>
-            <Card>
-                asd
-            </Card>
+            <CardBox>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+                <EntityCard>
+                    asd
+                </EntityCard>
+
+            </CardBox>
         </ContentWrapper>
     );
 };
