@@ -4,14 +4,12 @@ const SCROLLBOX_HEIGHT = 30;
 
 export const useScrollPosition = () => {
     const ref = useRef(null);
-    const [scrollOffset, setScrollOffset] = useState(null);
-
-    const [topShadow, setTopShadow] = useState(false);
-    const [bottomShadow, setBottomShadow] = useState(true);
+    const [scrollOffset, setScrollOffset] = useState(0);
 
     useEffect(() => {
         const {current: cardBox} = ref;
 
+        // move carette on scroll
         const scrollHandler = () => {
             const scrollHeight = cardBox.scrollHeight;
             const clientHeight = cardBox.clientHeight;
@@ -23,12 +21,13 @@ export const useScrollPosition = () => {
             setScrollOffset(part * (clientHeight - SCROLLBOX_HEIGHT));
         };
 
-        setTimeout(() => {
-            cardBox.addEventListener('scroll', scrollHandler);
-        }, 0);
+        cardBox.addEventListener('scroll', scrollHandler);
 
         return () => cardBox.removeEventListener('scroll', scrollHandler);
     }, []);
 
-    return {ref, scrollOffset, topShadow, bottomShadow};
+    return {
+        ref,
+        scrollOffset,
+    };
 };
