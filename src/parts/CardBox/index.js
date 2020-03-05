@@ -9,7 +9,13 @@ const CardBox = ({
 
     return (
         <div class={styles.cardBoxContainer}>
-            <div className={styles.scrollBar} style={{top: scrollOffset}}></div>
+            {/* TODO: add scrolling by carette moving */}
+            <div
+                hidden={scrollOffset < 0}
+                className={styles.scrollBar}
+                style={{top: scrollOffset}}
+            ></div>
+
             <div ref={ref} className={styles.cardBox}>
                 {children}
             </div>

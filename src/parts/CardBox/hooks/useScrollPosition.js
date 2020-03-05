@@ -4,7 +4,7 @@ const SCROLLBOX_HEIGHT = 30;
 
 export const useScrollPosition = () => {
     const ref = useRef(null);
-    const [scrollOffset, setScrollOffset] = useState(0);
+    const [scrollOffset, setScrollOffset] = useState(-1);
 
     useEffect(() => {
         const {current: cardBox} = ref;

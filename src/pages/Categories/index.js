@@ -7,49 +7,16 @@ import {
 } from '@/components';
 import {
     CardBox,
+    Controls,
 } from '@/parts';
+
 const Categories = () => {
     return (
         <ContentWrapper>
             <CardBox>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
-                <EntityCard>
-                    asd
-                </EntityCard>
 
             </CardBox>
+            <Controls />
         </ContentWrapper>
     );
 };
