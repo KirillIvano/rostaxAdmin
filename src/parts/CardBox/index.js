@@ -8,7 +8,7 @@ const CardBox = ({
     const {ref, scrollOffset} = useScrollPosition();
 
     return (
-        <div class={styles.cardBoxContainer}>
+        <div className={styles.cardBoxContainer}>
             {/* TODO: add scrolling by carette moving */}
             <div
                 hidden={scrollOffset < 0}
