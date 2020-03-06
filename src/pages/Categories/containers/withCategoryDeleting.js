@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => ({
         showNormalMessage('Удаление коллекции', 'Коллекция была успешно удалена'),
     ),
 
-    showDeletingErrorMessage: (error) => dispatch(
+    showDeletingErrorMessage: error => dispatch(
         showErrorMessage('Удаление коллекции', error),
     ),
 });

@@ -10,12 +10,11 @@ const DeleteModal = ({
     isOpen,
 
     // from redux
-    deleteCategory,
-
     categoryDeletingInProgress,
     categoryDeletingError,
     categoryDeletingSuccess,
 
+    deleteCategory,
     showDeletingSuccessMessage,
     showDeletingErrorMessage,
 }) => {

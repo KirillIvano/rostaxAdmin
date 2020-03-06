@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
     Modal,
@@ -13,8 +13,27 @@ const CreateModal = ({
     isOpen,
     handleClose,
 
+    categoryCreatingInProgress,
+    categoryCreatingError,
+    categoryCreatingSuccess,
+
     createCategory,
+    showCreatingSuccessMessage,
+    showCreatingErrorMessage,
 }) => {
+    useEffect(() => {
+        if (categoryCreatingSuccess) {
+            showCreatingSuccessMessage();
+            handleClose();
+        }
+    }, [categoryCreatingSuccess]);
+
+    useEffect(() => {
+        if (categoryCreatingError) {
+            showCreatingErrorMessage(categoryCreatingError);
+        }
+    }, [categoryCreatingError]);
+
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [isImagePreviewVisible, setImagePreviewVisibility] = useState(false);
@@ -51,6 +70,7 @@ const CreateModal = ({
 
                 <Button
                     className={styles.saveButton}
+                    disabled={categoryCreatingInProgress}
                     type="submit"
                 >
                     Сохранить
