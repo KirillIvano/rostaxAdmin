@@ -13,12 +13,15 @@ import {
 import {
     GET_CATEGORIES_START,
     DELETE_CATEGORY_START,
+    CREATE_CATEGORY_START,
 } from '@/redux/names/category';
 import {
     getCategoriesError,
     getCategoriesSuccess,
     deleteCategoryError,
     deleteCategorySuccess,
+    createCategoryError,
+    createCategorySuccess,
 } from '@/redux/actions/category';
 
 // GETTING
@@ -82,4 +85,49 @@ export const deleteCategoryEpic =
             ),
         );
 
-export default combineEpics(getCategoriesEpic ,deleteCategoryEpic);
+// CREATING
+
+const createCategory = body =>
+    ajax
+        .post(
+            `${SERVER_ORIGIN}/admin/categories`,
+            body,
+        )
+        .pipe(
+            mergeMap(
+                ({response}) => {
+                    const {category} = response;
+
+                    return of(
+                        createCategorySuccess(category),
+                    );
+                },
+            ),
+            catchError(
+                ({response}) => {
+                    const {error} = response;
+
+                    return of(createCategoryError(error));
+                },
+            ),
+        );
+
+export const createCategoryEpic =
+    action$ =>
+        action$.pipe(
+            ofType(CREATE_CATEGORY_START),
+            switchMap(
+                ({payload}) => {
+                    const {body} = payload;
+
+                    return createCategory(body);
+                },
+            ),
+        );
+
+
+export default combineEpics(
+    getCategoriesEpic,
+    deleteCategoryEpic,
+    createCategoryEpic,
+);

@@ -2,7 +2,11 @@ import React, { useEffect } from 'react';
 
 import {withCategoriesProps} from './containers/withCategoriesProps';
 import {useDeleteModalState} from './hooks/useDeleteModalState';
-import {DeleteModal} from './components';
+import {useCreateModalState} from './hooks/useCreateModalState';
+import {
+    DeleteModal,
+    CreateModal,
+} from './components';
 
 import {
     ContentWrapper,
@@ -34,6 +38,12 @@ const Categories = ({
         deletedId,
     } = useDeleteModalState();
 
+    const {
+        isCreateModalOpened,
+        openCreateModal,
+        closeCreateModal,
+    } = useCreateModalState();
+
     if (categoriesLoading) {
         return (
             <div>
@@ -61,12 +71,18 @@ const Categories = ({
                 }
             </CardBox>
 
-            <Controls />
+            <Controls
+                handleCreating={openCreateModal}
+            />
 
             <DeleteModal
                 isOpen={isDeleteModalOpened}
                 deletedId={deletedId}
                 handleClose={closeDeleteModal}
+            />
+            <CreateModal
+                isOpen={isCreateModalOpened}
+                handleClose={closeCreateModal}
             />
         </ContentWrapper>
     );

@@ -5,7 +5,7 @@ import {Button} from '@/components';
 
 const Controls = ({
     handleGoBack,
-    handleAdding,
+    handleCreating,
 
     isGoBackDisabled=false,
     isAddingDisabled=false,
@@ -21,7 +21,7 @@ const Controls = ({
             </Button>
 
             <Button
-                onClick={handleAdding}
+                onClick={handleCreating}
                 className={styles.button}
                 disabled={isAddingDisabled}
             >
