@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 
 import store from './redux';
-import './main.less';
+import './common/main.less';
 import {
     Header,
     Navbar,
@@ -37,6 +37,8 @@ const App = () => {
             <PageWrapper>
                 <Switch>
                     <Route exact path="/categories" component={CategoriesPage} />
+                    <Route exact path="/products/:categoryId" component={CategoriesPage} />
+
                     <Route exact path="/register/:hash" component={RegisterPage} />
                     <Route exact path="/login" component={LoginPage} />
                     <Route exact path="/" component={MainPage} />

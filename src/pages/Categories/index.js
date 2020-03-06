@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
-import styles from './styles.less';
 import {withCategoriesProps} from './containers/withCategoriesProps';
+import {useDeleteModalState} from './hooks/useDeleteModalState';
+import {DeleteModal} from './components';
 
 import {
     ContentWrapper,
     EntityCard,
-    ConfirmationModal,
 } from '@/components';
 import {
     CardBox,
@@ -27,6 +27,13 @@ const Categories = ({
         [],
     );
 
+    const {
+        isDeleteModalOpened,
+        openDeleteModal,
+        closeDeleteModal,
+        deletedId,
+    } = useDeleteModalState();
+
     if (categoriesLoading) {
         return (
             <div>
@@ -42,18 +49,25 @@ const Categories = ({
             <CardBox>
                 {
                     categories.map(
-                        ({name, _id}) => (
-                            <EntityCard key={_id}>
+                        ({name, id}) => (
+                            <EntityCard
+                                key={id}
+                                deleteHandler={() => openDeleteModal(id)}
+                            >
                                 {name}
                             </EntityCard>
                         ),
                     )
                 }
             </CardBox>
+
             <Controls />
-            <ConfirmationModal>
-                Вы точно хотите удалить категорию?
-            </ConfirmationModal>
+
+            <DeleteModal
+                isOpen={isDeleteModalOpened}
+                deletedId={deletedId}
+                handleClose={closeDeleteModal}
+            />
         </ContentWrapper>
     );
 };

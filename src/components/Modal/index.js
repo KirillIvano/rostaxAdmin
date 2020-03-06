@@ -11,6 +11,7 @@ const Modal = ({
     close,
     width=600,
     closeable=true,
+    isOpen,
 
     className,
     ...extraProps
@@ -19,7 +20,7 @@ const Modal = ({
         bodyOpenClassName={styles.bodyOpen}
         overlayClassName={styles.modalOverlay}
         className={classnames(styles.modal, className)}
-        isOpen={true}
+        isOpen={isOpen}
         shouldCloseOnEsc={closeable}
         shouldCloseOnOverlayClick={closeable}
         style={{content: {width: `${width}px`}}}
@@ -29,5 +30,7 @@ const Modal = ({
         {children}
     </ReactModal>
 );
+
+ReactModal.setAppElement(document.body);
 
 export default Modal;

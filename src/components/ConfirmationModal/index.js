@@ -30,10 +30,12 @@ const ConfirmationModal = ({
 
     handleConfirm,
     handleClose,
+    isOpen,
 
     ...modalProps
 }) => (
     <Modal
+        isOpen={isOpen}
         close={handleClose}
         className={styles.modal}
         width={400}

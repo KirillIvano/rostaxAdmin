@@ -13,7 +13,7 @@ import {
     registerSuccessAction,
 } from '@/redux/actions/register';
 
-export const registerEpic = action$ => action$.pipe(
+const registerEpic = action$ => action$.pipe(
     ofType(REGISTER_START),
     mergeMap(
         ({payload: {body, hash}}) =>
@@ -35,3 +35,5 @@ export const registerEpic = action$ => action$.pipe(
                 ),
     ),
 );
+
+export default registerEpic;

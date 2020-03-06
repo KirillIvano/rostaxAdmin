@@ -13,7 +13,7 @@ import {
     loginSuccessAction,
 } from '@/redux/actions/login';
 
-export const loginEpic = action$ => action$.pipe(
+const loginEpic = action$ => action$.pipe(
     ofType(LOGIN_START),
     mergeMap(
         ({payload: {body}}) =>
@@ -35,3 +35,6 @@ export const loginEpic = action$ => action$.pipe(
                 ),
     ),
 );
+
+
+export default loginEpic;
