@@ -1,0 +1,30 @@
+.closeIconContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .closeIcon {
+        position: relative;
+
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
+
+    .closeIcon::before, .closeIcon::after {
+        content: "";
+        position: absolute;
+        left: -3px;
+        width: 30px;
+        height: 6px;
+        background: black;
+        top: 9px;
+        transform-origin: center;
+    }
+    .closeIcon::before {
+        transform: rotate(45deg);
+    }
+    .closeIcon::after {
+        transform: rotate(-45deg);
+    }
+}

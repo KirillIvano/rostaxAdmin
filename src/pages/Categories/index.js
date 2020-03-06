@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
-import {connect} from 'react-redux';
 
 import styles from './styles.less';
+import {withCategoriesProps} from './containers/withCategoriesProps';
 
 import {
     ContentWrapper,
     EntityCard,
+    ConfirmationModal,
 } from '@/components';
 import {
     CardBox,
     Controls,
 } from '@/parts';
-import {getCategories} from '@/redux/actions/category';
 
 const Categories = ({
     getCategories,
@@ -26,7 +26,7 @@ const Categories = ({
         },
         [],
     );
-    console.log(categories);
+
     if (categoriesLoading) {
         return (
             <div>
@@ -43,34 +43,20 @@ const Categories = ({
                 {
                     categories.map(
                         ({name, _id}) => (
-                            <div key={_id}>
+                            <EntityCard key={_id}>
                                 {name}
-                            </div>
+                            </EntityCard>
                         ),
                     )
                 }
             </CardBox>
             <Controls />
+            <ConfirmationModal>
+                Вы точно хотите удалить категорию?
+            </ConfirmationModal>
         </ContentWrapper>
     );
 };
 
-const mapStateToProps = ({category}) => {
-    const {
-        categories,
-        categoriesLoading,
-        categoriesError,
-    } = category;
 
-    return {
-        categories,
-        categoriesLoading,
-        categoriesError,
-    };
-};
-
-const mapDispatchToProps = dispatch => ({
-    getCategories: () => dispatch(getCategories()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default withCategoriesProps(Categories);

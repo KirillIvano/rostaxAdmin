@@ -12,6 +12,11 @@ module.exports = {
     'plugins': [
         'react'
     ],
+    'settings': {
+        'react': {
+            'version': 'detect'
+        }
+    },
     'parser': 'babel-eslint',
     'parserOptions': {
         'ecmaVersion': 2019,

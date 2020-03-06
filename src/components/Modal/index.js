@@ -1,23 +1,31 @@
 import React from 'react';
-import styles from './styles.less';
 import ReactModal from 'react-modal';
 import classnames from 'classnames';
 
-const CloseIcon = ({close}) => <div onClick={close} className={styles.closeIcon}></div>;
+import styles from './styles.less';
+import {CloseIcon} from './components';
+
 
 const Modal = ({
     children,
     close,
+    width=600,
+    closeable=true,
 
     className,
+    ...extraProps
 }) => (
     <ReactModal
         bodyOpenClassName={styles.bodyOpen}
         overlayClassName={styles.modalOverlay}
         className={classnames(styles.modal, className)}
         isOpen={true}
+        shouldCloseOnEsc={closeable}
+        shouldCloseOnOverlayClick={closeable}
+        style={{content: {width: `${width}px`}}}
+        {...extraProps}
     >
-        <CloseIcon close={close} />
+        {closeable ? <CloseIcon close={close} />: null}
         {children}
     </ReactModal>
 );
