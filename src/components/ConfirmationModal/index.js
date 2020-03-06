@@ -7,20 +7,23 @@ import styles from './styles.less';
 const ModalControls = ({
     handleConfirm,
     handleClose,
+    disabled,
 }) => (
     <div className={styles.controls}>
         <Button
+            disabled={disabled}
             styling='danger'
             onClick={handleConfirm}
             className={styles.button}
         >
-        Подтвердить
+            Подтвердить
         </Button>
         <Button
+            disabled={disabled}
             onClick={handleClose}
             className={styles.button}
         >
-        Отмена
+            Отмена
         </Button>
     </div>
 );
@@ -31,6 +34,7 @@ const ConfirmationModal = ({
     handleConfirm,
     handleClose,
     isOpen,
+    areControlsDisabled,
 
     ...modalProps
 }) => (
@@ -49,6 +53,7 @@ const ConfirmationModal = ({
             </p>
 
             <ModalControls
+                disabled={areControlsDisabled}
                 handleConfirm={handleConfirm}
                 handleClose={handleClose}
             />

@@ -14,7 +14,7 @@ const CardBox = ({
                 hidden={scrollOffset < 0}
                 className={styles.scrollBar}
                 style={{top: scrollOffset}}
-            ></div>
+            />
 
             <div ref={ref} className={styles.cardBox}>
                 {children}

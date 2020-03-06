@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 
 import {ConfirmationModal} from '@/components';
 import {withCategoryDeleting} from './../../containers/withCategoryDeleting';
@@ -34,17 +34,11 @@ const DeleteModal = ({
         }
     }, [categoryDeletingError]);
 
-
-    if (categoryDeletingInProgress) {
-        return 'LOADING...';
-    }
-
-
-
     return (
         <ConfirmationModal
             isOpen={isOpen}
             handleClose={handleClose}
+            areControlsDisabled={categoryDeletingInProgress}
             handleConfirm={() => deleteCategory(deletedId)}
         >
             Вы уверены, что хотите удалить данную категорию?
