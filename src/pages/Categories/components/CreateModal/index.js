@@ -4,6 +4,7 @@ import {
     Modal,
     Button,
     Input,
+    FileInput,
 } from '@/components';
 
 import styles from './styles.less';
@@ -51,22 +52,30 @@ const CreateModal = ({
         >
             <form onSubmit={handleSubmit}>
                 <Input
+                    className={styles.input}
                     labelText={'Название категории'}
+                    name={'name'}
                     onChange={e => setName(e.currentTarget.value)}
                 />
-                <Input
-                    labelText={'Фото категории'}
+
+                <FileInput
+                    className={styles.input}
+                    labelText={'Загрузить фото'}
+
+                    name={'image'}
                     onChange={e => setImage(e.currentTarget.value)}
                     onFocus={() => setImagePreviewVisibility(false)}
                     onBlur={() => setImagePreviewVisibility(true)}
                 />
-                {
+
+                {/* TODO: check if image can be getted*/}
+                {/*
                     isImagePreviewVisible ?
                         <img className={styles.imagePreview} src={image} /> :
                         <div className={styles.imagePlaceholder}>
                             Тут будет фото
                         </div>
-                }
+                */}
 
                 <Button
                     className={styles.saveButton}

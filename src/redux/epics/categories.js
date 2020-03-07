@@ -113,7 +113,7 @@ const createCategory = body =>
         );
 
 export const createCategoryEpic =
-    action$ =>
+    (action$, state$) =>
         action$.pipe(
             ofType(CREATE_CATEGORY_START),
             switchMap(

@@ -12,10 +12,10 @@ module.exports = {
     'plugins': [
         'react'
     ],
-    'settings': {
-        'react': {
-            'version': 'detect'
-        }
+    settings: {
+        react: {
+            version: require('./package.json').dependencies.react,
+        },
     },
     'parser': 'babel-eslint',
     'parserOptions': {
