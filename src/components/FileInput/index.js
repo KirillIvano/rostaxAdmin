@@ -9,6 +9,8 @@ const FileInput = ({
     className,
     name,
 
+    background,
+
     ...extraProps
 }) => {
     const {current: formId} = useRef(getLabelId());
@@ -18,8 +20,11 @@ const FileInput = ({
             <label
                 className={styles.fictionalInput}
                 htmlFor={formId}
+                style={{backgroundImage: `url("${background}")`}}
             >
-                {labelText}
+                <p className={styles.inputContent}>
+                    {labelText}
+                </p>
             </label>
 
             <input

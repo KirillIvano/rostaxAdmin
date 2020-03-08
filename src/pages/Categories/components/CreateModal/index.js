@@ -6,6 +6,7 @@ import {
     Input,
     FileInput,
 } from '@/components';
+import {useImagePreview} from '@/hooks/useImagePreview';
 
 import styles from './styles.less';
 import {withCategoryCreating} from './../../containers/withCategoryCreating';
@@ -22,6 +23,8 @@ const CreateModal = ({
     showCreatingSuccessMessage,
     showCreatingErrorMessage,
 }) => {
+    if (!isOpen) return null;
+
     useEffect(() => {
         if (categoryCreatingSuccess) {
             showCreatingSuccessMessage();
@@ -36,13 +39,12 @@ const CreateModal = ({
     }, [categoryCreatingError]);
 
     const [name, setName] = useState('');
-    const [image, setImage] = useState('');
-    const [isImagePreviewVisible, setImagePreviewVisibility] = useState(false);
+    const {imageUrl, file, setFile} = useImagePreview();
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        createCategory({name, image});
+        createCategory({name, file});
     };
 
     return (
@@ -61,21 +63,11 @@ const CreateModal = ({
                 <FileInput
                     className={styles.input}
                     labelText={'Загрузить фото'}
+                    background={imageUrl}
 
                     name={'image'}
-                    onChange={e => setImage(e.currentTarget.value)}
-                    onFocus={() => setImagePreviewVisibility(false)}
-                    onBlur={() => setImagePreviewVisibility(true)}
+                    onChange={e => setFile(e.currentTarget.files[0])}
                 />
-
-                {/* TODO: check if image can be getted*/}
-                {/*
-                    isImagePreviewVisible ?
-                        <img className={styles.imagePreview} src={image} /> :
-                        <div className={styles.imagePlaceholder}>
-                            Тут будет фото
-                        </div>
-                */}
 
                 <Button
                     className={styles.saveButton}
