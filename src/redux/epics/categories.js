@@ -87,8 +87,14 @@ export const deleteCategoryEpic =
 
 // CREATING
 
-const createCategory = body =>
-    ajax
+const createCategory = formData => {
+    const body = new FormData();
+
+    Object.entries(formData).forEach(([name, value]) => {
+        body.append(name, value);
+    });
+
+    return ajax
         .post(
             `${SERVER_ORIGIN}/admin/categories`,
             body,
@@ -111,16 +117,18 @@ const createCategory = body =>
                 },
             ),
         );
+};
+
 
 export const createCategoryEpic =
-    (action$, state$) =>
+    action$ =>
         action$.pipe(
             ofType(CREATE_CATEGORY_START),
             switchMap(
                 ({payload}) => {
-                    const {body} = payload;
+                    const {formData} = payload;
 
-                    return createCategory(body);
+                    return createCategory(formData);
                 },
             ),
         );

@@ -47,10 +47,10 @@ export const deleteCategoryError = (id, error) => ({
     },
 });
 
-export const createCategory = body => ({
+export const createCategory = formData => ({
     type: CREATE_CATEGORY_START,
     payload: {
-        body,
+        formData,
     },
 });
 export const createCategorySuccess = category => ({

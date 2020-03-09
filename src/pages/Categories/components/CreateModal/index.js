@@ -23,8 +23,6 @@ const CreateModal = ({
     showCreatingSuccessMessage,
     showCreatingErrorMessage,
 }) => {
-    if (!isOpen) return null;
-
     useEffect(() => {
         if (categoryCreatingSuccess) {
             showCreatingSuccessMessage();
@@ -44,7 +42,7 @@ const CreateModal = ({
     const handleSubmit = e => {
         e.preventDefault();
 
-        createCategory({name, file});
+        createCategory({name, image: file});
     };
 
     return (
