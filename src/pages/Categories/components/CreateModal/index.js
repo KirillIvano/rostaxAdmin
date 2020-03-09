@@ -22,10 +22,12 @@ const CreateModal = ({
     createCategory,
     showCreatingSuccessMessage,
     showCreatingErrorMessage,
+    reloadCategoryCreating,
 }) => {
     useEffect(() => {
         if (categoryCreatingSuccess) {
             showCreatingSuccessMessage();
+            reloadCategoryCreating();
             handleClose();
         }
     }, [categoryCreatingSuccess]);
@@ -33,6 +35,8 @@ const CreateModal = ({
     useEffect(() => {
         if (categoryCreatingError) {
             showCreatingErrorMessage(categoryCreatingError);
+            reloadCategoryCreating();
+            handleClose();
         }
     }, [categoryCreatingError]);
 

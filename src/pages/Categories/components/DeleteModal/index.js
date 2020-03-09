@@ -17,11 +17,13 @@ const DeleteModal = ({
     deleteCategory,
     showDeletingSuccessMessage,
     showDeletingErrorMessage,
+    reloadCategoryDeleting,
 }) => {
     useEffect(() => {
         // if succeed
         if (categoryDeletingSuccess) {
             showDeletingSuccessMessage();
+            reloadCategoryDeleting();
             handleClose();
         }
     }, [categoryDeletingSuccess]);
@@ -29,6 +31,7 @@ const DeleteModal = ({
     useEffect(() => {
         if (categoryDeletingError) {
             showDeletingErrorMessage(categoryDeletingError);
+            reloadCategoryDeleting();
             handleClose();
         }
     }, [categoryDeletingError]);

@@ -1,6 +1,9 @@
 import {connect} from 'react-redux';
 
-import {createCategory} from '@/redux/actions/category';
+import {
+    createCategory,
+    createCategoryReload,
+} from '@/redux/actions/category';
 import {
     showNormalMessage,
     showErrorMessage,
@@ -22,6 +25,7 @@ const mapStateToProps = ({category}) => {
 
 const mapDispatchToProps = dispatch => ({
     createCategory: body => dispatch(createCategory(body)),
+    reloadCategoryCreating: () => dispatch(createCategoryReload()),
 
     showCreatingSuccessMessage: () => dispatch(
         showNormalMessage('Создание коллекции', 'Коллекция была успешно создана'),

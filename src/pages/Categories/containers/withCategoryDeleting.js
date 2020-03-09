@@ -1,6 +1,9 @@
 import {connect} from 'react-redux';
 
-import {deleteCategory} from '@/redux/actions/category';
+import {
+    deleteCategory,
+    deleteCategoryReload,
+} from '@/redux/actions/category';
 import {
     showNormalMessage,
     showErrorMessage,
@@ -22,6 +25,7 @@ const mapStateToProps = ({category}) => {
 
 const mapDispatchToProps = dispatch => ({
     deleteCategory: id => dispatch(deleteCategory(id)),
+    reloadCategoryDeleting: () => dispatch(deleteCategoryReload()),
 
     showDeletingSuccessMessage: () => dispatch(
         showNormalMessage('Удаление коллекции', 'Коллекция была успешно удалена'),

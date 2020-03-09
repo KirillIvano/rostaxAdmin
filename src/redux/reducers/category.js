@@ -6,10 +6,12 @@ import {
     DELETE_CATEGORY_START,
     DELETE_CATEGORY_SUCCESS,
     DELETE_CATEGORY_ERROR,
+    DELETE_CATEGORY_RELOAD,
 
     CREATE_CATEGORY_START,
     CREATE_CATEGORY_SUCCESS,
     CREATE_CATEGORY_ERROR,
+    CREATE_CATEGORY_RELOAD,
 } from '@/redux/names/category';
 
 const INITIAL_STATE = {
@@ -82,11 +84,19 @@ export const categoryReducer = (
             categoryDeletingError: error,
         };
     }
+    case DELETE_CATEGORY_RELOAD: {
+        return {
+            ...state,
+            categoryDeletingError: null,
+            categoryDeletingSuccess: false,
+            categoryDeletingInProgress: true,
+        };
+    }
 
     case CREATE_CATEGORY_START: {
         return {
             ...state,
-            categoryCreatingInProgress: true,
+            categoryCreatingInProgress: false,
             categoryCreatingError: null,
             categoryCreatingSuccess: false,
         };
@@ -109,6 +119,14 @@ export const categoryReducer = (
             ...state,
             categoryCreatingInProgress: false,
             categoryCreatingError: error,
+        };
+    }
+    case CREATE_CATEGORY_RELOAD: {
+        return {
+            ...state,
+            categoryCreatingInProgress: false,
+            categoryCreatingError: null,
+            categoryCreatingSuccess: false,
         };
     }
     default: {
