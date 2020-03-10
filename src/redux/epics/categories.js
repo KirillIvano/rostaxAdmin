@@ -14,14 +14,20 @@ import {
     GET_CATEGORIES_START,
     DELETE_CATEGORY_START,
     CREATE_CATEGORY_START,
+    UPDATE_CATEGORY_START,
 } from '@/redux/names/category';
 import {
     getCategoriesError,
     getCategoriesSuccess,
+
     deleteCategoryError,
     deleteCategorySuccess,
+
     createCategoryError,
     createCategorySuccess,
+
+    updateCategoryError,
+    updateCategorySuccess,
 } from '@/redux/actions/category';
 
 // GETTING
@@ -85,6 +91,8 @@ export const deleteCategoryEpic =
             ),
         );
 
+
+
 // CREATING
 
 const createCategory = formData => {
@@ -133,9 +141,55 @@ export const createCategoryEpic =
             ),
         );
 
+const updateCategory = (formData, categoryId) => {
+    const body = new FormData();
+
+    Object.entries(formData).forEach(([name, value]) => {
+        body.append(name, value);
+    });
+
+    return ajax
+        .put(
+            `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
+            body,
+        )
+        .pipe(
+            mergeMap(
+                ({response}) => {
+                    const {category} = response;
+
+                    return of(
+                        updateCategorySuccess(category),
+                    );
+                },
+            ),
+            catchError(
+                ({response}) => {
+                    const {error} = response;
+
+                    return of(updateCategoryError(error));
+                },
+            ),
+        );
+};
+
+
+export const updateCategoryEpic =
+    action$ =>
+        action$.pipe(
+            ofType(UPDATE_CATEGORY_START),
+            switchMap(
+                ({payload}) => {
+                    const {formData} = payload;
+
+                    return updateCategory(formData);
+                },
+            ),
+        );
 
 export default combineEpics(
     getCategoriesEpic,
     deleteCategoryEpic,
     createCategoryEpic,
+    updateCategoryEpic,
 );

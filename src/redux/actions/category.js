@@ -12,6 +12,7 @@ import {
     CREATE_CATEGORY_SUCCESS,
     CREATE_CATEGORY_ERROR,
     CREATE_CATEGORY_RELOAD,
+    UPDATE_CATEGORY_START,
 } from '@/redux/names/category';
 
 export const getCategories = () => ({
@@ -74,4 +75,26 @@ export const createCategoryError = error => ({
 });
 export const createCategoryReload = () => ({
     type: CREATE_CATEGORY_RELOAD,
+});
+
+export const updateCategory = formData => ({
+    type: UPDATE_CATEGORY_START,
+    payload: {
+        formData,
+    },
+});
+export const updateCategorySuccess = category => ({
+    type: UPDATE_CATEGORY_START,
+    payload: {
+        category,
+    },
+});
+export const updateCategoryError = error => ({
+    type: UPDATE_CATEGORY_START,
+    payload: {
+        error,
+    },
+});
+export const updateCategoryReload = () => ({
+    type: UPDATE_CATEGORY_START,
 });

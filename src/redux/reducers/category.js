@@ -12,6 +12,11 @@ import {
     CREATE_CATEGORY_SUCCESS,
     CREATE_CATEGORY_ERROR,
     CREATE_CATEGORY_RELOAD,
+
+    UPDATE_CATEGORY_START,
+    UPDATE_CATEGORY_SUCCESS,
+    UPDATE_CATEGORY_ERROR,
+    UPDATE_CATEGORY_RELOAD,
 } from '@/redux/names/category';
 
 const INITIAL_STATE = {
@@ -26,6 +31,10 @@ const INITIAL_STATE = {
     categoryCreatingInProgress: false,
     categoryCreatingError: null,
     categoryCreatingSuccess: false,
+
+    categoryUpdatingInProgress: false,
+    categoryUpdatingError: null,
+    categoryUpdatingSuccess: false,
 };
 
 export const categoryReducer = (
@@ -124,9 +133,46 @@ export const categoryReducer = (
     case CREATE_CATEGORY_RELOAD: {
         return {
             ...state,
-            categoryCreatingInProgress: false,
-            categoryCreatingError: null,
-            categoryCreatingSuccess: false,
+            categoryUpdatingInProgress: false,
+            categoryUpdatingError: null,
+            categoryUpdatingSuccess: false,
+        };
+    }
+
+    case UPDATE_CATEGORY_START: {
+        return {
+            ...state,
+            categoryUpdatingInProgress: false,
+            categoryUpdatingError: null,
+            categoryUpdatingSuccess: false,
+        };
+    }
+    case UPDATE_CATEGORY_SUCCESS: {
+        const {category} = payload;
+        const {categories} = state;
+
+        return {
+            ...state,
+            categories: [...categories, category],
+            categoryUpdatingInProgress: false,
+            categoryUpdatingSuccess: true,
+        };
+    }
+    case UPDATE_CATEGORY_ERROR: {
+        const {error} = payload;
+
+        return {
+            ...state,
+            categoryUpdatingInProgress: false,
+            categoryUpdatingError: error,
+        };
+    }
+    case UPDATE_CATEGORY_RELOAD: {
+        return {
+            ...state,
+            categoryUpdatingInProgress: false,
+            categoryUpdatingError: null,
+            categoryUpdatingSuccess: false,
         };
     }
     default: {
