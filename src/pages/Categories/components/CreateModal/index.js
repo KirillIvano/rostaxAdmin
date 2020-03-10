@@ -1,4 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {
+    useState,
+    useEffect,
+    useCallback,
+} from 'react';
 
 import {
     Modal,
@@ -24,10 +28,19 @@ const CreateModal = ({
     showCreatingErrorMessage,
     reloadCategoryCreating,
 }) => {
+    const [name, setName] = useState('');
+    const {imageUrl, file, setFile} = useImagePreview();
+
+    const resetData = useCallback(() => {
+        setName('');
+        setFile(null);
+    });
+
     useEffect(() => {
         if (categoryCreatingSuccess) {
             showCreatingSuccessMessage();
             reloadCategoryCreating();
+            resetData();
             handleClose();
         }
     }, [categoryCreatingSuccess]);
@@ -39,9 +52,6 @@ const CreateModal = ({
             handleClose();
         }
     }, [categoryCreatingError]);
-
-    const [name, setName] = useState('');
-    const {imageUrl, file, setFile} = useImagePreview();
 
     const handleSubmit = e => {
         e.preventDefault();
