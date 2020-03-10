@@ -4,10 +4,6 @@ import {
     deleteCategory,
     deleteCategoryReload,
 } from '@/redux/actions/category';
-import {
-    showNormalMessage,
-    showErrorMessage,
-} from '@/redux/actions/message';
 
 const mapStateToProps = ({category}) => {
     const {
@@ -26,14 +22,6 @@ const mapStateToProps = ({category}) => {
 const mapDispatchToProps = dispatch => ({
     deleteCategory: id => dispatch(deleteCategory(id)),
     reloadCategoryDeleting: () => dispatch(deleteCategoryReload()),
-
-    showDeletingSuccessMessage: () => dispatch(
-        showNormalMessage('Удаление коллекции', 'Коллекция была успешно удалена'),
-    ),
-
-    showDeletingErrorMessage: error => dispatch(
-        showErrorMessage('Удаление коллекции', error),
-    ),
 });
 
 export const withCategoryDeleting = connect(mapStateToProps, mapDispatchToProps);

@@ -24,8 +24,6 @@ const CreateModal = ({
     categoryCreatingSuccess,
 
     createCategory,
-    showCreatingSuccessMessage,
-    showCreatingErrorMessage,
     reloadCategoryCreating,
 }) => {
     const [name, setName] = useState('');
@@ -38,7 +36,6 @@ const CreateModal = ({
 
     useEffect(() => {
         if (categoryCreatingSuccess) {
-            showCreatingSuccessMessage();
             reloadCategoryCreating();
             resetData();
             handleClose();
@@ -47,7 +44,6 @@ const CreateModal = ({
 
     useEffect(() => {
         if (categoryCreatingError) {
-            showCreatingErrorMessage(categoryCreatingError);
             reloadCategoryCreating();
             handleClose();
         }

@@ -29,6 +29,10 @@ import {
     updateCategoryError,
     updateCategorySuccess,
 } from '@/redux/actions/category';
+import {
+    showNormalMessage,
+    showErrorMessage,
+} from '@/redux/actions/message';
 
 // GETTING
 
@@ -67,13 +71,17 @@ const deleteCategory = categoryId =>
             mergeMap(
                 () => of(
                     deleteCategorySuccess(categoryId),
+                    showNormalMessage('Удаление категории', 'Удаление прошло успешно'),
                 ),
             ),
             catchError(
                 ({response}) => {
                     const {error} = response;
 
-                    return of(deleteCategoryError(categoryId, error));
+                    return of(
+                        deleteCategoryError(categoryId, error),
+                        showErrorMessage('Удаление категории', error),
+                    );
                 },
             ),
         );
@@ -114,6 +122,7 @@ const createCategory = formData => {
 
                     return of(
                         createCategorySuccess(category),
+                        showNormalMessage('Создание категории', 'Категория успешно создана'),
                     );
                 },
             ),
@@ -121,7 +130,10 @@ const createCategory = formData => {
                 ({response}) => {
                     const {error} = response;
 
-                    return of(createCategoryError(error));
+                    return of(
+                        createCategoryError(error),
+                        showErrorMessage('Создание категории', error),
+                    );
                 },
             ),
         );
@@ -159,7 +171,8 @@ const updateCategory = (formData, categoryId) => {
                     const {category} = response;
 
                     return of(
-                        updateCategorySuccess(category),
+                        updateCategorySuccess(category, categoryId),
+                        showNormalMessage('Редактирование категории', 'Категория успешно отредактирована'),
                     );
                 },
             ),
@@ -167,12 +180,14 @@ const updateCategory = (formData, categoryId) => {
                 ({response}) => {
                     const {error} = response;
 
-                    return of(updateCategoryError(error));
+                    return of(
+                        updateCategoryError(error),
+                        showErrorMessage('Редактирование категории', error),
+                    );
                 },
             ),
         );
 };
-
 
 export const updateCategoryEpic =
     action$ =>
