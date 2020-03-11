@@ -5,7 +5,7 @@ import {Button} from '@/components';
 
 const EntityCard = ({
     children,
-    modifyHandler,
+    updateHandler,
     deleteHandler,
 }) => {
     return (
@@ -14,7 +14,7 @@ const EntityCard = ({
                 {children}
             </div>
             <div className={styles.controls}>
-                <Button className={styles.button} onClick={modifyHandler}>
+                <Button className={styles.button} onClick={updateHandler}>
                     Редактировать
                 </Button>
                 <Button className={styles.button} onClick={deleteHandler} styling='danger'>

@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 
 import {withCategoriesProps} from './containers/withCategoriesProps';
+
 import {useDeleteModalState} from './hooks/useDeleteModalState';
 import {useCreateModalState} from './hooks/useCreateModalState';
+import {useUpdateModalState} from './hooks/useUpdateModalState';
+
 import {
     DeleteModal,
     CreateModal,
+    UpdateModal,
 } from './components';
 
 import {
@@ -44,6 +48,13 @@ const Categories = ({
         closeCreateModal,
     } = useCreateModalState();
 
+    const {
+        isUpdateModalOpened,
+        openUpdateModal,
+        closeUpdateModal,
+        updatedId,
+    } = useUpdateModalState();
+
     if (categoriesLoading) {
         return (
             <div>
@@ -63,6 +74,7 @@ const Categories = ({
                             <EntityCard
                                 key={id}
                                 deleteHandler={() => openDeleteModal(id)}
+                                updateHandler={() => openUpdateModal(id)}
                             >
                                 {name}
                             </EntityCard>
@@ -77,12 +89,17 @@ const Categories = ({
 
             <DeleteModal
                 isOpen={isDeleteModalOpened}
-                deletedId={deletedId}
                 handleClose={closeDeleteModal}
+                deletedId={deletedId}
             />
             <CreateModal
                 isOpen={isCreateModalOpened}
                 handleClose={closeCreateModal}
+            />
+            <UpdateModal
+                isOpen={isUpdateModalOpened}
+                handleClose={closeUpdateModal}
+                updatedId={updatedId}
             />
         </ContentWrapper>
     );

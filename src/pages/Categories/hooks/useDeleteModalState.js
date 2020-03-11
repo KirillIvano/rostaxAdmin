@@ -5,7 +5,7 @@ export const useDeleteModalState = () => {
     const {isModalOpened, open, close} = useModalState();
     const [deletedId, changeDeletedId] = useState(null);
 
-    const openDeleteModal = (id) => {
+    const openDeleteModal = id => {
         changeDeletedId(id);
         open();
     };

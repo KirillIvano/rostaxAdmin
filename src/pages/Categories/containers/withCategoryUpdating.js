@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 
 import {
-    createCategory,
-    createCategoryReload,
+    updateCategory,
+    updateCategoryReload,
 } from '@/redux/actions/category';
 
 const mapStateToProps = ({category}) => {
@@ -20,8 +20,8 @@ const mapStateToProps = ({category}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    updateCategory: body => dispatch(createCategory(body)),
-    reloadCategoryUpdating: () => dispatch(createCategoryReload()),
+    updateCategory: body => dispatch(updateCategory(body)),
+    reloadCategoryUpdating: () => dispatch(updateCategoryReload()),
 });
 
 export const withCategoryUpdating = connect(mapStateToProps, mapDispatchToProps);
