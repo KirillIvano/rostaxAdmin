@@ -49,11 +49,14 @@ const CreateModal = ({
         }
     }, [categoryCreatingError]);
 
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        createCategory({name, image: file});
-    };
+    const handleSubmit = useCallback(
+        e => {
+            e.preventDefault();
+            // TODO: validation
+            createCategory({name, image: file});
+        },
+        [name, file],
+    );
 
     return (
         <Modal

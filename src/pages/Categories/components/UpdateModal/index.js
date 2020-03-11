@@ -49,11 +49,13 @@ const UpdateModal = ({
         }
     }, [categoryUpdatingError]);
 
-    const handleSubmit = e => {
-        e.preventDefault();
-
-        updateCategory({name, image: file});
-    };
+    const handleSubmit = useCallback(
+        e => {
+            e.preventDefault();
+            updateCategory({name, image: file});
+        },
+        [name, file],
+    );
 
     return (
         <Modal
