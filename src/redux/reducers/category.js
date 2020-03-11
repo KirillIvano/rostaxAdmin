@@ -98,7 +98,7 @@ export const categoryReducer = (
             ...state,
             categoryDeletingError: null,
             categoryDeletingSuccess: false,
-            categoryDeletingInProgress: true,
+            categoryDeletingInProgress: false,
         };
     }
 
@@ -133,9 +133,9 @@ export const categoryReducer = (
     case CREATE_CATEGORY_RELOAD: {
         return {
             ...state,
-            categoryUpdatingInProgress: false,
-            categoryUpdatingError: null,
-            categoryUpdatingSuccess: false,
+            categoryCreatingInProgress: false,
+            categoryCreatingError: null,
+            categoryCreatingSuccess: false,
         };
     }
 
