@@ -4,13 +4,14 @@ module.exports = {
         'browser': true,
         'node': true,
     },
-    'extends': ['eslint:recommended'],
+    'extends': ['eslint:recommended', "plugin:react/recommended"],
     'globals': {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly'
     },
     'plugins': [
-        'react'
+        'react',
+        'react-hooks'
     ],
     settings: {
         react: {
@@ -45,7 +46,8 @@ module.exports = {
         'handle-callback-err': ['error'],
         'max-len': ['warn', {code: 120}],
         'no-console': ['error'],
-        // react
+        
+        'react/prop-types': 'off',
         'react/jsx-uses-react': 'error',
         'react/jsx-uses-vars': 'error',
         'react/boolean-prop-naming': 'error',
