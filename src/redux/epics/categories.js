@@ -153,11 +153,11 @@ export const createCategoryEpic =
             ),
         );
 
-const updateCategory = (formData, categoryId) => {
+const updateCategory = (categoryId, formData) => {
     const body = new FormData();
 
     Object.entries(formData).forEach(([name, value]) => {
-        body.append(name, value);
+        if (value !== undefined) body.append(name, value);
     });
 
     return ajax
@@ -195,9 +195,9 @@ export const updateCategoryEpic =
             ofType(UPDATE_CATEGORY_START),
             switchMap(
                 ({payload}) => {
-                    const {formData} = payload;
+                    const {formData, id} = payload;
 
-                    return updateCategory(formData);
+                    return updateCategory(id, formData);
                 },
             ),
         );

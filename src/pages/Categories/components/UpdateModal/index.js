@@ -16,6 +16,8 @@ import styles from './styles.less';
 import {withCategoryUpdating} from './../../containers/withCategoryUpdating';
 
 const UpdateModal = ({
+    updatedId,
+
     isOpen,
     handleClose,
 
@@ -52,7 +54,7 @@ const UpdateModal = ({
     const handleSubmit = useCallback(
         e => {
             e.preventDefault();
-            updateCategory({name, image: file});
+            updateCategory(updatedId, {name, image: file});
         },
         [name, file],
     );

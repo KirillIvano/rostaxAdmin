@@ -142,7 +142,7 @@ export const categoryReducer = (
     case UPDATE_CATEGORY_START: {
         return {
             ...state,
-            categoryUpdatingInProgress: false,
+            categoryUpdatingInProgress: true,
             categoryUpdatingError: null,
             categoryUpdatingSuccess: false,
         };
@@ -151,9 +151,13 @@ export const categoryReducer = (
         const {category} = payload;
         const {categories} = state;
 
+        const categoryIndex = categories.findIndex(({id}) => id === category.id);
+        const newCategories = categories.slice(0);
+        newCategories[categoryIndex] = category;
+
         return {
             ...state,
-            categories: [...categories, category],
+            categories: newCategories,
             categoryUpdatingInProgress: false,
             categoryUpdatingSuccess: true,
         };

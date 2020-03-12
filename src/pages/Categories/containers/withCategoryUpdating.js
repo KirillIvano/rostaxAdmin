@@ -20,7 +20,7 @@ const mapStateToProps = ({category}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    updateCategory: body => dispatch(updateCategory(body)),
+    updateCategory: (id, body) => dispatch(updateCategory(id, body)),
     reloadCategoryUpdating: () => dispatch(updateCategoryReload()),
 });
 
