@@ -13,10 +13,13 @@ const Navbar = ({
                 {[styles.opened]: isMenuOpened},
             )}
     >
-        <Link to={'/admin/main'} className={styles.navitem}>
+        <Link to={'/main'} className={styles.navitem}>
             ГЛАВНАЯ
         </Link>
-        <Link to={'/admin/login'} className={styles.navitem}>
+        <Link to={'/categories'} className={styles.navitem}>
+            КАТЕГОРИИ
+        </Link>
+        <Link to={'/login'} className={styles.navitem}>
             ЛОГИН
         </Link>
     </nav>

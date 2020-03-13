@@ -13,28 +13,29 @@ import {
     loginSuccessAction,
 } from '@/redux/actions/login';
 
-const loginEpic = action$ => action$.pipe(
-    ofType(LOGIN_START),
-    mergeMap(
-        ({payload: {body}}) =>
-            ajax.post(`${SERVER_ORIGIN}/admin/auth/login`, body)
-                .pipe(
-                    mergeMap(
-                        ({response}) => of(
-                            authenticateAction(response),
-                            loginSuccessAction(),
+const loginEpic = action$ =>
+    action$.pipe(
+        ofType(LOGIN_START),
+        mergeMap(
+            ({payload: {body}}) =>
+                ajax.post(`${SERVER_ORIGIN}/admin/auth/login`, body)
+                    .pipe(
+                        mergeMap(
+                            ({response}) => of(
+                                console.log(response) || authenticateAction(response),
+                                loginSuccessAction(),
+                            ),
+                        ),
+                        catchError(
+                            ({response}) => {
+                                const {error} = response;
+
+                                return of(loginErrorAction(error));
+                            },
                         ),
                     ),
-                    catchError(
-                        ({response}) => {
-                            const {error} = response;
-
-                            return of(loginErrorAction(error));
-                        },
-                    ),
-                ),
-    ),
-);
+        ),
+    );
 
 
 export default loginEpic;

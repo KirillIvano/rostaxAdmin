@@ -15,6 +15,7 @@ import {
 import {
     ContentWrapper,
     EntityCard,
+    Preloader,
 } from '@/components';
 import {
     CardBox,
@@ -63,7 +64,7 @@ const Categories = ({
         );
     }
 
-    if (categoriesError) return categoriesError;
+    if (categoriesError) return <Preloader />;
 
     return (
         <ContentWrapper>
