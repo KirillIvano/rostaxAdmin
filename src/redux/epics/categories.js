@@ -2,12 +2,10 @@ import {
     ofType,
     combineEpics,
 } from 'redux-observable';
-import {of} from 'rxjs';
-import {ajax} from 'rxjs/ajax';
+import {of, from} from 'rxjs';
 import {
     switchMap,
     mergeMap,
-    catchError,
 } from 'rxjs/operators';
 
 import {
@@ -33,68 +31,82 @@ import {
     showNormalMessage,
     showErrorMessage,
 } from '@/redux/actions/message';
+import {selectAccessJwt} from '@/redux/selectors/auth';
 
 // GETTING
 
-const getCategories$ = ajax
-    .getJSON(`${SERVER_ORIGIN}/admin/categories/previews`)
-    .pipe(
+const getCategories = accessToken =>
+    from(
+        fetch(
+            `${SERVER_ORIGIN}/admin/categories/previews`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            }).then(res => res.json()),
+    ).pipe(
         mergeMap(
-            ({data}) => of(
-                getCategoriesSuccess(data),
-            ),
-        ),
-        catchError(
-            ({response}) => {
-                const {error} = response;
-
-                return of(getCategoriesError(error));
+            ({ok, error, categories}) => {
+                if (!ok) {
+                    return of(
+                        getCategoriesError(error),
+                    );
+                }
+                return of(
+                    getCategoriesSuccess(categories),
+                );
             },
         ),
     );
 
 export const getCategoriesEpic =
-    action$ =>
+    (action$, state$) =>
         action$.pipe(
             ofType(GET_CATEGORIES_START),
-            switchMap(
-                () => getCategories$,
-            ),
+            switchMap(() => getCategories(selectAccessJwt(state$.value))),
         );
 
 // DELETING
 
-const deleteCategory = categoryId =>
-    ajax
-        .delete(`${SERVER_ORIGIN}/admin/categories/${categoryId}`)
+const deleteCategory = (categoryId, accessToken) => {
+    const request = fetch(
+        `${SERVER_ORIGIN}/admin/categories/previews`,
+        {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        }).then(res => res.json());
+
+    return from(request)
         .pipe(
             mergeMap(
-                () => of(
-                    deleteCategorySuccess(categoryId),
-                    showNormalMessage('Удаление категории', 'Удаление прошло успешно'),
-                ),
-            ),
-            catchError(
-                ({response}) => {
-                    const {error} = response;
+                ({ok, error}) => {
+                    if (!ok) {
+                        return of(
+                            deleteCategoryError(categoryId, error),
+                            showErrorMessage('Удаление категории', error),
+                        );
+                    }
 
                     return of(
-                        deleteCategoryError(categoryId, error),
-                        showErrorMessage('Удаление категории', error),
+                        deleteCategorySuccess(categoryId),
+                        showNormalMessage('Удаление категории', 'Удаление прошло успешно'),
                     );
                 },
             ),
         );
+};
 
 export const deleteCategoryEpic =
-    action$ =>
+    (action$, state$) =>
         action$.pipe(
             ofType(DELETE_CATEGORY_START),
             switchMap(
                 ({payload}) => {
                     const {id} = payload;
 
-                    return deleteCategory(id);
+                    return deleteCategory(id, selectAccessJwt(state$.value));
                 },
             ),
         );
@@ -103,36 +115,37 @@ export const deleteCategoryEpic =
 
 // CREATING
 
-const createCategory = formData => {
+const createCategory = (formData, accessToken) => {
     const body = new FormData();
 
     Object.entries(formData).forEach(([name, value]) => {
         body.append(name, value);
     });
 
-    return ajax
-        .post(
-            `${SERVER_ORIGIN}/admin/categories`,
+    const request = fetch(
+        `${SERVER_ORIGIN}/admin/categories`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
             body,
-        )
+        }).then(res => res.json());
+
+    return from(request)
         .pipe(
             mergeMap(
-                ({response}) => {
-                    const {category} = response;
+                ({ok, error, category}) => {
+                    if (!ok) {
+                        return of(
+                            createCategoryError(error),
+                            showErrorMessage('Создание категории', error),
+                        );
+                    }
 
                     return of(
                         createCategorySuccess(category),
                         showNormalMessage('Создание категории', 'Категория успешно создана'),
-                    );
-                },
-            ),
-            catchError(
-                ({response}) => {
-                    const {error} = response;
-
-                    return of(
-                        createCategoryError(error),
-                        showErrorMessage('Создание категории', error),
                     );
                 },
             ),
@@ -141,34 +154,45 @@ const createCategory = formData => {
 
 
 export const createCategoryEpic =
-    action$ =>
+    (action$, state$) =>
         action$.pipe(
             ofType(CREATE_CATEGORY_START),
             switchMap(
                 ({payload}) => {
                     const {formData} = payload;
 
-                    return createCategory(formData);
+                    return createCategory(formData, selectAccessJwt(state$.value));
                 },
             ),
         );
 
-const updateCategory = (categoryId, formData) => {
+const updateCategory = (categoryId, formData, accessToken) => {
     const body = new FormData();
 
     Object.entries(formData).forEach(([name, value]) => {
         if (value !== undefined) body.append(name, value);
     });
 
-    return ajax
-        .put(
-            `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
+    const request = fetch(
+        `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
+        {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
             body,
-        )
+        }).then(res => res.json());
+
+    return request
         .pipe(
             mergeMap(
-                ({response}) => {
-                    const {category} = response;
+                ({ok, error, category}) => {
+                    if (!ok) {
+                        return of(
+                            updateCategoryError(error),
+                            showErrorMessage('Редактирование категории', error),
+                        );
+                    }
 
                     return of(
                         updateCategorySuccess(category, categoryId),
@@ -176,28 +200,20 @@ const updateCategory = (categoryId, formData) => {
                     );
                 },
             ),
-            catchError(
-                ({response}) => {
-                    const {error} = response;
-
-                    return of(
-                        updateCategoryError(error),
-                        showErrorMessage('Редактирование категории', error),
-                    );
-                },
-            ),
         );
 };
 
 export const updateCategoryEpic =
-    action$ =>
+    (action$, state$) =>
         action$.pipe(
             ofType(UPDATE_CATEGORY_START),
             switchMap(
                 ({payload}) => {
-                    const {formData, id} = payload;
+                    const {id, formData} = payload;
 
-                    return updateCategory(id, formData);
+                    const accessToken = selectAccessJwt(state$.value);
+
+                    return updateCategory(id, formData, accessToken);
                 },
             ),
         );
