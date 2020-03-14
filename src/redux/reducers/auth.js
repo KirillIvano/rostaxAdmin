@@ -1,12 +1,12 @@
 import {
     AUTHENTICATE,
+    REFRESH_TOKENS_ERROR,
 } from '@/redux/names/auth';
 
 const INITIAL_STATE = {
-    accessToken: null,
-    refreshToken: null,
-
-    isAuthenticated: true,
+    accessJwt: null,
+    refreshJwt: null,
+    isAuthenticated: false,
 };
 
 export const authReducer = (
@@ -22,11 +22,17 @@ export const authReducer = (
             refreshJwt,
         } = payload;
 
-
         return {
             ...state,
             accessJwt,
             refreshJwt,
+            isAuthenticated: true,
+        };
+    }
+    case REFRESH_TOKENS_ERROR: {
+        return {
+            ...state,
+            isAuthenticated: false,
         };
     }
     default: {

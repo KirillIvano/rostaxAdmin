@@ -22,7 +22,7 @@ const loginEpic = action$ =>
                     .pipe(
                         mergeMap(
                             ({response}) => of(
-                                console.log(response) || authenticateAction(response),
+                                authenticateAction(response),
                                 loginSuccessAction(),
                             ),
                         ),

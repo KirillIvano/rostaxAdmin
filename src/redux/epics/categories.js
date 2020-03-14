@@ -34,7 +34,6 @@ import {
 import {selectAccessJwt} from '@/redux/selectors/auth';
 
 // GETTING
-
 const getCategories = accessToken =>
     from(
         fetch(
@@ -60,10 +59,10 @@ const getCategories = accessToken =>
     );
 
 export const getCategoriesEpic =
-    (action$, state$) =>
+    action$ =>
         action$.pipe(
             ofType(GET_CATEGORIES_START),
-            switchMap(() => getCategories(selectAccessJwt(state$.value))),
+            switchMap(({accessToken}) => getCategories(accessToken)),
         );
 
 // DELETING
@@ -110,8 +109,6 @@ export const deleteCategoryEpic =
                 },
             ),
         );
-
-
 
 // CREATING
 

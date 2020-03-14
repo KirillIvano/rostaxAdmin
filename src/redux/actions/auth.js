@@ -1,6 +1,7 @@
 import {
     AUTHENTICATE,
-    CHECK_AUTHENTICATION,
+    AUTHENTICATE_FROM_MEMORY,
+    REFRESH_TOKENS,
 } from '@/redux/names/auth';
 
 export const authenticateAction = ({
@@ -14,6 +15,10 @@ export const authenticateAction = ({
     },
 });
 
-export const checkAuthAction = () => ({
-    type: CHECK_AUTHENTICATION,
+export const authFromMemoryAction = () => ({
+    type: AUTHENTICATE_FROM_MEMORY,
+});
+
+export const refreshTokensAction = () => ({
+    type: REFRESH_TOKENS,
 });

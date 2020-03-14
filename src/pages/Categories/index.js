@@ -28,12 +28,14 @@ const Categories = ({
     categories,
     categoriesLoading,
     categoriesError,
+
+    isUserAuthenticated,
 }) => {
     useEffect(
         () => {
             getCategories();
         },
-        [],
+        [isUserAuthenticated],
     );
 
     const {

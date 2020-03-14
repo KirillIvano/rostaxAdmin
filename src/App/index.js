@@ -25,7 +25,7 @@ import {withAppInitialize} from './containers/withAppInitialize';
 
 const App = ({
     isUserAuthenticated,
-    checkAuthentication,
+    tryAuth,
 }) => {
     const {
         isMenuOpened,
@@ -33,7 +33,7 @@ const App = ({
     } = useNavbarState();
 
     useEffect(() => {
-        checkAuthentication();
+        tryAuth();
     }, []);
 
     return (
