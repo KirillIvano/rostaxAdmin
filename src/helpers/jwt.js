@@ -1,1 +1,1 @@
-export const getJwtPayload = jwt => JSON.parse(atob(jwt.split('.')[0]));
+export const getJwtPayload = jwt => JSON.parse(atob(jwt.split('.')[1]));

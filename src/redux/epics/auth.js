@@ -19,10 +19,10 @@ import {
 } from '@/redux/names/auth';
 import {getJwtPayload} from '@/helpers/jwt';
 import {selectRefreshJwt, selectAccessJwt} from '@/redux/selectors/auth';
-import {authenticateAction, refreshTokensAction} from '@/redux/actions/auth';
+import {authenticateAction, refreshTokensAction, authFromMemoryFinishAction} from '@/redux/actions/auth';
 import {emptyAction} from '@/redux/actions/empty';
 
-const authenticateEpic =
+const saveTokensEpic =
     action$ =>
         action$.pipe(
             ofType(SAVE_TOKENS),
@@ -76,15 +76,21 @@ const authFromMemoryEpic =
 
                 return of(
                     authenticateAction({accessJwt, refreshJwt}),
+                    authFromMemoryFinishAction(),
                 );
             }),
+        );
+
+const appStartAuthEpic = () =>
+    action$ =>
+        action$.pipe(
+            ofType(),
         );
 
 const withAuthenticationEpic =
     (action$, state$) =>
         action$.pipe(
             ofType(WITH_AUTHENTICATION),
-            delay(0),
             mergeMap(({action}) => {
                 const accessToken = selectAccessJwt(state$.value);
                 const refreshToken = selectRefreshJwt(state$.value);
@@ -96,7 +102,7 @@ const withAuthenticationEpic =
                 const refreshTokenPayload = getJwtPayload(refreshToken);
 
                 if (refreshTokenPayload.exp > Date.now() / 1000) {
-                    return concat(refreshTokenObservable());
+                    return refreshTokenObservable();
                 }
 
                 return of(refreshTokensAction());
@@ -104,7 +110,7 @@ const withAuthenticationEpic =
         );
 
 export default combineEpics(
-    authenticateEpic,
+    saveTokensEpic,
     authFromMemoryEpic,
     refreshTokensEpic,
     withAuthenticationEpic,

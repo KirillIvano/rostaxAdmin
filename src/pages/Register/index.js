@@ -25,7 +25,7 @@ const Register = ({
 }) => {
     if (success) {
         showMessage('Регистрация', 'Вы были успешно зарегистрированы');
-        return <Redirect to="/admin/main" />;
+        return <Redirect to="/categories" />;
     }
 
     const [name, setName] = useState('');

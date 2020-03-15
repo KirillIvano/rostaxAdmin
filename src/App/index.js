@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-
+import {useHistory} from 'react-router-dom';
 import {
     Switch,
     Route,
@@ -12,6 +12,7 @@ import {
 } from '@/parts';
 import {
     PageWrapper,
+    Preloader,
 } from '@/components';
 import {
     RegisterPage,
@@ -25,17 +26,30 @@ import {withAppInitialize} from './containers/withAppInitialize';
 
 const App = ({
     isUserAuthenticated,
+    isAuthFromMemoryFinished,
+
     tryAuth,
 }) => {
     const {
         isMenuOpened,
         toggleMenu,
     } = useNavbarState();
+    const history = useHistory();
 
+    // try to auth from memory
     useEffect(() => {
         tryAuth();
     }, []);
 
+    if (!isAuthFromMemoryFinished) {
+        return <Preloader />;
+    }
+
+    if (!isUserAuthenticated) {
+        history.push('/login');
+    }
+
+    // initializing the whole app
     return (
         <>
             <Header toggleMenu={toggleMenu} />

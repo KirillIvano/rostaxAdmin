@@ -1,6 +1,7 @@
 import {
     AUTHENTICATE,
     AUTHENTICATE_FROM_MEMORY,
+    AUTHENTICATE_FROM_MEMORY_FINISH,
     REFRESH_TOKENS,
     SAVE_TOKENS,
 } from '@/redux/names/auth';
@@ -29,6 +30,10 @@ export const saveTokensAction = ({
 
 export const authFromMemoryAction = () => ({
     type: AUTHENTICATE_FROM_MEMORY,
+});
+
+export const authFromMemoryFinishAction = () => ({
+    type: AUTHENTICATE_FROM_MEMORY_FINISH,
 });
 
 export const refreshTokensAction = () => ({

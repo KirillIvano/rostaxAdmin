@@ -21,7 +21,7 @@ const Login = ({
 }) => {
     if (success) {
         showMessage('Вход', 'Вы успешно вошли в систему');
-        return <Redirect to='/main' />;
+        return <Redirect to='/categories' />;
     }
 
     const [validationError, setValidationError] = useState('');
