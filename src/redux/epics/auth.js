@@ -4,16 +4,15 @@ import {
 } from 'redux-observable';
 import {of, from} from 'rxjs';
 import {
-    switchMap,
-    map,
     tap,
     exhaustMap,
     mergeMap,
+    delay,
+    concat,
 } from 'rxjs/operators';
 
 import {
-    AUTHENTICATE,
-    REFRESH_TOKENS_ERROR,
+    SAVE_TOKENS,
     AUTHENTICATE_FROM_MEMORY,
     WITH_AUTHENTICATION,
     REFRESH_TOKENS,
@@ -26,7 +25,7 @@ import {emptyAction} from '@/redux/actions/empty';
 const authenticateEpic =
     action$ =>
         action$.pipe(
-            ofType(AUTHENTICATE),
+            ofType(SAVE_TOKENS),
             tap(({payload}) => {
                 const {refreshJwt, accessJwt} = payload;
 
@@ -35,6 +34,23 @@ const authenticateEpic =
             }),
             mergeMap(() => of(emptyAction())),
         );
+
+const refreshTokenObservable = csrf => {
+    const request = fetch(
+        `${SERVER_ORIGIN}/admin/auth/refreshTokens`,
+        {
+            method: 'POST',
+            body: {
+                csrf,
+            },
+        },
+    ).then(response => response.json());
+
+    return from(request)
+        .pipe(
+            mergeMap(body => of(authenticateAction(body))),
+        );
+};
 
 const refreshTokensEpic =
     (action$, state$) =>
@@ -46,20 +62,7 @@ const refreshTokensEpic =
 
                 const {csrf} = getJwtPayload(refreshToken);
 
-                const request = fetch(
-                    `${SERVER_ORIGIN}/admin/auth/refreshTokens`,
-                    {
-                        method: 'POST',
-                        body: {
-                            csrf,
-                        },
-                    },
-                ).then(response => response.json());
-
-                from(request)
-                    .pipe(
-                        mergeMap(body => of(authenticateAction(body))),
-                    );
+                return refreshTokenObservable(csrf);
             }),
         );
 
@@ -71,7 +74,9 @@ const authFromMemoryEpic =
                 const refreshJwt = localStorage.getItem('refreshJwt');
                 const accessJwt = localStorage.getItem('accessJwt');
 
-                return of(authenticateAction({accessJwt, refreshJwt}));
+                return of(
+                    authenticateAction({accessJwt, refreshJwt}),
+                );
             }),
         );
 
@@ -79,15 +84,20 @@ const withAuthenticationEpic =
     (action$, state$) =>
         action$.pipe(
             ofType(WITH_AUTHENTICATION),
+            delay(0),
             mergeMap(({action}) => {
                 const accessToken = selectAccessJwt(state$.value);
                 const refreshToken = selectRefreshJwt(state$.value);
 
                 const accessTokenPayload = getJwtPayload(accessToken);
-                if (accessTokenPayload.exp < Date.now()) return of({...action, accessToken});
+
+                if (accessTokenPayload.exp > Date.now() / 1000) return of({...action, accessToken});
 
                 const refreshTokenPayload = getJwtPayload(refreshToken);
-                if (refreshTokenPayload.exp > Date.now()) return;
+
+                if (refreshTokenPayload.exp > Date.now() / 1000) {
+                    return concat(refreshTokenObservable());
+                }
 
                 return of(refreshTokensAction());
             }),

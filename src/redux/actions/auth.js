@@ -2,6 +2,7 @@ import {
     AUTHENTICATE,
     AUTHENTICATE_FROM_MEMORY,
     REFRESH_TOKENS,
+    SAVE_TOKENS,
 } from '@/redux/names/auth';
 
 export const authenticateAction = ({
@@ -9,6 +10,17 @@ export const authenticateAction = ({
     refreshJwt,
 }) => ({
     type: AUTHENTICATE,
+    payload: {
+        accessJwt,
+        refreshJwt,
+    },
+});
+
+export const saveTokensAction = ({
+    accessJwt,
+    refreshJwt,
+}) => ({
+    type: SAVE_TOKENS,
     payload: {
         accessJwt,
         refreshJwt,

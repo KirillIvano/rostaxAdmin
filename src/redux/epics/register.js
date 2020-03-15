@@ -3,11 +3,15 @@ import {of} from 'rxjs';
 import {
     catchError,
     mergeMap,
+    exhaustMap,
 } from 'rxjs/operators';
 import {ajax} from 'rxjs/ajax';
 
 import {REGISTER_START} from '@/redux/names/register';
-import {authenticateAction} from '@/redux/actions/auth';
+import {
+    authenticateAction,
+    saveTokensAction,
+} from '@/redux/actions/auth';
 import {
     registerErrorAction,
     registerSuccessAction,
@@ -15,13 +19,14 @@ import {
 
 const registerEpic = action$ => action$.pipe(
     ofType(REGISTER_START),
-    mergeMap(
+    exhaustMap(
         ({payload: {body, hash}}) =>
             ajax.post(`${SERVER_ORIGIN}/admin/auth/register/${hash}`, body)
                 .pipe(
                     mergeMap(
                         ({response}) => of(
                             authenticateAction(response),
+                            saveTokensAction(),
                             registerSuccessAction(),
                         ),
                     ),
