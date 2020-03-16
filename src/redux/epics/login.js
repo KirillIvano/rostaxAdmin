@@ -1,5 +1,5 @@
 import {ofType} from 'redux-observable';
-import {of} from 'rxjs';
+import {of, from} from 'rxjs';
 import {
     catchError,
     mergeMap,
@@ -21,21 +21,24 @@ const loginEpic = action$ =>
         ofType(LOGIN_START),
         mergeMap(
             ({payload: {body}}) =>
-                ajax.post(`${SERVER_ORIGIN}/admin/auth/login`, body)
+                from(
+                    fetch(`${SERVER_ORIGIN}/admin/auth/login`,
+                        {
+                            body: JSON.stringify(body),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            method: 'POST',
+                            credentials: 'include',
+                        }).then(response => response.json()),
+                )
                     .pipe(
                         mergeMap(
-                            ({response}) => of(
-                                authenticateAction(response),
-                                saveTokensAction(response),
+                            ({ok, error, ...tokens}) => of(
+                                authenticateAction(tokens),
+                                saveTokensAction(tokens),
                                 loginSuccessAction(),
                             ),
-                        ),
-                        catchError(
-                            ({response}) => {
-                                const {error} = response;
-
-                                return of(loginErrorAction(error));
-                            },
                         ),
                     ),
         ),
