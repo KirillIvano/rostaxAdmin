@@ -26,7 +26,7 @@ const registerEpic = action$ => action$.pipe(
                     mergeMap(
                         ({response}) => of(
                             authenticateAction(response),
-                            saveTokensAction(),
+                            saveTokenAction(response),
                             registerSuccessAction(),
                         ),
                     ),

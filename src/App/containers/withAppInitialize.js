@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import {authFromMemoryAction} from '@/redux/actions/auth';
+import {appStartAuthAction} from '@/redux/actions/auth';
 import {selectIfAuthenticated, selectIfAuthFromMemoryFinished} from '@/redux/selectors/auth';
 
 const mapStateToProps = state => ({
@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    tryAuth: () => dispatch(authFromMemoryAction()),
+    tryAuth: () => dispatch(appStartAuthAction()),
 });
 
 export const withAppInitialize = connect(mapStateToProps, mapDispatchToProps);

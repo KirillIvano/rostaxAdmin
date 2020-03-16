@@ -2,8 +2,11 @@ import {
     AUTHENTICATE,
     AUTHENTICATE_FROM_MEMORY,
     AUTHENTICATE_FROM_MEMORY_FINISH,
+    APP_START_AUTH,
+    APP_START_AUTH_ERROR,
+    APP_START_AUTH_SUCCESS,
     REFRESH_TOKENS,
-    SAVE_TOKENS,
+    SAVE_TOKEN,
 } from '@/redux/names/auth';
 
 export const authenticateAction = ({
@@ -17,13 +20,9 @@ export const authenticateAction = ({
     },
 });
 
-export const saveTokensAction = ({
-    accessJwt,
-    refreshJwt,
-}) => ({
-    type: SAVE_TOKENS,
+export const saveTokenAction = refreshJwt => ({
+    type: SAVE_TOKEN,
     payload: {
-        accessJwt,
         refreshJwt,
     },
 });
@@ -38,4 +37,16 @@ export const authFromMemoryFinishAction = () => ({
 
 export const refreshTokensAction = () => ({
     type: REFRESH_TOKENS,
+});
+
+export const appStartAuthAction = () => ({
+    type: APP_START_AUTH,
+});
+
+export const appStartAuthErrorAction = () => ({
+    type: APP_START_AUTH_ERROR,
+});
+
+export const appStartAuthSuccessAction = () => ({
+    type: APP_START_AUTH_SUCCESS,
 });

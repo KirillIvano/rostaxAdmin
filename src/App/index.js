@@ -41,13 +41,13 @@ const App = ({
         tryAuth();
     }, []);
 
-    if (!isAuthFromMemoryFinished) {
-        return <Preloader />;
-    }
+    // if (!isAuthFromMemoryFinished) {
+    //     return <Preloader />;
+    // }
 
-    if (!isUserAuthenticated) {
-        history.push('/login');
-    }
+    // if (!isUserAuthenticated) {
+    //     history.push('/login');
+    // }
 
     // initializing the whole app
     return (

@@ -9,7 +9,7 @@ import {ajax} from 'rxjs/ajax';
 import {LOGIN_START} from '@/redux/names/login';
 import {
     authenticateAction,
-    saveTokensAction,
+    saveTokenAction,
 } from '@/redux/actions/auth';
 import {
     loginErrorAction,
@@ -34,9 +34,9 @@ const loginEpic = action$ =>
                 )
                     .pipe(
                         mergeMap(
-                            ({ok, error, ...tokens}) => of(
-                                authenticateAction(tokens),
-                                saveTokensAction(tokens),
+                            ({ok, error, accessJwt, refreshJwt}) => of(
+                                authenticateAction({accessJwt, refreshJwt}),
+                                saveTokenAction(refreshJwt),
                                 loginSuccessAction(),
                             ),
                         ),
