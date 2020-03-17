@@ -4,6 +4,7 @@ import {
     createCategory,
     createCategoryReload,
 } from '@/redux/actions/category';
+import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 
 const mapStateToProps = ({category}) => {
     const {
@@ -20,7 +21,7 @@ const mapStateToProps = ({category}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    createCategory: body => dispatch(createCategory(body)),
+    createCategory: body => dispatch(withAuthentication(createCategory(body))),
     reloadCategoryCreating: () => dispatch(createCategoryReload()),
 });
 

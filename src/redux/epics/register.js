@@ -1,16 +1,14 @@
 import {ofType} from 'redux-observable';
-import {of} from 'rxjs';
+import {of, from} from 'rxjs';
 import {
-    catchError,
     mergeMap,
     exhaustMap,
 } from 'rxjs/operators';
-import {ajax} from 'rxjs/ajax';
 
 import {REGISTER_START} from '@/redux/names/register';
 import {
     authenticateAction,
-    saveTokensAction,
+    saveTokenAction,
 } from '@/redux/actions/auth';
 import {
     registerErrorAction,
@@ -21,20 +19,31 @@ const registerEpic = action$ => action$.pipe(
     ofType(REGISTER_START),
     exhaustMap(
         ({payload: {body, hash}}) =>
-            ajax.post(`${SERVER_ORIGIN}/admin/auth/register/${hash}`, body)
+            from(
+                fetch(`${SERVER_ORIGIN}/admin/auth/register/${hash}`,
+                    {
+                        body: JSON.stringify(body),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST',
+                        credentials: 'include',
+                    }).then(response => response.json()),
+            )
                 .pipe(
                     mergeMap(
-                        ({response}) => of(
-                            authenticateAction(response),
-                            saveTokenAction(response),
-                            registerSuccessAction(),
-                        ),
-                    ),
-                    catchError(
-                        ({response}) => {
-                            const {error} = response;
+                        ({ok, error, accessJwt, refreshJwt}) => {
+                            if (!ok) {
+                                return of(
+                                    registerErrorAction(error),
+                                );
+                            }
 
-                            return of(registerErrorAction(error));
+                            return of(
+                                authenticateAction({accessJwt, refreshJwt}),
+                                saveTokenAction(refreshJwt),
+                                registerSuccessAction(),
+                            );
                         },
                     ),
                 ),

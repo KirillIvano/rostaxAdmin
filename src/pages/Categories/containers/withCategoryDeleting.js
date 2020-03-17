@@ -4,6 +4,7 @@ import {
     deleteCategory,
     deleteCategoryReload,
 } from '@/redux/actions/category';
+import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 
 const mapStateToProps = ({category}) => {
     const {
@@ -20,7 +21,7 @@ const mapStateToProps = ({category}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    deleteCategory: id => dispatch(deleteCategory(id)),
+    deleteCategory: id => dispatch(withAuthentication(deleteCategory(id))),
     reloadCategoryDeleting: () => dispatch(deleteCategoryReload()),
 });
 

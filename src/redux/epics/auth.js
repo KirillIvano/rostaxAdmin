@@ -7,15 +7,10 @@ import {
     tap,
     exhaustMap,
     mergeMap,
-    delay,
-    concat,
-    catchError,
 } from 'rxjs/operators';
 import {
     SAVE_TOKEN,
-    AUTHENTICATE_FROM_MEMORY,
     WITH_AUTHENTICATION,
-    REFRESH_TOKENS,
     APP_START_AUTH,
 } from '@/redux/names/auth';
 import {getJwtPayload, isTokenExpired} from '@/helpers/jwt';
@@ -25,20 +20,18 @@ import {
 } from '@/redux/selectors/auth';
 import {
     authenticateAction,
-    refreshTokensAction,
-    authFromMemoryFinishAction,
     saveTokenAction,
     appStartAuthErrorAction,
     appStartAuthSuccessAction,
+    refreshTokensError,
 } from '@/redux/actions/auth';
 import {
     showErrorMessage,
-    showNormalMessage,
 } from '@/redux/actions/message';
 import {emptyAction} from '@/redux/actions/empty';
 
 const refreshTokenObservable = csrf => {
-    const body = {csrf, kek: 'kek'};
+    const body = {csrf};
 
     const request = fetch(
         `${SERVER_ORIGIN}/admin/auth/refreshTokens`,
@@ -103,62 +96,46 @@ const saveTokenEpic =
             mergeMap(() => of(emptyAction())),
         );
 
+const withAuthenticationEpic =
+    (action$, state$) =>
+        action$.pipe(
+            ofType(WITH_AUTHENTICATION),
+            mergeMap(({action}) => {
+                const state = state$.value;
 
-// const refreshTokensEpic =
-//     (action$, state$) =>
-//         action$.pipe(
-//             ofType(REFRESH_TOKENS),
-//             exhaustMap(() => {
-//                 const refreshToken = selectRefreshJwt(state$.value) || localStorage.getItem('refreshJwt');
-//                 if (!refreshToken) return of(emptyAction());
+                const accessToken = selectAccessJwt(state);
+                const refreshToken = selectRefreshJwt(state);
 
-//                 const {csrf} = getJwtPayload(refreshToken);
+                const accessTokenPayload = getJwtPayload(accessToken);
 
-//                 return refreshTokenObservable(csrf);
-//             }),
-//         );
+                if (accessTokenPayload.exp > Date.now() / 1000) return of({...action, accessToken});
 
-// const authFromMemoryEpic =
-//     action$ =>
-//         action$.pipe(
-//             ofType(AUTHENTICATE_FROM_MEMORY),
-//             exhaustMap(() => {
-//                 const refreshJwt = localStorage.getItem('refreshJwt');
-//                 const accessJwt = localStorage.getItem('accessJwt');
+                const refreshTokenPayload = getJwtPayload(refreshToken);
+                const {csrf} = refreshTokenPayload;
 
-//                 return of(
-//                     authenticateAction({accessJwt, refreshJwt}),
-//                     authFromMemoryFinishAction(),
-//                 );
-//             }),
-//         );
+                if (refreshTokenPayload.exp > Date.now() / 1000) {
+                    return refreshTokenObservable(csrf).pipe(
+                        mergeMap(
+                            ({ok, accessJwt, refreshJwt}) => {
+                                if (!ok) {
+                                    return of(
+                                        refreshTokensError(),
+                                    );
+                                }
 
-// const withAuthenticationEpic =
-//     (action$, state$) =>
-//         action$.pipe(
-//             ofType(WITH_AUTHENTICATION),
-//             mergeMap(({action}) => {
-//                 const accessToken = selectAccessJwt(state$.value);
-//                 const refreshToken = selectRefreshJwt(state$.value);
-
-//                 const accessTokenPayload = getJwtPayload(accessToken);
-
-//                 if (accessTokenPayload.exp > Date.now() / 1000) return of({...action, accessToken});
-
-//                 const refreshTokenPayload = getJwtPayload(refreshToken);
-
-//                 if (refreshTokenPayload.exp > Date.now() / 1000) {
-//                     return refreshTokenObservable();
-//                 }
-
-//                 return of(refreshTokensAction());
-//             }),
-//         );
+                                return of(
+                                    authenticateAction({accessJwt, refreshJwt}),
+                                    {...action, accessToken: accessJwt},
+                                );
+                            },
+                        ),
+                    );
+                }
+            }),
+        );
 
 export default combineEpics(
     appStartAuthEpic,
     saveTokenEpic,
-    // authFromMemoryEpic,
-    // refreshTokensEpic,
-    // withAuthenticationEpic,
+    withAuthenticationEpic,
 );

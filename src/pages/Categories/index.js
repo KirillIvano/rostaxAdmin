@@ -21,7 +21,6 @@ import {
     CardBox,
     Controls,
 } from '@/parts';
-import {Redirect} from 'react-router-dom';
 
 const Categories = ({
     getCategories,
@@ -29,8 +28,6 @@ const Categories = ({
     categories,
     categoriesLoading,
     categoriesError,
-
-    isUserAuthenticated,
 }) => {
     useEffect(
         () => {

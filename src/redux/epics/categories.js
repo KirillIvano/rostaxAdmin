@@ -69,7 +69,7 @@ export const getCategoriesEpic =
 
 const deleteCategory = (categoryId, accessToken) => {
     const request = fetch(
-        `${SERVER_ORIGIN}/admin/categories/previews`,
+        `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
         {
             method: 'DELETE',
             headers: {
@@ -98,15 +98,11 @@ const deleteCategory = (categoryId, accessToken) => {
 };
 
 export const deleteCategoryEpic =
-    (action$, state$) =>
+    action$ =>
         action$.pipe(
             ofType(DELETE_CATEGORY_START),
             switchMap(
-                ({payload}) => {
-                    const {id} = payload;
-
-                    return deleteCategory(id, selectAccessJwt(state$.value));
-                },
+                ({accessToken, payload: {id}}) => deleteCategory(id, accessToken),
             ),
         );
 
@@ -173,14 +169,14 @@ const updateCategory = (categoryId, formData, accessToken) => {
     const request = fetch(
         `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
         {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             },
             body,
         }).then(res => res.json());
 
-    return request
+    return from(request)
         .pipe(
             mergeMap(
                 ({ok, error, category}) => {
@@ -201,14 +197,12 @@ const updateCategory = (categoryId, formData, accessToken) => {
 };
 
 export const updateCategoryEpic =
-    (action$, state$) =>
+    action$ =>
         action$.pipe(
             ofType(UPDATE_CATEGORY_START),
             switchMap(
-                ({payload}) => {
+                ({payload, accessToken}) => {
                     const {id, formData} = payload;
-
-                    const accessToken = selectAccessJwt(state$.value);
 
                     return updateCategory(id, formData, accessToken);
                 },

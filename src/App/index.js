@@ -26,7 +26,7 @@ import {withAppInitialize} from './containers/withAppInitialize';
 
 const App = ({
     isUserAuthenticated,
-    isAuthFromMemoryFinished,
+    isInitialAuthFinished,
 
     tryAuth,
 }) => {
@@ -41,13 +41,14 @@ const App = ({
         tryAuth();
     }, []);
 
-    // if (!isAuthFromMemoryFinished) {
-    //     return <Preloader />;
-    // }
+    if (!isInitialAuthFinished) {
+        return <Preloader />;
+    }
 
-    // if (!isUserAuthenticated) {
-    //     history.push('/login');
-    // }
+    if (!isUserAuthenticated) {
+        if (!history.location.pathname === '/login')
+            history.push('/login');
+    }
 
     // initializing the whole app
     return (

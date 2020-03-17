@@ -1,10 +1,8 @@
 import {ofType} from 'redux-observable';
 import {of, from} from 'rxjs';
 import {
-    catchError,
-    mergeMap,
+    mergeMap, exhaustMap,
 } from 'rxjs/operators';
-import {ajax} from 'rxjs/ajax';
 
 import {LOGIN_START} from '@/redux/names/login';
 import {
@@ -19,7 +17,7 @@ import {
 const loginEpic = action$ =>
     action$.pipe(
         ofType(LOGIN_START),
-        mergeMap(
+        exhaustMap(
             ({payload: {body}}) =>
                 from(
                     fetch(`${SERVER_ORIGIN}/admin/auth/login`,
@@ -34,11 +32,19 @@ const loginEpic = action$ =>
                 )
                     .pipe(
                         mergeMap(
-                            ({ok, error, accessJwt, refreshJwt}) => of(
-                                authenticateAction({accessJwt, refreshJwt}),
-                                saveTokenAction(refreshJwt),
-                                loginSuccessAction(),
-                            ),
+                            ({ok, error, accessJwt, refreshJwt}) => {
+                                if (!ok) {
+                                    return of(
+                                        loginErrorAction(error),
+                                    );
+                                }
+
+                                return of(
+                                    authenticateAction({accessJwt, refreshJwt}),
+                                    saveTokenAction(refreshJwt),
+                                    loginSuccessAction(),
+                                );
+                            },
                         ),
                     ),
         ),
