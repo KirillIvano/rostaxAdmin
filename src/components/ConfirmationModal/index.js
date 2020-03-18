@@ -6,7 +6,7 @@ import styles from './styles.less';
 
 const ModalControls = ({
     handleConfirm,
-    handleClose,
+    handleReject,
     disabled,
 }) => (
     <div className={styles.controls}>
@@ -20,7 +20,7 @@ const ModalControls = ({
         </Button>
         <Button
             disabled={disabled}
-            onClick={handleClose}
+            onClick={handleReject}
             className={styles.button}
         >
             Отмена
@@ -32,7 +32,7 @@ const ConfirmationModal = ({
     children,
 
     handleConfirm,
-    handleClose,
+    handleReject,
     isOpen,
     areControlsDisabled,
 
@@ -40,7 +40,6 @@ const ConfirmationModal = ({
 }) => (
     <Modal
         isOpen={isOpen}
-        close={handleClose}
         className={styles.modal}
         width={400}
         closeable={false}
@@ -55,7 +54,7 @@ const ConfirmationModal = ({
             <ModalControls
                 disabled={areControlsDisabled}
                 handleConfirm={handleConfirm}
-                handleClose={handleClose}
+                handleReject={handleReject}
             />
         </div>
     </Modal>

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Redirect} from 'react-router-dom';
 import {
     Switch,
     Route,
@@ -9,6 +9,7 @@ import {
     Header,
     Navbar,
     MessageBox,
+    RefreshErrorModal,
 } from '@/parts';
 import {
     PageWrapper,
@@ -45,12 +46,10 @@ const App = ({
         return <Preloader />;
     }
 
-    if (!isUserAuthenticated) {
-        if (!history.location.pathname === '/login')
-            history.push('/login');
+    if (!isUserAuthenticated && history.location.pathname !== '/login') {
+        return <Redirect to={'/login'} />;
     }
 
-    // initializing the whole app
     return (
         <>
             <Header toggleMenu={toggleMenu} />

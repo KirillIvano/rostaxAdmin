@@ -35,9 +35,9 @@ const DeleteModal = ({
     return (
         <ConfirmationModal
             isOpen={isOpen}
-            handleClose={handleClose}
-            areControlsDisabled={categoryDeletingInProgress}
             handleConfirm={() => deleteCategory(deletedId)}
+            handleReject={handleClose}
+            areControlsDisabled={categoryDeletingInProgress}
         >
             Вы уверены, что хотите удалить данную категорию?
         </ConfirmationModal>

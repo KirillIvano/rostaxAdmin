@@ -21,6 +21,9 @@ import {
     CardBox,
     Controls,
 } from '@/parts';
+import {
+    withAuthCheck,
+} from '@/containers/withAuthCheck';
 
 const Categories = ({
     getCategories,
@@ -107,4 +110,4 @@ const Categories = ({
 };
 
 
-export default withCategoriesProps(Categories);
+export default withCategoriesProps(withAuthCheck(Categories));
