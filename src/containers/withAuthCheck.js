@@ -1,19 +1,27 @@
-import React, {} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 
+import {RefreshErrorModal} from '@/parts';
+import {refreshTokensErrorEnd} from '@/redux/actions/auth';
+
 const mapStateToProps = ({auth}) => ({
-    isUserAuthenticated: auth.isAuthenticated,
+    isModalOpened: auth.isRefreshTokenErrorProcessing,
+});
+
+const mapDispatchToProps = dispatch => ({
+    handleModalClose: () => dispatch(refreshTokensErrorEnd()),
 });
 
 const withModal =
     Comp =>
-        ({isUserAuthenticated, ...props}) => (
+        ({isModalOpened, handleModalClose, ...props}) => (
             <>
                 <Comp {...props} />
-                <p>
-                    {String(isUserAuthenticated)}
-                </p>
+                <RefreshErrorModal
+                    isOpen={isModalOpened}
+                    handleClose={handleModalClose}
+                />
             </>
         );
 
-export const withAuthCheck = Comp => connect(mapStateToProps)(withModal(Comp));
+export const withAuthCheck = Comp => connect(mapStateToProps, mapDispatchToProps)(withModal(Comp));

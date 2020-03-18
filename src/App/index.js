@@ -15,6 +15,7 @@ import {
     PageWrapper,
     Preloader,
 } from '@/components';
+import {withAuthCheck} from '@/containers';
 import {
     RegisterPage,
     LoginPage,
@@ -68,4 +69,4 @@ const App = ({
     );
 };
 
-export default withAppInitialize(App);
+export default withAppInitialize(withAuthCheck(App));

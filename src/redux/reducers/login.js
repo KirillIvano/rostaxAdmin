@@ -2,6 +2,7 @@ import {
     LOGIN_START,
     LOGIN_ERROR,
     LOGIN_SUCCESS,
+    LOGIN_FORGET,
     FORGET_LOGIN_ERROR,
 } from '@/redux/names/login';
 
@@ -30,6 +31,9 @@ export const loginReducer = (
     }
     case LOGIN_SUCCESS: {
         return {...state, error: null, success: true, loading: false};
+    }
+    case LOGIN_FORGET: {
+        return INITIAL_STATE;
     }
     case FORGET_LOGIN_ERROR: {
         return {...state, error: null};

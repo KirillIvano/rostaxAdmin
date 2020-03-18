@@ -3,6 +3,7 @@ import {
     REFRESH_TOKENS_ERROR,
     APP_START_AUTH_ERROR,
     APP_START_AUTH_SUCCESS,
+    REFRESH_TOKENS_ERROR_HANDLED,
 } from '@/redux/names/auth';
 
 const INITIAL_STATE = {
@@ -50,6 +51,13 @@ export const authReducer = (
         return {
             ...state,
             isAuthenticated: false,
+            isRefreshTokenErrorProcessing: true,
+        };
+    }
+    case REFRESH_TOKENS_ERROR_HANDLED: {
+        return {
+            ...state,
+            isRefreshTokenErrorProcessing: false,
         };
     }
     default: {

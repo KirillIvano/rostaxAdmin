@@ -25,9 +25,8 @@ import {
     appStartAuthSuccessAction,
     refreshTokensError,
 } from '@/redux/actions/auth';
-import {
-    showErrorMessage,
-} from '@/redux/actions/message';
+import {loginForgetAction} from '@/redux/actions/login';
+import {showErrorMessage} from '@/redux/actions/message';
 import {emptyAction} from '@/redux/actions/empty';
 
 const refreshTokenObservable = csrf => {
@@ -119,6 +118,7 @@ const withAuthenticationEpic =
                             ({ok, accessJwt, refreshJwt}) => {
                                 if (!ok) {
                                     return of(
+                                        loginForgetAction(),
                                         refreshTokensError(),
                                     );
                                 }
