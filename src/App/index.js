@@ -9,7 +9,6 @@ import {
     Header,
     Navbar,
     MessageBox,
-    RefreshErrorModal,
 } from '@/parts';
 import {
     PageWrapper,
@@ -21,6 +20,7 @@ import {
     LoginPage,
     MainPage,
     CategoriesPage,
+    ProductsPage,
 } from '@/pages';
 import {useNavbarState} from '@/hooks/useNavbarState';
 
@@ -58,11 +58,26 @@ const App = ({
             <MessageBox />
             <PageWrapper>
                 <Switch>
-                    <Route exact path="/categories" render={() => <CategoriesPage isUserAuthenticated={isUserAuthenticated} />} />
-                    <Route exact path="/products/:categoryId" component={CategoriesPage} />
-                    <Route exact path="/register/:hash" component={RegisterPage} />
-                    <Route exact path="/login" component={LoginPage} />
-                    <Route exact path="/" component={MainPage} />
+                    <Route exact
+                        path="/categories"
+                        component={CategoriesPage}
+                    />
+                    <Route exact
+                        path="/products/:categoryId"
+                        component={ProductsPage}
+                    />
+                    <Route exact
+                        path="/register/:hash"
+                        component={RegisterPage}
+                    />
+                    <Route exact
+                        path="/login"
+                        component={LoginPage}
+                    />
+                    <Route exact
+                        path="/"
+                        component={MainPage}
+                    />
                 </Switch>
             </PageWrapper>
         </>
