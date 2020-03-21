@@ -25,6 +25,9 @@ const UpdateModal = ({
     categoryUpdatingError,
     categoryUpdatingSuccess,
 
+    prevName,
+    prevImage,
+
     updateCategory,
     reloadCategoryUpdating,
 }) => {
@@ -34,7 +37,7 @@ const UpdateModal = ({
     const resetData = useCallback(() => {
         setName('');
         setFile(null);
-    });
+    }, []);
 
     useEffect(() => {
         if (categoryUpdatingSuccess) {
@@ -69,13 +72,15 @@ const UpdateModal = ({
                     className={styles.input}
                     labelText={'Название категории'}
                     name={'name'}
+                    placeholder={prevName}
+
                     onChange={e => setName(e.currentTarget.value)}
                 />
 
                 <FileInput
                     className={styles.input}
                     labelText={'Загрузить фото'}
-                    background={imageUrl}
+                    background={imageUrl || prevImage}
 
                     name={'image'}
                     onChange={e => setFile(e.currentTarget.files[0])}

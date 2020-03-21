@@ -21,6 +21,7 @@ const dev = {
         new CleanObsoleteChunks(),
         new webpack.DefinePlugin({
             SERVER_ORIGIN: '"http://localhost:5000"',
+            IMAGE_HOST: '"http://localhost:5000/images"',
         }),
     ],
     mode: 'development',

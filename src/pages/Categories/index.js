@@ -1,16 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import {withCategoriesProps} from './containers/withCategoriesProps';
-
-import {useDeleteModalState} from './hooks/useDeleteModalState';
-import {useCreateModalState} from './hooks/useCreateModalState';
-import {useUpdateModalState} from './hooks/useUpdateModalState';
-
-import {
-    DeleteModal,
-    CreateModal,
-    UpdateModal,
-} from './components';
 
 import {
     ContentWrapper,
@@ -21,6 +11,35 @@ import {
     CardBox,
     Controls,
 } from '@/parts';
+import {useDataLoadingStart} from '@/hooks/useDataLoadingStart';
+
+import {
+    useDeleteModalState,
+    useCreateModalState,
+    useUpdateModalState,
+} from './hooks';
+
+import {
+    DeleteModal,
+    CreateModal,
+    UpdateModal,
+} from './components';
+
+const Cards = ({
+    categories,
+    handleUpdate,
+    handleDelete,
+}) => categories.map(
+    ({name, id}) => (
+        <EntityCard
+            key={id}
+            deleteHandler={() => handleDelete(id)}
+            updateHandler={() => handleUpdate(id)}
+        >
+            {name}
+        </EntityCard>
+    ),
+);
 
 const Categories = ({
     getCategories,
@@ -29,12 +48,7 @@ const Categories = ({
     categoriesLoading,
     categoriesError,
 }) => {
-    useEffect(
-        () => {
-            getCategories();
-        },
-        [],
-    );
+    useDataLoadingStart(getCategories);
 
     const {
         isDeleteModalOpened,
@@ -69,19 +83,11 @@ const Categories = ({
     return (
         <ContentWrapper>
             <CardBox>
-                {
-                    categories.map(
-                        ({name, id}) => (
-                            <EntityCard
-                                key={id}
-                                deleteHandler={() => openDeleteModal(id)}
-                                updateHandler={() => openUpdateModal(id)}
-                            >
-                                {name}
-                            </EntityCard>
-                        ),
-                    )
-                }
+                <Cards
+                    categories={categories}
+                    handleDelete={openDeleteModal}
+                    handleUpdate={openUpdateModal}
+                />
             </CardBox>
 
             <Controls

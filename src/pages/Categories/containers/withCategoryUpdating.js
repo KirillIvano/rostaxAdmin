@@ -5,18 +5,24 @@ import {
     updateCategoryReload,
 } from '@/redux/actions/category';
 import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
+import {getImageUrl} from '@/helpers/getImageUrl';
 
-const mapStateToProps = ({category}) => {
+const mapStateToProps = ({category}, {updatedId}) => {
     const {
         categoryUpdatingInProgress,
         categoryUpdatingError,
         categoryUpdatingSuccess,
     } = category;
 
+    const updatedCategory = category.categories.find(({id}) => id === updatedId);
+    const {name: prevName, image: prevImageName} = updatedCategory || {};
+
     return {
         categoryUpdatingInProgress,
         categoryUpdatingError,
         categoryUpdatingSuccess,
+        prevName,
+        prevImage: getImageUrl(prevImageName),
     };
 };
 
