@@ -23,7 +23,7 @@ module.exports = {
                         exclude: [
                             /node_modules/,
                         ],
-                        'presets': ['@babel/env', '@babel/react'],
+                        'presets': ['@babel/env', '@babel/react', '@babel/preset-flow'],
                         'plugins': ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-transform-object-assign'],
                     },
                 },

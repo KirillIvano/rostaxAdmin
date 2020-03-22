@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
 const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
+const FlowWebpackPlugin = require('flow-webpack-plugin');
 
 const dev = {
     devServer: {
@@ -37,6 +38,7 @@ const dev = {
                 test: /\.(less|css)$/,
                 use: [
                     'style-loader',
+                    'css-modules-flow-types-loader',
                     {
                         loader: 'css-loader',
                         options: {

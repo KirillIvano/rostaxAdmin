@@ -1,7 +1,16 @@
+// @flow
+
 import React from 'react';
+import type {Node} from 'react';
 import classnames from 'classnames';
 
 import styles from './styles.less';
+
+type ButtonProps = {
+    children?: Node,
+    className?: string,
+    styling?: 'normal' | 'danger' | 'success',
+};
 
 const Button = ({
     children,
@@ -9,9 +18,10 @@ const Button = ({
     styling='normal',
 
     ...props
-}) => (
+}: ButtonProps) => (
     // eslint-disable-next-line react/button-has-type
     <button
+        {...props}
         className={
             classnames(
                 styles.button,
@@ -23,7 +33,6 @@ const Button = ({
                 },
             )
         }
-        {...props}
     >
         {children}
     </button>
