@@ -13,6 +13,7 @@ import {
     loginErrorAction,
     loginSuccessAction,
 } from '@/redux/actions/login';
+import {login} from '@/services/auth';
 
 const loginEpic = action$ =>
     action$.pipe(
@@ -20,15 +21,7 @@ const loginEpic = action$ =>
         exhaustMap(
             ({payload: {body}}) =>
                 from(
-                    fetch(`${SERVER_ORIGIN}/admin/auth/login`,
-                        {
-                            body: JSON.stringify(body),
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            method: 'POST',
-                            credentials: 'include',
-                        }).then(response => response.json()),
+                    login(body),
                 )
                     .pipe(
                         mergeMap(

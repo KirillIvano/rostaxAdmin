@@ -14,21 +14,14 @@ import {
     registerErrorAction,
     registerSuccessAction,
 } from '@/redux/actions/register';
+import {register} from '@/services/auth';
 
 const registerEpic = action$ => action$.pipe(
     ofType(REGISTER_START),
     exhaustMap(
         ({payload: {body, hash}}) =>
             from(
-                fetch(`${SERVER_ORIGIN}/admin/auth/register/${hash}`,
-                    {
-                        body: JSON.stringify(body),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        method: 'POST',
-                        credentials: 'include',
-                    }).then(response => response.json()),
+                register(hash, body),
             )
                 .pipe(
                     mergeMap(

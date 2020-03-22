@@ -32,17 +32,18 @@ import {
     showErrorMessage,
 } from '@/redux/actions/message';
 import {selectAccessJwt} from '@/redux/selectors/auth';
+import {
+    getCategories,
+    deleteCategory,
+    updateCategory,
+    createCategory,
+} from '@/services/categories';
+
 
 // GETTING
-const getCategories = accessToken =>
+const getCategoriesObservable = accessToken =>
     from(
-        fetch(
-            `${SERVER_ORIGIN}/admin/categories/previews`,
-            {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                },
-            }).then(res => res.json()),
+        getCategories(accessToken),
     ).pipe(
         mergeMap(
             ({ok, error, categories}) => {
@@ -62,22 +63,15 @@ export const getCategoriesEpic =
     action$ =>
         action$.pipe(
             ofType(GET_CATEGORIES_START),
-            switchMap(({accessToken}) => getCategories(accessToken)),
+            switchMap(({accessToken}) => getCategoriesObservable(accessToken)),
         );
 
 // DELETING
 
-const deleteCategory = (categoryId, accessToken) => {
-    const request = fetch(
-        `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
-        {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-        }).then(res => res.json());
-
-    return from(request)
+const deleteCategoryObservable = (categoryId, accessToken) =>
+    from(
+        deleteCategory(accessToken, categoryId),
+    )
         .pipe(
             mergeMap(
                 ({ok, error}) => {
@@ -95,35 +89,26 @@ const deleteCategory = (categoryId, accessToken) => {
                 },
             ),
         );
-};
 
 export const deleteCategoryEpic =
     action$ =>
         action$.pipe(
             ofType(DELETE_CATEGORY_START),
             switchMap(
-                ({accessToken, payload: {id}}) => deleteCategory(id, accessToken),
+                ({accessToken, payload: {id}}) => deleteCategoryObservable(id, accessToken),
             ),
         );
 
 // CREATING
 
-const createCategory = (formData, accessToken) => {
+const createCategoryObservable = (formData, accessToken) => {
     const body = new FormData();
 
     Object.entries(formData).forEach(([name, value]) => {
         body.append(name, value);
     });
 
-    const request = fetch(
-        `${SERVER_ORIGIN}/admin/categories`,
-        {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-            body,
-        }).then(res => res.json());
+    const request = createCategory(accessToken, body);
 
     return from(request)
         .pipe(
@@ -154,27 +139,19 @@ export const createCategoryEpic =
                 ({payload}) => {
                     const {formData} = payload;
 
-                    return createCategory(formData, selectAccessJwt(state$.value));
+                    return createCategoryObservable(formData, selectAccessJwt(state$.value));
                 },
             ),
         );
 
-const updateCategory = (categoryId, formData, accessToken) => {
+const updateCategoryObservable = (categoryId, formData, accessToken) => {
     const body = new FormData();
 
     Object.entries(formData).forEach(([name, value]) => {
         if (value !== undefined) body.append(name, value);
     });
 
-    const request = fetch(
-        `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
-        {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-            body,
-        }).then(res => res.json());
+    const request = updateCategory(accessToken, body);
 
     return from(request)
         .pipe(
@@ -204,7 +181,7 @@ export const updateCategoryEpic =
                 ({payload, accessToken}) => {
                     const {id, formData} = payload;
 
-                    return updateCategory(id, formData, accessToken);
+                    return updateCategoryObservable(id, formData, accessToken);
                 },
             ),
         );

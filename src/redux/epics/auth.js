@@ -25,26 +25,20 @@ import {
     appStartAuthSuccessAction,
     refreshTokensError,
 } from '@/redux/actions/auth';
+import {
+    saveToken,
+    refreshTokens,
+} from '@/services/auth';
+
 import {loginForgetAction} from '@/redux/actions/login';
 import {showErrorMessage} from '@/redux/actions/message';
 import {emptyAction} from '@/redux/actions/empty';
 
 const refreshTokenObservable = csrf => {
     const body = {csrf};
+    const req = refreshTokens(body);
 
-    const request = fetch(
-        `${SERVER_ORIGIN}/admin/auth/refreshTokens`,
-        {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        },
-    ).then(response => response.json());
-
-    return from(request);
+    return from(req);
 };
 
 const appStartAuthEpic =
@@ -90,7 +84,7 @@ const saveTokenEpic =
             tap(({payload}) => {
                 const {refreshJwt} = payload;
 
-                localStorage.setItem('refreshJwt', refreshJwt);
+                saveToken(refreshJwt);
             }),
             mergeMap(() => of(emptyAction())),
         );
