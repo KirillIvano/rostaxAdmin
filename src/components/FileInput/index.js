@@ -39,4 +39,4 @@ const FileInput = ({
     );
 };
 
-export default FileInput;
+export default React.memo(FileInput);

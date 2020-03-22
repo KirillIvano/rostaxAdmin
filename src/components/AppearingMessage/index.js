@@ -22,4 +22,4 @@ const AppearingMessage = ({
     </p>
 );
 
-export default AppearingMessage;
+export default  React.memo(AppearingMessage);
