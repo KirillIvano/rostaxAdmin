@@ -14,15 +14,15 @@ const mapStateToProps = ({category}) => {
     } = category;
 
     return {
-        categoryDeletingInProgress,
-        categoryDeletingError,
-        categoryDeletingSuccess,
+        deletingInProgress: categoryDeletingInProgress,
+        deletingError: categoryDeletingError,
+        deletingSuccess: categoryDeletingSuccess,
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    deleteCategory: id => dispatch(withAuthentication(deleteCategory(id))),
-    reloadCategoryDeleting: () => dispatch(deleteCategoryReload()),
+    doDelete: id => dispatch(withAuthentication(deleteCategory(id))),
+    reloadDeleting: () => dispatch(deleteCategoryReload()),
 });
 
 export const withCategoryDeleting = connect(mapStateToProps, mapDispatchToProps);
