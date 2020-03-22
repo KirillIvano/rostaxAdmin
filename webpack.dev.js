@@ -38,7 +38,6 @@ const dev = {
                 test: /\.(less|css)$/,
                 use: [
                     'style-loader',
-                    'css-modules-flow-types-loader',
                     {
                         loader: 'css-loader',
                         options: {

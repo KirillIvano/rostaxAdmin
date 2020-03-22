@@ -1,7 +1,7 @@
 [ignore]
-/node_modules/*
-/dist/*
-/.vscode/*
+node_modules/
+dist/
+.vscode/
 [include]
 
 [libs]
@@ -9,5 +9,5 @@
 [lints]
 
 [options]
-
+module.name_mapper='^.*\.less$' -> 'css-module-flow'
 [strict]
