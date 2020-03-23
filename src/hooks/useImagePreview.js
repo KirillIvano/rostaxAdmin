@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 
 export const useImagePreview = () => {
     const [file, setFile]: [?File, (?File | ?File => ?File) => any] = useState(null);
-    const [imageUrl, setImageUrl]: [?string, (?string | ?string => ? string) => any] = useState(null);
+    const [imageUrl, setImageUrl]: [?string, (?string | ?string => ?string) => any] = useState(null);
 
     useEffect(() => {
         if (file) {
