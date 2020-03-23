@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './styles.less';
 
-const CloseIcon = ({close}) => (
+type CloseIconProps = {
+    close: () => any,
+};
+
+const CloseIcon = ({close}: CloseIconProps) => (
     <div className={styles.closeIconContainer}>
         <div
             onClick={close}

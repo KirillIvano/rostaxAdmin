@@ -1,13 +1,22 @@
+// @flow
+
 import React from 'react';
+import type {Node} from 'react';
 import styles from './styles.less';
 
 import {Button} from '@/components';
+
+type EntityCardProps = {
+    children: Node,
+    updateHandler: string => any,
+    deleteHandler: string => any,
+};
 
 const EntityCard = ({
     children,
     updateHandler,
     deleteHandler,
-}) => {
+}: EntityCardProps) => {
     return (
         <div className={styles.card}>
             <div className={styles.content}>

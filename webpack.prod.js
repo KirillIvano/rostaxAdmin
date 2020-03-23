@@ -20,7 +20,8 @@ const prod = {
         new CleanObsoleteChunks(),
         new MiniCssExtractPlugin(),
         new webpack.DefinePlugin({
-            SERVER_ORIGIN: '"https://rostax.herokuapp.com"',
+            SERVER_ORIGIN: '"http://194.67.113.29:5000"',
+            IMAGE_HOST: '"http://194.67.113.29:5000/images"',
         }),
     ],
     mode: 'production',

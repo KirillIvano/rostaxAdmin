@@ -3,7 +3,6 @@
 import React from 'react';
 import type {Node} from 'react';
 import classnames from 'classnames';
-
 import styles from './styles.less';
 
 type ButtonProps = {
@@ -38,4 +37,6 @@ const Button = ({
     </button>
 );
 
-export default React.memo(Button);
+const enchancedButton = React.memo<ButtonProps>(Button);
+
+export default enchancedButton;
