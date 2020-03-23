@@ -1,3 +1,5 @@
+// @flow
+
 import {useState} from 'react';
 
 export const useModalState = () => {
