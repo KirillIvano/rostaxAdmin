@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import type {Node} from 'react';
 
@@ -9,10 +11,10 @@ import {CloseIcon} from './components';
 
 type ModalProps = {
     className?: string,
-    width: number,
+    width?: number,
     closeable?: boolean,
     children: Node,
-    close: () => any,
+    close?: () => any,
     isOpen: boolean,
 }
 
@@ -28,6 +30,8 @@ const Modal = ({
     ...extraProps
 }: ModalProps) => (
     <ReactModal
+        {...extraProps}
+
         bodyOpenClassName={styles.bodyOpen}
         overlayClassName={styles.modalOverlay}
         className={classnames(styles.modal, className)}
@@ -38,8 +42,6 @@ const Modal = ({
         shouldCloseOnOverlayClick={false}
 
         onRequestClose={close}
-
-        {...extraProps}
     >
         {closeable ? <CloseIcon close={close} />: null}
         {children}
