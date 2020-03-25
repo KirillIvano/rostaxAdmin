@@ -1,11 +1,8 @@
-// @flow
-
 import {
     ofType,
     combineEpics,
 } from 'redux-observable';
 import {of, from} from 'rxjs';
-import type {Observable} from 'rxjs';
 import {
     switchMap,
     mergeMap,
@@ -42,13 +39,6 @@ import {
     createCategory,
 } from '@/services/categories';
 
-import type {
-    getCategoriesActionType,
-    createCategoryActionType,
-    updateCategoryActionType,
-    deleteCategoryActionType,
-} from '@/entities/category/actions';
-
 // GETTING
 const getCategoriesObservable = accessToken =>
     from(
@@ -69,7 +59,7 @@ const getCategoriesObservable = accessToken =>
     );
 
 export const getCategoriesEpic =
-    (action$: Observable) =>
+    action$ =>
         action$.pipe(
             ofType(GET_CATEGORIES_START),
             switchMap(({accessToken}) => getCategoriesObservable(accessToken)),
@@ -100,7 +90,7 @@ const deleteCategoryObservable = (categoryId, accessToken) =>
         );
 
 export const deleteCategoryEpic =
-    (action$: Observable) =>
+    action$ =>
         action$.pipe(
             ofType(DELETE_CATEGORY_START),
             switchMap(
@@ -140,7 +130,7 @@ const createCategoryObservable = ({name, image}, accessToken) => {
 
 
 export const createCategoryEpic =
-    (action$: Observable, state$: Observable) =>
+    (action$, state$) =>
         action$.pipe(
             ofType(CREATE_CATEGORY_START),
             switchMap(
@@ -181,7 +171,7 @@ const updateCategoryObservable = (categoryId, {name, image}, accessToken) => {
 };
 
 export const updateCategoryEpic =
-    (action$: Observable) =>
+    action$ =>
         action$.pipe(
             ofType(UPDATE_CATEGORY_START),
             switchMap(

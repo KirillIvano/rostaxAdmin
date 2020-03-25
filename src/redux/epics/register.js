@@ -15,13 +15,12 @@ import {
     registerSuccessAction,
 } from '@/redux/actions/register';
 import {register} from '@/services/auth';
-import type {registerStartActionType} from '@/redux/actions/register';
 
 const registerEpic = action$ =>
     action$.pipe(
         ofType(REGISTER_START),
         exhaustMap(
-            ({payload: {body, hash}}: registerStartActionType) =>
+            ({payload: {body, hash}}) =>
                 from(
                     register(hash, body),
                 )

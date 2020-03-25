@@ -1,5 +1,3 @@
-// @flow
-
 import {
     ofType,
     combineEpics,
@@ -33,14 +31,9 @@ import {
     refreshTokens,
 } from '@/services/auth';
 
-import type {
-    saveTokenActionType,
-} from '@/redux/actions/auth';
-
 import {loginForgetAction} from '@/redux/actions/login';
 import {showErrorMessage} from '@/entities/message/actions';
 import {emptyAction} from '@/redux/actions/empty';
-import {withAuthenticationActionType} from '@/redux/highOrderActions/withAuthentication';
 
 const refreshTokenObservable = csrf => {
     const body = {csrf};
@@ -89,7 +82,7 @@ const saveTokenEpic =
     action$ =>
         action$.pipe(
             ofType(SAVE_TOKEN),
-            tap(({payload}: saveTokenActionType) => {
+            tap(({payload}) => {
                 const {refreshJwt} = payload;
 
                 saveToken(refreshJwt);
@@ -101,7 +94,7 @@ const withAuthenticationEpic =
     (action$, state$) =>
         action$.pipe(
             ofType(WITH_AUTHENTICATION),
-            mergeMap(({action}: withAuthenticationActionType) => {
+            mergeMap(({action}) => {
                 const state = state$.value;
 
                 const accessToken = selectAccessJwt(state);

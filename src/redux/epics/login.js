@@ -1,5 +1,3 @@
-// @flow
-
 import {ofType} from 'redux-observable';
 import {of, from} from 'rxjs';
 import {
@@ -16,13 +14,12 @@ import {
     loginSuccessAction,
 } from '@/redux/actions/login';
 import {login} from '@/services/auth';
-import {loginStartActionType} from '@/redux/actions/login';
 
 const loginEpic = action$ =>
     action$.pipe(
         ofType(LOGIN_START),
         exhaustMap(
-            ({payload: {body}}: loginStartActionType) =>
+            ({payload: {body}}) =>
                 from(
                     login(body),
                 )
