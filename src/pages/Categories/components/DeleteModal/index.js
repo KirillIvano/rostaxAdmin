@@ -1,5 +1,3 @@
-// @flow
-
 import {DeleteModal} from '@/components';
 import {withCategoryDeleting} from './../../containers/withCategoryDeleting';
 

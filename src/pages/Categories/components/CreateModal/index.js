@@ -1,5 +1,3 @@
-// @flow
-
 import React, {
     useState,
     useEffect,
@@ -13,22 +11,9 @@ import {
     FileInput,
 } from '@/components';
 import {useImagePreview} from '@/hooks/useImagePreview';
-import {CategoryFormData} from '@/entities/category/types';
 
 import styles from './styles.less';
 import {withCategoryCreating} from './../../containers/withCategoryCreating';
-
-type CreateModalProps = {
-    isOpen: boolean,
-    handleClose: () => any,
-
-    categoryCreatingInProgress: boolean,
-    categoryCreatingError: boolean,
-    categoryCreatingSuccess: boolean,
-
-    createCategory: CategoryFormData => any,
-    reloadCategoryCreating: () => any,
-};
 
 const CreateModal = ({
     isOpen,
@@ -40,7 +25,7 @@ const CreateModal = ({
 
     createCategory,
     reloadCategoryCreating,
-}: CreateModalProps) => {
+}) => {
     const [name, setName] = useState('');
     const {imageUrl, file, setFile} = useImagePreview();
 
