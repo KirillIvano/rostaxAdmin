@@ -1,5 +1,3 @@
-// @flow
-
 import {
     REGISTER_START,
     REGISTER_ERROR,

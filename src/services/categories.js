@@ -1,12 +1,4 @@
-// @flow
-
-import type {CategoryFormData, Category} from '@/entities/category/types';
-
-declare var SERVER_ORIGIN: string;
-
-type getCategoriesResponseType = {ok: boolean, categories: Category[]} | {error: string};
-
-export const getCategories = (accessToken: string): Promise<getCategoriesResponseType> => fetch(
+export const getCategories = accessToken => fetch(
     `${SERVER_ORIGIN}/admin/categories/previews`,
     {
         headers: {
@@ -14,7 +6,7 @@ export const getCategories = (accessToken: string): Promise<getCategoriesRespons
         },
     }).then(res => res.json());
 
-export const deleteCategory = (accessToken: string, categoryId: string) => fetch(
+export const deleteCategory = (accessToken, categoryId) => fetch(
     `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
     {
         method: 'DELETE',
@@ -23,7 +15,7 @@ export const deleteCategory = (accessToken: string, categoryId: string) => fetch
         },
     }).then(res => res.json());
 
-export const createCategory = (accessToken: string, body: CategoryFormData) => fetch(
+export const createCategory = (accessToken, body) => fetch(
     `${SERVER_ORIGIN}/admin/categories`,
     {
         method: 'POST',
@@ -34,9 +26,9 @@ export const createCategory = (accessToken: string, body: CategoryFormData) => f
     }).then(res => res.json());
 
 export const updateCategory = (
-    accessToken: string,
-    categoryId: string,
-    body: CategoryFormData,
+    accessToken,
+    categoryId,
+    body,
 ) => fetch(
     `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
     {

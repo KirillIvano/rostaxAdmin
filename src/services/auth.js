@@ -1,10 +1,4 @@
-// @flow
-
-import type {UserCreds} from '@/entities/auth/types';
-
-declare var SERVER_ORIGIN: string;
-
-export const refreshTokens = (body: UserCreds) => fetch(
+export const refreshTokens = body => fetch(
     `${SERVER_ORIGIN}/admin/auth/refreshTokens`,
     {
         method: 'POST',
@@ -16,13 +10,13 @@ export const refreshTokens = (body: UserCreds) => fetch(
     },
 ).then(response => response.json());
 
-export const saveToken = (refreshJwt: string) => {
+export const saveToken = refreshJwt => {
     localStorage.setItem('refreshJwt', refreshJwt);
 };
 
 export const getLocalToken = () => localStorage.getItem('refreshJwt');
 
-export const login = (body: UserCreds) => fetch(
+export const login = body => fetch(
     `${SERVER_ORIGIN}/admin/auth/login`,
     {
         body: JSON.stringify(body),
@@ -33,7 +27,7 @@ export const login = (body: UserCreds) => fetch(
         credentials: 'include',
     }).then(response => response.json());
 
-export const register = (userHash: string, body: UserCreds) => fetch(
+export const register = (userHash, body) => fetch(
     `${SERVER_ORIGIN}/admin/auth/register/${userHash}`,
     {
         body: JSON.stringify(body),
