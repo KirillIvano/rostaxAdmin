@@ -1,5 +1,3 @@
-// @flow
-
 import {
     POP_MESSAGE,
     PUSH_MESSAGE,
@@ -7,21 +5,10 @@ import {
 
 let messageId = 0;
 
-export type showMessageActionType = {
-    type: PUSH_MESSAGE,
-    payload: {
-        message: {
-            id: number,
-            title: string,
-            content: string,
-            styling: string,
-        },
-    },
-};
 const showMessage = (
-    title: string,
-    content: string,
-    styling: string,
+    title,
+    content,
+    styling,
 ) => ({
     type: PUSH_MESSAGE,
     payload: {
@@ -34,8 +21,8 @@ const showMessage = (
     },
 });
 
-export const showErrorMessage = (title: string, content: string) => showMessage(title, content, 'error');
-export const showNormalMessage = (title: string, content: string) => showMessage(title, content, 'normal');
+export const showErrorMessage = (title, content) => showMessage(title, content, 'error');
+export const showNormalMessage = (title, content) => showMessage(title, content, 'normal');
 
 export const removeLastMessage = () => ({
     type: POP_MESSAGE,

@@ -1,5 +1,3 @@
-// @flow
-
 import {
     GET_CATEGORIES_START,
     GET_CATEGORIES_SUCCESS,
@@ -21,63 +19,31 @@ import {
     UPDATE_CATEGORY_RELOAD,
 } from './names';
 
-import type {
-    Category,
-    CategoryFormData,
-} from './types';
-
-export type getCategoriesActionType = {
-    type: typeof GET_CATEGORIES_START,
-}
 export const getCategories = () => ({
     type: GET_CATEGORIES_START,
 });
 
-export type getCategoriesSuccessActionType = {
-    type: typeof GET_CATEGORIES_SUCCESS,
-    payload: {
-        categories: Category[],
-    },
-}
-export const getCategoriesSuccess = (categories: Category[]) => ({
+export const getCategoriesSuccess = categories => ({
     type: GET_CATEGORIES_SUCCESS,
     payload: {
         categories,
     },
 });
 
-export type getCategoriesErrorActionType = {
-    type: typeof GET_CATEGORIES_ERROR,
-    payload: {
-        error: string,
-    },
-}
-export const getCategoriesError = (error: string) => ({
+export const getCategoriesError = error => ({
     type: GET_CATEGORIES_ERROR,
     payload: {
         error,
     },
 });
 
-export type deleteCategoryActionType = {
-    type: typeof GET_CATEGORIES_ERROR,
-    payload: {
-        id: string,
-    },
-}
-export const deleteCategory = (id: string) => ({
+export const deleteCategory = id => ({
     type: DELETE_CATEGORY_START,
     payload: {
         id,
     },
 });
 
-export type deleteCategorySuccessActionType = {
-    type: typeof DELETE_CATEGORY_SUCCESS,
-    payload: {
-        id: string,
-    },
-}
 export const deleteCategorySuccess = id => ({
     type: DELETE_CATEGORY_SUCCESS,
     payload: {
@@ -85,81 +51,43 @@ export const deleteCategorySuccess = id => ({
     },
 });
 
-export type deleteCategoryErrorActionType = {
-    type: typeof DELETE_CATEGORY_ERROR,
-    payload: {
-        error: string,
-    },
-}
-export const deleteCategoryError = (error: string) => ({
+export const deleteCategoryError = error => ({
     type: DELETE_CATEGORY_ERROR,
     payload: {
         error,
     },
 });
 
-export type deleteCategoryReloadActionType = {
-    type: typeof DELETE_CATEGORY_RELOAD,
-}
 export const deleteCategoryReload = () => ({
     type: DELETE_CATEGORY_RELOAD,
 });
 
-export type createCategoryActionType = {
-    type: typeof CREATE_CATEGORY_START,
-    payload: {
-        formData: CategoryFormData,
-    },
-}
-export const createCategory = (formData: CategoryFormData) => ({
+export const createCategory = formData => ({
     type: CREATE_CATEGORY_START,
     payload: {
         formData,
     },
 });
 
-export type createCategorySuccessActionType = {
-    type: typeof CREATE_CATEGORY_SUCCESS,
-    payload: {
-        category: Category,
-    },
-}
-export const createCategorySuccess = (category: Category) => ({
+export const createCategorySuccess = category => ({
     type: CREATE_CATEGORY_SUCCESS,
     payload: {
         category,
     },
 });
 
-export type createCategoryErrorActionType = {
-    type: typeof CREATE_CATEGORY_ERROR,
-    payload: {
-        error: string,
-    },
-}
-export const createCategoryError = (error: string) => ({
+export const createCategoryError = error => ({
     type: CREATE_CATEGORY_ERROR,
     payload: {
         error,
     },
 });
 
-export type createCategoryReloadActionType = {
-    type: typeof CREATE_CATEGORY_RELOAD,
-}
 export const createCategoryReload = () => ({
     type: CREATE_CATEGORY_RELOAD,
 });
 
-
-export type updateCategoryActionType = {
-    type: typeof UPDATE_CATEGORY_START,
-    payload: {
-        formData: CategoryFormData,
-        id: string,
-    },
-}
-export const updateCategory = (id: string, formData: CategoryFormData) => ({
+export const updateCategory = (id, formData) => ({
     type: UPDATE_CATEGORY_START,
     payload: {
         formData,
@@ -167,35 +95,20 @@ export const updateCategory = (id: string, formData: CategoryFormData) => ({
     },
 });
 
-export type updateCategorySuccessActionType = {
-    type: typeof UPDATE_CATEGORY_SUCCESS,
-    payload: {
-        category: Category,
-    },
-}
-export const updateCategorySuccess = (category: Category) => ({
+export const updateCategorySuccess = category => ({
     type: UPDATE_CATEGORY_SUCCESS,
     payload: {
         category,
     },
 });
 
-export type updateCategoryErrorActionType = {
-    type: typeof UPDATE_CATEGORY_ERROR,
-    payload: {
-        error: string,
-    },
-}
-export const updateCategoryError = (error: string) => ({
+export const updateCategoryError = error => ({
     type: UPDATE_CATEGORY_ERROR,
     payload: {
         error,
     },
 });
 
-export type updateCategoryReloadActionType = {
-    type: typeof UPDATE_CATEGORY_RELOAD,
-}
 export const updateCategoryReload = () => ({
     type: UPDATE_CATEGORY_RELOAD,
 });
