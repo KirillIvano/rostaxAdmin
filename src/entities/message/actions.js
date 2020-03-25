@@ -7,6 +7,17 @@ import {
 
 let messageId = 0;
 
+export type showMessageActionType = {
+    type: PUSH_MESSAGE,
+    payload: {
+        message: {
+            id: number,
+            title: string,
+            content: string,
+            styling: string,
+        },
+    },
+};
 const showMessage = (
     title: string,
     content: string,
