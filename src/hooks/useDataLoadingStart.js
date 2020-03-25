@@ -1,9 +1,5 @@
-// @flow
-
 import {useEffect} from 'react';
 
-type handlerType = () => any;
-
-export const useDataLoadingStart = (handler: handlerType) => {
+export const useDataLoadingStart = handler => {
     useEffect(() => {handler();}, []);
 };
