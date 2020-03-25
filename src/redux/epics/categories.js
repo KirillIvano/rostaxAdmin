@@ -1,8 +1,11 @@
+// @flow
+
 import {
     ofType,
     combineEpics,
 } from 'redux-observable';
 import {of, from} from 'rxjs';
+import type {Observable} from 'rxjs';
 import {
     switchMap,
     mergeMap,
@@ -13,7 +16,7 @@ import {
     DELETE_CATEGORY_START,
     CREATE_CATEGORY_START,
     UPDATE_CATEGORY_START,
-} from '@/redux/names/category';
+} from '@/entities/category/names';
 import {
     getCategoriesError,
     getCategoriesSuccess,
@@ -26,11 +29,11 @@ import {
 
     updateCategoryError,
     updateCategorySuccess,
-} from '@/redux/actions/category';
+} from '@/entities/category/actions';
 import {
     showNormalMessage,
     showErrorMessage,
-} from '@/redux/actions/message';
+} from '@/entities/message/actions';
 import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
     getCategories,
@@ -39,6 +42,12 @@ import {
     createCategory,
 } from '@/services/categories';
 
+import type {
+    getCategoriesActionType,
+    createCategoryActionType,
+    updateCategoryActionType,
+    deleteCategoryActionType,
+} from '@/entities/category/actions';
 
 // GETTING
 const getCategoriesObservable = accessToken =>
@@ -60,7 +69,7 @@ const getCategoriesObservable = accessToken =>
     );
 
 export const getCategoriesEpic =
-    action$ =>
+    (action$: Observable) =>
         action$.pipe(
             ofType(GET_CATEGORIES_START),
             switchMap(({accessToken}) => getCategoriesObservable(accessToken)),
@@ -77,7 +86,7 @@ const deleteCategoryObservable = (categoryId, accessToken) =>
                 ({ok, error}) => {
                     if (!ok) {
                         return of(
-                            deleteCategoryError(categoryId, error),
+                            deleteCategoryError(error),
                             showErrorMessage('Удаление категории', error),
                         );
                     }
@@ -91,7 +100,7 @@ const deleteCategoryObservable = (categoryId, accessToken) =>
         );
 
 export const deleteCategoryEpic =
-    action$ =>
+    (action$: Observable) =>
         action$.pipe(
             ofType(DELETE_CATEGORY_START),
             switchMap(
@@ -101,12 +110,11 @@ export const deleteCategoryEpic =
 
 // CREATING
 
-const createCategoryObservable = (formData, accessToken) => {
+const createCategoryObservable = ({name, image}, accessToken) => {
     const body = new FormData();
 
-    Object.entries(formData).forEach(([name, value]) => {
-        body.append(name, value);
-    });
+    body.append('name', name);
+    body.append('image', image);
 
     const request = createCategory(accessToken, body);
 
@@ -132,7 +140,7 @@ const createCategoryObservable = (formData, accessToken) => {
 
 
 export const createCategoryEpic =
-    (action$, state$) =>
+    (action$: Observable, state$: Observable) =>
         action$.pipe(
             ofType(CREATE_CATEGORY_START),
             switchMap(
@@ -144,14 +152,13 @@ export const createCategoryEpic =
             ),
         );
 
-const updateCategoryObservable = (categoryId, formData, accessToken) => {
+const updateCategoryObservable = (categoryId, {name, image}, accessToken) => {
     const body = new FormData();
 
-    Object.entries(formData).forEach(([name, value]) => {
-        if (value !== undefined) body.append(name, value);
-    });
+    body.append('name', name);
+    body.append('image', image);
 
-    const request = updateCategory(accessToken, body);
+    const request = updateCategory(accessToken, categoryId, body);
 
     return from(request)
         .pipe(
@@ -165,7 +172,7 @@ const updateCategoryObservable = (categoryId, formData, accessToken) => {
                     }
 
                     return of(
-                        updateCategorySuccess(category, categoryId),
+                        updateCategorySuccess(category),
                         showNormalMessage('Редактирование категории', 'Категория успешно отредактирована'),
                     );
                 },
@@ -174,7 +181,7 @@ const updateCategoryObservable = (categoryId, formData, accessToken) => {
 };
 
 export const updateCategoryEpic =
-    action$ =>
+    (action$: Observable) =>
         action$.pipe(
             ofType(UPDATE_CATEGORY_START),
             switchMap(

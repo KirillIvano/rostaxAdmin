@@ -17,7 +17,7 @@ import {
     UPDATE_CATEGORY_SUCCESS,
     UPDATE_CATEGORY_ERROR,
     UPDATE_CATEGORY_RELOAD,
-} from '@/redux/names/category';
+} from '@/entities/category/names';
 
 const INITIAL_STATE = {
     categories: [],

@@ -10,7 +10,7 @@ type FileInputProps = {
     labelText: string,
     className: string,
     name: string,
-    background: string,
+    background: ?string,
 };
 
 const FileInput = ({
@@ -29,7 +29,7 @@ const FileInput = ({
             <label
                 className={styles.fictionalInput}
                 htmlFor={formId}
-                style={{backgroundImage: `url("${background}")`}}
+                style={background && {backgroundImage: `url("${background}")`}}
             >
                 <p className={styles.inputContent}>
                     {labelText}

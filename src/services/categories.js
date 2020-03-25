@@ -1,10 +1,12 @@
 // @flow
 
-import type {CategoryFormData} from '@/entities/category/types';
+import type {CategoryFormData, Category} from '@/entities/category/types';
 
 declare var SERVER_ORIGIN: string;
 
-export const getCategories = (accessToken: string) => fetch(
+type getCategoriesResponseType = {ok: boolean, categories: Category[]} | {error: string};
+
+export const getCategories = (accessToken: string): Promise<getCategoriesResponseType> => fetch(
     `${SERVER_ORIGIN}/admin/categories/previews`,
     {
         headers: {

@@ -5,20 +5,20 @@ import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 
 const mapStateToProps = ({category}) => {
     const {
-        categories,
-        categoriesLoading,
-        categoriesError,
+        products,
+        productsLoading,
+        productsError,
     } = category;
 
     return {
-        categories,
-        categoriesLoading,
-        categoriesError,
+        products,
+        productsLoading,
+        productsError,
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    getCategories: () => dispatch(withAuthentication(getCategories())),
+    getProducts: () => dispatch(withAuthentication(getCategories())),
 });
 
-export const withCategoriesProps = connect(mapStateToProps, mapDispatchToProps);
+export const withProductsProps = connect(mapStateToProps, mapDispatchToProps);

@@ -1,7 +1,7 @@
 import {
     POP_MESSAGE,
     PUSH_MESSAGE,
-} from '@/redux/names/message';
+} from '@/entities/message/names';
 
 const INITIAL_STATE = {
     messages: [],

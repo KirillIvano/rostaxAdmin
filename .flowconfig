@@ -9,7 +9,7 @@ src/
 [lints]
 
 [options]
-module.name_mapper='^.*\.less$' -> 'css-module-flow'
+module.name_mapper='^.*\.less$' -> '<PROJECT_ROOT>/less'
 module.name_mapper='@' -> '<PROJECT_ROOT>/src/'
 
 [strict]

@@ -4,7 +4,7 @@ import {
     loginStartAction,
     forgetLoginErrorAction,
 } from '@/redux/actions/login';
-import {showNormalMessage} from '@/redux/actions/message';
+import {showNormalMessage} from '@/entities/message/actions';
 
 const mapStateToProps = ({login}) => login;
 

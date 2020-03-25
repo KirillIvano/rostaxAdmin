@@ -1,3 +1,5 @@
+// @flow
+
 import {combineEpics} from 'redux-observable';
 
 import registerEpic from './register';

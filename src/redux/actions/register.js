@@ -12,6 +12,7 @@ export type registerStartActionType = {
     type: typeof REGISTER_START,
     payload: {
         body: UserCreds,
+        hash: string,
     },
 }
 export const registerStartAction = (

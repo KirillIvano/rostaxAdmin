@@ -13,7 +13,7 @@ import {
 import {useImagePreview} from '@/hooks/useImagePreview';
 
 import styles from './styles.less';
-import {withCategoryUpdating} from './../../containers/withCategoryUpdating';
+import {withProductUpdating} from '../../containers/withProductUpdating';
 
 const UpdateModal = ({
     updatedId,
@@ -93,4 +93,4 @@ const UpdateModal = ({
     );
 };
 
-export default withCategoryUpdating(UpdateModal);
+export default withProductUpdating(UpdateModal);

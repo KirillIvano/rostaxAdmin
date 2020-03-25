@@ -1,3 +1,5 @@
+// @flow
+
 import {
     ofType,
     combineEpics,
@@ -27,12 +29,18 @@ import {
 } from '@/redux/actions/auth';
 import {
     saveToken,
+    getLocalToken,
     refreshTokens,
 } from '@/services/auth';
 
+import type {
+    saveTokenActionType,
+} from '@/redux/actions/auth';
+
 import {loginForgetAction} from '@/redux/actions/login';
-import {showErrorMessage} from '@/redux/actions/message';
+import {showErrorMessage} from '@/entities/message/actions';
 import {emptyAction} from '@/redux/actions/empty';
+import {withAuthenticationActionType} from '@/redux/highOrderActions/withAuthentication';
 
 const refreshTokenObservable = csrf => {
     const body = {csrf};
@@ -46,7 +54,7 @@ const appStartAuthEpic =
         action$.pipe(
             ofType(APP_START_AUTH),
             exhaustMap(() => {
-                const refreshJwt = localStorage.getItem('refreshJwt');
+                const refreshJwt = getLocalToken();
 
                 if (!refreshJwt || isTokenExpired(refreshJwt)) {
                     return of(
@@ -81,7 +89,7 @@ const saveTokenEpic =
     action$ =>
         action$.pipe(
             ofType(SAVE_TOKEN),
-            tap(({payload}) => {
+            tap(({payload}: saveTokenActionType) => {
                 const {refreshJwt} = payload;
 
                 saveToken(refreshJwt);
@@ -93,15 +101,25 @@ const withAuthenticationEpic =
     (action$, state$) =>
         action$.pipe(
             ofType(WITH_AUTHENTICATION),
-            mergeMap(({action}) => {
+            mergeMap(({action}: withAuthenticationActionType) => {
                 const state = state$.value;
 
                 const accessToken = selectAccessJwt(state);
+
+                if (accessToken) {
+                    const accessTokenPayload = getJwtPayload(accessToken);
+
+                    if (accessTokenPayload.exp > Date.now() / 1000) return of({...action, accessToken});
+                }
+
                 const refreshToken = selectRefreshJwt(state);
 
-                const accessTokenPayload = getJwtPayload(accessToken);
-
-                if (accessTokenPayload.exp > Date.now() / 1000) return of({...action, accessToken});
+                if (!refreshToken) {
+                    return of(
+                        loginForgetAction(),
+                        refreshTokensError(),
+                    );
+                }
 
                 const refreshTokenPayload = getJwtPayload(refreshToken);
                 const {csrf} = refreshTokenPayload;
@@ -125,6 +143,8 @@ const withAuthenticationEpic =
                         ),
                     );
                 }
+
+
             }),
         );
 

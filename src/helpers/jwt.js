@@ -1,6 +1,6 @@
 // @flow
 
-export const getJwtPayload: (string => {exp: number}) =
+export const getJwtPayload: (string => {exp: number, csrf: string}) =
      jwt => JSON.parse(atob(jwt.split('.')[1]));
 
 export const isTokenExpired = (jwt: string) => {

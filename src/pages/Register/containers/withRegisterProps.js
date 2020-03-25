@@ -4,7 +4,7 @@ import {
     registerStartAction,
     forgetRegisterErrorAction,
 } from '@/redux/actions/register';
-import {showNormalMessage} from '@/redux/actions/message';
+import {showNormalMessage} from '@/entities/message/actions';
 
 const mapStateToProps = ({register}) => (register);
 

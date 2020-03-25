@@ -1,12 +1,15 @@
 import React from 'react';
 
 import {
-    ContentWrapper,
+    // ContentWrapper,
+    EntityCard,
+    Preloader,
+    // DeleteModal,
 } from '@/components';
-import {
-    CardBox,
-    Controls,
-} from '@/parts';
+// import {
+//     CardBox,
+//     Controls,
+// } from '@/parts';
 import {useDataLoadingStart} from '@/hooks/useDataLoadingStart';
 
 import {
@@ -15,11 +18,26 @@ import {
     useDeleteModalState,
 } from './hooks/';
 
-import {
-    DeleteModal,
-    CreateModal,
-    UpdateModal,
-} from './components';
+// import {
+//     CreateModal,
+//     UpdateModal,
+// } from './components';
+
+const ProductCards = ({
+    products,
+    handleDelete,
+    handleUpdate,
+}) => products.map(
+    ({name, id}) => (
+        <EntityCard
+            key={id}
+            deleteHandler={() => handleDelete(id)}
+            updateHandler={() => handleUpdate(id)}
+        >
+            {name}
+        </EntityCard>
+    ),
+);
 
 const ProductsPage = ({
     getProducts,
@@ -50,7 +68,7 @@ const ProductsPage = ({
         updatedId,
     } = useUpdateModalState();
 
-    if (categoriesLoading) {
+    if (productsLoading) {
         return (
             <div>
                 loading
@@ -58,46 +76,38 @@ const ProductsPage = ({
         );
     }
 
-    if (categoriesError) return <Preloader />;
+    if (productsLoadingError) return <Preloader />;
 
-    return (
-        <ContentWrapper>
-            <CardBox>
-                {
-                    categories.map(
-                        ({name, id}) => (
-                            <EntityCard
-                                key={id}
-                                deleteHandler={() => openDeleteModal(id)}
-                                updateHandler={() => openUpdateModal(id)}
-                            >
-                                {name}
-                            </EntityCard>
-                        ),
-                    )
-                }
-            </CardBox>
+    // return (
+    //     <ContentWrapper>
+    //         <CardBox>
+    //             <ProductCards
+    //                 products={products}
+    //                 handleDelete={openDeleteModal}
+    //                 handleUpdate={openUpdateModal}
+    //             />
+    //         </CardBox>
 
-            <Controls
-                handleCreating={openCreateModal}
-            />
+    //         <Controls
+    //             handleCreating={openCreateModal}
+    //         />
 
-            <DeleteModal
-                isOpen={isDeleteModalOpened}
-                handleClose={closeDeleteModal}
-                deletedId={deletedId}
-            />
-            <CreateModal
-                isOpen={isCreateModalOpened}
-                handleClose={closeCreateModal}
-            />
-            <UpdateModal
-                isOpen={isUpdateModalOpened}
-                handleClose={closeUpdateModal}
-                updatedId={updatedId}
-            />
-        </ContentWrapper>
-    );
+    //         <DeleteModal
+    //             isOpen={isDeleteModalOpened}
+    //             handleClose={closeDeleteModal}
+    //             deletedId={deletedId}
+    //         />
+    //         <CreateModal
+    //             isOpen={isCreateModalOpened}
+    //             handleClose={closeCreateModal}
+    //         />
+    //         <UpdateModal
+    //             isOpen={isUpdateModalOpened}
+    //             handleClose={closeUpdateModal}
+    //             updatedId={updatedId}
+    //         />
+    //     </ContentWrapper>
+    // );
 };
 
 

@@ -24,7 +24,6 @@ const DeleteModal = ({
     handleClose,
     isOpen,
 
-    // from redux
     deletingInProgress,
     deletingError,
     deletingSuccess,

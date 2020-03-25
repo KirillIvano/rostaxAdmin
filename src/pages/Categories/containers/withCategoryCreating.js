@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
     createCategory,
     createCategoryReload,
-} from '@/redux/actions/category';
+} from '@/entities/category/actions';
 import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 
 const mapStateToProps = ({category}) => {

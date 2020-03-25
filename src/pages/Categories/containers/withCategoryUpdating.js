@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
     updateCategory,
     updateCategoryReload,
-} from '@/redux/actions/category';
+} from '@/entities/category/actions';
 import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 import {getImageUrl} from '@/helpers/getImageUrl';
 

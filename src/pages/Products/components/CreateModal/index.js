@@ -13,7 +13,7 @@ import {
 import {useImagePreview} from '@/hooks/useImagePreview';
 
 import styles from './styles.less';
-import {withCategoryCreating} from './../../containers/withCategoryCreating';
+import {withProductCreating} from '../../containers/withProductCreating';
 
 const CreateModal = ({
     isOpen,
@@ -92,4 +92,4 @@ const CreateModal = ({
     );
 };
 
-export default withCategoryCreating(CreateModal);
+export default withProductCreating(CreateModal);
