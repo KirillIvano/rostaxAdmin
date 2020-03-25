@@ -1,8 +1,5 @@
-// @flow
-
 import {ofType} from 'redux-observable';
 import {of, from} from 'rxjs';
-import type {Observable} from 'rxjs';
 import {
     mergeMap,
     exhaustMap,

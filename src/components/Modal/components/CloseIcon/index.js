@@ -1,13 +1,7 @@
-// @flow
-
 import React from 'react';
 import styles from './styles.less';
 
-type CloseIconProps = {
-    close: () => any,
-};
-
-const CloseIcon = ({close}: CloseIconProps) => (
+const CloseIcon = ({close}) => (
     <div className={styles.closeIconContainer}>
         <div
             onClick={close}

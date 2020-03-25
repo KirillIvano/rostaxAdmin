@@ -1,16 +1,8 @@
-// @flow
-
 import React, {useRef} from 'react';
 import styles from './styles.less';
 
 import {InputLabel} from './../';
 import {getLabelId} from '@/helpers/labelId';
-
-type InputProps = {
-    labelText: string,
-    name: string,
-    className?: string,
-}
 
 const Input = ({
     labelText,
@@ -18,7 +10,7 @@ const Input = ({
     className,
 
     ...props
-}: InputProps) => {
+}) => {
     const {current: formId} = useRef(getLabelId());
 
     return (
@@ -31,6 +23,6 @@ const Input = ({
     );
 };
 
-const enchancedInput = React.memo<InputProps>(Input);
+const enchancedInput = React.memo(Input);
 
 export default enchancedInput;

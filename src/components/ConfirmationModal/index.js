@@ -1,31 +1,14 @@
-// @flow
-
 import React from 'react';
-import type {Node} from 'react';
 
 import {Modal, Button} from '@/components';
 
 import styles from './styles.less';
 
-type ModalControlsProps = {
-    handleConfirm: () => {},
-    handleReject: () => {},
-    disabled: boolean,
-};
-
-type ConfirmationModalType = {
-    children: Node,
-    handleConfirm: () => {},
-    handleReject: () => {},
-    isOpen: boolean,
-    areControlsDisabled: boolean,
-};
-
 const ModalControls = ({
     handleConfirm,
     handleReject,
     disabled,
-}: ModalControlsProps) => (
+}) => (
     <div className={styles.controls}>
         <Button
             disabled={disabled}
@@ -54,7 +37,7 @@ const ConfirmationModal = ({
     areControlsDisabled,
 
     ...modalProps
-}: ConfirmationModalType) => (
+}) => (
     <Modal
         {...modalProps}
 

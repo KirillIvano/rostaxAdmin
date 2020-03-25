@@ -1,22 +1,6 @@
-// @flow
-
 import React, {useEffect} from 'react';
 
 import {ConfirmationModal} from '@/components';
-
-type DeleteModalProps = {
-    deletedId: string,
-
-    handleClose: () => any,
-    isOpen: boolean,
-
-    deletingInProgress: boolean,
-    deletingError: boolean,
-    deletingSuccess: boolean,
-
-    startDeleting: string => any,
-    reloadDeleting: () => any,
-}
 
 const DeleteModal = ({
     deletedId,
@@ -30,7 +14,7 @@ const DeleteModal = ({
 
     startDeleting,
     reloadDeleting,
-}: DeleteModalProps) => {
+}) => {
     useEffect(() => {
         // if succeed
         if (deletingSuccess) {

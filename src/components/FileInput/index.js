@@ -1,17 +1,8 @@
-// @flow
-
 import React, {useRef} from 'react';
 
 import {getLabelId} from '@/helpers/labelId';
 
 import styles from './styles.less';
-
-type FileInputProps = {
-    labelText: string,
-    className: string,
-    name: string,
-    background: ?string,
-};
 
 const FileInput = ({
     labelText,
@@ -21,7 +12,7 @@ const FileInput = ({
     background,
 
     ...extraProps
-}: FileInputProps) => {
+}) => {
     const {current: formId} = useRef(getLabelId());
 
     return (
@@ -48,6 +39,6 @@ const FileInput = ({
     );
 };
 
-const enchancedFileInput = React.memo<FileInputProps>(FileInput);
+const enchancedFileInput = React.memo(FileInput);
 
 export default enchancedFileInput;
