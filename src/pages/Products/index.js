@@ -1,15 +1,15 @@
 import React from 'react';
 
 import {
-    // ContentWrapper,
+    ContentWrapper,
     EntityCard,
     Preloader,
-    // DeleteModal,
+    DeleteModal,
 } from '@/components';
-// import {
-//     CardBox,
-//     Controls,
-// } from '@/parts';
+import {
+    CardBox,
+    Controls,
+} from '@/parts';
 import {useDataLoadingStart} from '@/hooks/useDataLoadingStart';
 
 import {
@@ -17,11 +17,12 @@ import {
     useCreateModalState,
     useDeleteModalState,
 } from './hooks/';
+import {withProductsProps} from './containers/withProductsProps';
 
-// import {
-//     CreateModal,
-//     UpdateModal,
-// } from './components';
+import {
+    CreateModal,
+    UpdateModal,
+} from './components';
 
 const ProductCards = ({
     products,
@@ -78,37 +79,36 @@ const ProductsPage = ({
 
     if (productsLoadingError) return <Preloader />;
 
-    // return (
-    //     <ContentWrapper>
-    //         <CardBox>
-    //             <ProductCards
-    //                 products={products}
-    //                 handleDelete={openDeleteModal}
-    //                 handleUpdate={openUpdateModal}
-    //             />
-    //         </CardBox>
+    return (
+        <ContentWrapper>
+            <CardBox>
+                <ProductCards
+                    products={products}
+                    handleDelete={openDeleteModal}
+                    handleUpdate={openUpdateModal}
+                />
+            </CardBox>
 
-    //         <Controls
-    //             handleCreating={openCreateModal}
-    //         />
+            <Controls
+                handleCreating={openCreateModal}
+            />
 
-    //         <DeleteModal
-    //             isOpen={isDeleteModalOpened}
-    //             handleClose={closeDeleteModal}
-    //             deletedId={deletedId}
-    //         />
-    //         <CreateModal
-    //             isOpen={isCreateModalOpened}
-    //             handleClose={closeCreateModal}
-    //         />
-    //         <UpdateModal
-    //             isOpen={isUpdateModalOpened}
-    //             handleClose={closeUpdateModal}
-    //             updatedId={updatedId}
-    //         />
-    //     </ContentWrapper>
-    // );
+            <DeleteModal
+                isOpen={isDeleteModalOpened}
+                handleClose={closeDeleteModal}
+                deletedId={deletedId}
+            />
+            <CreateModal
+                isOpen={isCreateModalOpened}
+                handleClose={closeCreateModal}
+            />
+            <UpdateModal
+                isOpen={isUpdateModalOpened}
+                handleClose={closeUpdateModal}
+                updatedId={updatedId}
+            />
+        </ContentWrapper>
+    );
 };
 
-
-export default ProductsPage;
+export default withProductsProps(ProductsPage);

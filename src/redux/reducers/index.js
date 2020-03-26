@@ -6,6 +6,7 @@ import {authReducer} from './auth';
 
 import {messageReducer} from './message';
 import {categoryReducer} from './category';
+import {productReducer} from './product';
 
 export default combineReducers({
     register: registerReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
 
     message: messageReducer,
     category: categoryReducer,
+    product: productReducer,
 });

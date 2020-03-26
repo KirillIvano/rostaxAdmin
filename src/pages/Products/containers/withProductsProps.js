@@ -3,15 +3,15 @@ import {connect} from 'react-redux';
 import {getCategories} from '@/entities/category/actions';
 import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 
-const mapStateToProps = ({category}) => {
+const mapStateToProps = ({product}) => {
     const {
         products,
         productsLoading,
         productsError,
-    } = category;
+    } = product;
 
     return {
-        products,
+        products: Object.keys(products),
         productsLoading,
         productsError,
     };
