@@ -61,7 +61,7 @@ export const categoryReducer = (
         return {
             ...state,
             categoriesLoading: false,
-            categories: null,
+            categories: {},
             categoriesError: error,
         };
     }
@@ -78,9 +78,12 @@ export const categoryReducer = (
         const {id} = payload;
         const {categories} = state;
 
+        const newCategories = categories;
+        delete newCategories[id];
+
         return {
             ...state,
-            categories: categories.filter(({id: itemId}) => itemId !== id),
+            categories: newCategories,
             categoryDeletingInProgress: false,
             categoryDeletingSuccess: true,
         };
@@ -113,10 +116,11 @@ export const categoryReducer = (
     case CREATE_CATEGORY_SUCCESS: {
         const {category} = payload;
         const {categories} = state;
+        const {id} = category;
 
         return {
             ...state,
-            categories: [...categories, category],
+            categories: {...categories, [id]: category},
             categoryCreatingInProgress: false,
             categoryCreatingSuccess: true,
         };
@@ -150,10 +154,10 @@ export const categoryReducer = (
     case UPDATE_CATEGORY_SUCCESS: {
         const {category} = payload;
         const {categories} = state;
+        const {id} = category;
 
-        const categoryIndex = categories.findIndex(({id}) => id === category.id);
-        const newCategories = categories.slice(0);
-        newCategories[categoryIndex] = category;
+        const newCategories = {...categories};
+        newCategories[id] = category;
 
         return {
             ...state,

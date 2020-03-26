@@ -31,6 +31,8 @@ import {
     showNormalMessage,
     showErrorMessage,
 } from '@/entities/message/actions';
+import {normalizeCategories} from '@/entities/category/normalization';
+
 import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
     getCategories,
@@ -52,7 +54,9 @@ const getCategoriesObservable = accessToken =>
                     );
                 }
                 return of(
-                    getCategoriesSuccess(categories),
+                    getCategoriesSuccess(
+                        normalizeCategories(categories),
+                    ),
                 );
             },
         ),
