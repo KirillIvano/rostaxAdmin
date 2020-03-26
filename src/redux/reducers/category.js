@@ -20,7 +20,7 @@ import {
 } from '@/entities/category/names';
 
 const INITIAL_STATE = {
-    categories: [],
+    categories: {},
     categoriesLoading: false,
     categoriesError: null,
 

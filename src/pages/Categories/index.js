@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import {withCategoriesProps} from './containers/withCategoriesProps';
 
@@ -24,17 +24,20 @@ import {
     CreateModal,
     UpdateModal,
 } from './components';
+import { useHistory } from 'react-router-dom';
 
 const Cards = ({
     categories,
     handleUpdate,
     handleDelete,
+    handleRedirect,
 }) => categories.map(
     ({name, id}) => (
         <EntityCard
             key={id}
             deleteHandler={() => handleDelete(id)}
             updateHandler={() => handleUpdate(id)}
+            redirectHandler={() => handleRedirect(id)}
         >
             {name}
         </EntityCard>
@@ -49,6 +52,7 @@ const Categories = ({
     categoriesError,
 }) => {
     useDataLoadingStart(getCategories);
+    const history = useHistory();
 
     const {
         isDeleteModalOpened,
@@ -70,6 +74,11 @@ const Categories = ({
         updatedId,
     } = useUpdateModalState();
 
+    const handleRedirect = useCallback(
+        id => {history.push(`/products/${id}`);},
+        [],
+    );
+
     if (categoriesLoading) {
         return (
             <div>
@@ -87,6 +96,7 @@ const Categories = ({
                     categories={categories}
                     handleDelete={openDeleteModal}
                     handleUpdate={openUpdateModal}
+                    handleRedirect={handleRedirect}
                 />
             </CardBox>
 
