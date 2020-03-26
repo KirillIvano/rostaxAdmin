@@ -12,9 +12,10 @@ const mapStateToProps = ({category}, {updatedId}) => {
         categoryUpdatingInProgress,
         categoryUpdatingError,
         categoryUpdatingSuccess,
+        categories,
     } = category;
 
-    const updatedCategory = category.categories.find(({id}) => id === updatedId);
+    const updatedCategory = categories[updatedId];
     const {name: prevName, image: prevImageName} = updatedCategory || {};
 
     return {

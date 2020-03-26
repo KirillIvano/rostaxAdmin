@@ -11,7 +11,7 @@ const mapStateToProps = ({category}) => {
     } = category;
 
     return {
-        categories,
+        categories: Object.values(categories),
         categoriesLoading,
         categoriesError,
     };
