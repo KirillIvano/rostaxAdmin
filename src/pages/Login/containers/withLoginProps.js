@@ -3,15 +3,15 @@ import {connect} from 'react-redux';
 import {
     loginStartAction,
     forgetLoginErrorAction,
+    loginForgetAction,
 } from '@/redux/actions/login';
-import {showNormalMessage} from '@/entities/message/actions';
 
 const mapStateToProps = ({login}) => login;
 
 const mapDispatchToProps = dispatch => ({
     login: body => dispatch(loginStartAction(body)),
     forgetLoginError: () => dispatch(forgetLoginErrorAction()),
-    showMessage: (title, content) => dispatch(showNormalMessage(title, content)),
+    loginForget: () => dispatch(loginForgetAction()),
 });
 
 export const withLoginProps = connect(mapStateToProps, mapDispatchToProps);

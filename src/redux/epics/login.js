@@ -14,6 +14,7 @@ import {
     loginSuccessAction,
 } from '@/redux/actions/login';
 import {login} from '@/services/auth';
+import {showNormalMessage} from '@/entities/message/actions';
 
 const loginEpic = action$ =>
     action$.pipe(
@@ -34,6 +35,7 @@ const loginEpic = action$ =>
 
                                 return of(
                                     authenticateAction({accessJwt, refreshJwt}),
+                                    showNormalMessage('Вход', 'Вы успешно вошли в систему'),
                                     saveTokenAction(refreshJwt),
                                     loginSuccessAction(),
                                 );

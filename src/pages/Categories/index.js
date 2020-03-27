@@ -79,6 +79,11 @@ const Categories = ({
         [],
     );
 
+    const handleGoBack = useCallback(
+        () => {history.push('/');},
+        [],
+    );
+
     if (categoriesLoading) {
         return (
             <div>
@@ -102,6 +107,7 @@ const Categories = ({
 
             <Controls
                 handleCreating={openCreateModal}
+                handleGoBack={handleGoBack}
             />
 
             <DeleteModal

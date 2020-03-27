@@ -9,6 +9,8 @@ import {
 
     REFRESH_TOKENS_ERROR,
     REFRESH_TOKENS_ERROR_HANDLED,
+
+    UNLOGIN,
 } from '@/redux/names/auth';
 
 export const authenticateAction = ({
@@ -47,4 +49,8 @@ export const appStartAuthErrorAction = () => ({
 
 export const appStartAuthSuccessAction = () => ({
     type: APP_START_AUTH_SUCCESS,
+});
+
+export const unloginAction = () => ({
+    type: UNLOGIN,
 });

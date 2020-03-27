@@ -3,8 +3,12 @@ import classnames from 'classnames';
 import {Link} from 'react-router-dom';
 
 import styles from './styles.less';
+import {withAuthInfo} from './containers/withAuthInfo';
+
 const Navbar = ({
+    unlogin,
     isMenuOpened,
+    isUserAuthenticated,
 }) => (
     <nav
         className={
@@ -19,10 +23,23 @@ const Navbar = ({
         <Link to={'/categories'} className={styles.navitem}>
             КАТЕГОРИИ
         </Link>
-        <Link to={'/login'} className={styles.navitem}>
-            ЛОГИН
-        </Link>
+        {
+            isUserAuthenticated ?
+                (
+                    <p
+                        onClick={unlogin}
+                        className={styles.navitem}
+                    >
+                        ВЫХОД
+                    </p>
+                ) :
+                (
+                    <Link to={'/login'} className={styles.navitem}>
+                        ЛОГИН
+                    </Link>
+                )
+        }
     </nav>
 );
 
-export default Navbar;
+export default withAuthInfo(Navbar);

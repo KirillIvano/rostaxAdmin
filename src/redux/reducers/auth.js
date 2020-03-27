@@ -4,6 +4,7 @@ import {
     APP_START_AUTH_ERROR,
     APP_START_AUTH_SUCCESS,
     REFRESH_TOKENS_ERROR_HANDLED,
+    UNLOGIN,
 } from '@/redux/names/auth';
 
 const INITIAL_STATE = {
@@ -58,6 +59,12 @@ export const authReducer = (
         return {
             ...state,
             isRefreshTokenErrorProcessing: false,
+        };
+    }
+    case UNLOGIN: {
+        return {
+            ...state,
+            isAuthenticated: false,
         };
     }
     default: {

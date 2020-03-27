@@ -12,15 +12,15 @@ import {
 
 const Login = ({
     forgetLoginError,
+    loginForget,
     login,
-    showMessage,
 
     success,
     error,
     loading,
 }) => {
     if (success) {
-        showMessage('Вход', 'Вы успешно вошли в систему');
+        setTimeout(loginForget, 0);
         return <Redirect to='/categories' />;
     }
 
