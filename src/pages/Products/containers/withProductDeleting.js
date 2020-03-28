@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {
     deleteProduct,
     deleteProductReload,
-} from '@/entities/category/actions';
+} from '@/entities/product/actions';
 import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
 
 const mapStateToProps = ({product}) => {

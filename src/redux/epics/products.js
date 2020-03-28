@@ -9,69 +9,74 @@ import {
 } from 'rxjs/operators';
 
 import {
-    GET_CATEGORIES_START,
-    DELETE_CATEGORY_START,
-    CREATE_CATEGORY_START,
-    UPDATE_CATEGORY_START,
-} from '@/entities/category/names';
+    GET_PRODUCTS_START,
+    DELETE_PRODUCT_START,
+    CREATE_PRODUCT_START,
+    UPDATE_PRODUCT_START,
+} from '@/entities/product/names';
 import {
-    getCategoriesError,
-    getCategoriesSuccess,
+    getProductsError,
+    getProductsSuccess,
 
-    deleteCategoryError,
-    deleteCategorySuccess,
+    deleteProductError,
+    deleteProductSuccess,
 
-    createCategoryError,
-    createCategorySuccess,
+    createProductError,
+    createProductSuccess,
 
-    updateCategoryError,
-    updateCategorySuccess,
-} from '@/entities/category/actions';
+    updateProductError,
+    updateProductSuccess,
+} from '@/entities/product/actions';
+import {setCategoryProductIds} from '@/entities/category/actions';
 import {
     showNormalMessage,
     showErrorMessage,
 } from '@/entities/message/actions';
-import {normalizeCategories} from '@/entities/category/normalization';
+import {normalizeProducts} from '@/entities/product/normalization';
 
 import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
-    getCategories,
     deleteCategory,
     updateCategory,
     createCategory,
 } from '@/services/categories';
+import {
+    getProducts,
+} from '@/services/products';
 
 // GETTING
-const getCategoriesObservable = accessToken =>
+const getProductsObservable = (accessToken, categoryId) =>
     from(
-        getCategories(accessToken),
+        getProducts(accessToken, categoryId),
     ).pipe(
         mergeMap(
-            ({ok, error, categories}) => {
+            ({ok, error, products}) => {
                 if (!ok) {
                     return of(
-                        getCategoriesError(error),
+                        getProductsError(error),
                     );
                 }
+
+                const {productIds, products: productsObj} = normalizeProducts(products);
+
                 return of(
-                    getCategoriesSuccess(
-                        normalizeCategories(categories),
-                    ),
+                    getProductsSuccess(productsObj),
+                    setCategoryProductIds(categoryId, productIds),
                 );
             },
         ),
     );
 
-export const getCategoriesEpic =
+export const getProductsEpic =
     action$ =>
         action$.pipe(
-            ofType(GET_CATEGORIES_START),
-            switchMap(({accessToken}) => getCategoriesObservable(accessToken)),
+            ofType(GET_PRODUCTS_START),
+            switchMap(({accessToken, payload: {id}}) => getProductsObservable(accessToken, id)),
         );
 
 // DELETING
 
-const deleteCategoryObservable = (accessToken, categoryId) =>
+const deleteProductObservable = (categoryId, accessToken) =>
     from(
         deleteCategory(accessToken, categoryId),
     )
@@ -80,36 +85,36 @@ const deleteCategoryObservable = (accessToken, categoryId) =>
                 ({ok, error}) => {
                     if (!ok) {
                         return of(
-                            deleteCategoryError(error),
+                            deleteProductError(error),
                             showErrorMessage('Удаление категории', error),
                         );
                     }
 
                     return of(
-                        deleteCategorySuccess(categoryId),
+                        deleteProductSuccess(categoryId),
                         showNormalMessage('Удаление категории', 'Удаление прошло успешно'),
                     );
                 },
             ),
         );
 
-export const deleteCategoryEpic =
+export const deleteProductEpic =
     action$ =>
         action$.pipe(
-            ofType(DELETE_CATEGORY_START),
+            ofType(DELETE_PRODUCT_START),
             switchMap(
-                ({accessToken, payload: {id}}) => deleteCategoryObservable(accessToken, id),
+                ({accessToken, payload: {id}}) => deleteProductObservable(id, accessToken),
             ),
         );
 
 // CREATING
 
-const createCategoryObservable = (accessToken, {name, image}) => {
+const createProductObservable = (bodyData, accessToken) => {
     const body = new FormData();
 
-    body.append('name', name);
-    body.append('image', image);
-
+    Object.entries(bodyData).forEach(
+        ([name, value]) => value && body.append(name, value),
+    );
     const request = createCategory(accessToken, body);
 
     return from(request)
@@ -118,13 +123,13 @@ const createCategoryObservable = (accessToken, {name, image}) => {
                 ({ok, error, category}) => {
                     if (!ok) {
                         return of(
-                            createCategoryError(error),
+                            createProductError(error),
                             showErrorMessage('Создание категории', error),
                         );
                     }
 
                     return of(
-                        createCategorySuccess(category),
+                        createProductSuccess(category),
                         showNormalMessage('Создание категории', 'Категория успешно создана'),
                     );
                 },
@@ -133,24 +138,29 @@ const createCategoryObservable = (accessToken, {name, image}) => {
 };
 
 
-export const createCategoryEpic =
+const createProductEpic =
     (action$, state$) =>
         action$.pipe(
-            ofType(CREATE_CATEGORY_START),
+            ofType(CREATE_PRODUCT_START),
             switchMap(
                 ({payload}) => {
                     const {formData} = payload;
 
-                    return createCategoryObservable(selectAccessJwt(state$.value), formData);
+                    return createProductObservable(formData, selectAccessJwt(state$.value));
                 },
             ),
         );
 
-const updateCategoryObservable = (accessToken, categoryId, {name, image}) => {
+const updateProductObservable = (
+    categoryId,
+    bodyData,
+    accessToken,
+) => {
     const body = new FormData();
 
-    body.append('name', name);
-    body.append('image', image);
+    Object.entries(bodyData).forEach(
+        ([name, value]) => value && body.append(name, value),
+    );
 
     const request = updateCategory(accessToken, categoryId, body);
 
@@ -160,13 +170,13 @@ const updateCategoryObservable = (accessToken, categoryId, {name, image}) => {
                 ({ok, error, category}) => {
                     if (!ok) {
                         return of(
-                            updateCategoryError(error),
+                            updateProductError(error),
                             showErrorMessage('Редактирование категории', error),
                         );
                     }
 
                     return of(
-                        updateCategorySuccess(category),
+                        updateProductSuccess(category),
                         showNormalMessage('Редактирование категории', 'Категория успешно отредактирована'),
                     );
                 },
@@ -174,22 +184,22 @@ const updateCategoryObservable = (accessToken, categoryId, {name, image}) => {
         );
 };
 
-export const updateCategoryEpic =
+const updateProductEpic =
     action$ =>
         action$.pipe(
-            ofType(UPDATE_CATEGORY_START),
+            ofType(UPDATE_PRODUCT_START),
             switchMap(
                 ({payload, accessToken}) => {
                     const {id, formData} = payload;
 
-                    return updateCategoryObservable(accessToken, id, formData);
+                    return updateProductObservable(id, formData, accessToken);
                 },
             ),
         );
 
 export default combineEpics(
-    getCategoriesEpic,
-    deleteCategoryEpic,
-    createCategoryEpic,
-    updateCategoryEpic,
+    getProductsEpic,
+    deleteProductEpic,
+    createProductEpic,
+    updateProductEpic,
 );

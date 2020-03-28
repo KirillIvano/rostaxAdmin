@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 
 import {
     ContentWrapper,
@@ -10,7 +11,6 @@ import {
     CardBox,
     Controls,
 } from '@/parts';
-import {useDataLoadingStart} from '@/hooks/useDataLoadingStart';
 
 import {
     useUpdateModalState,
@@ -47,7 +47,10 @@ const ProductsPage = ({
     productsLoading,
     productsLoadingError,
 }) => {
-    useDataLoadingStart(getProducts);
+    const {categoryId} = useParams();
+    useEffect(() => {
+        getProducts(categoryId);
+    }, []);
 
     const {
         isDeleteModalOpened,

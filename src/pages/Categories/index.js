@@ -53,13 +53,14 @@ const Categories = ({
 }) => {
     useDataLoadingStart(getCategories);
     const history = useHistory();
-
     const {
         isDeleteModalOpened,
         openDeleteModal,
         closeDeleteModal,
         deletedId,
     } = useDeleteModalState();
+
+    console.log(categories);
 
     const {
         isCreateModalOpened,

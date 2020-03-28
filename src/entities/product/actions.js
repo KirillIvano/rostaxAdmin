@@ -19,14 +19,17 @@ import {
     UPDATE_PRODUCT_RELOAD,
 } from './names';
 
-export const getProducts = () => ({
+export const getProducts = id => ({
     type: GET_PRODUCTS_START,
+    payload: {
+        id,
+    },
 });
 
-export const getProductsSuccess = categories => ({
+export const getProductsSuccess = products => ({
     type: GET_PRODUCTS_SUCCESS,
     payload: {
-        categories,
+        products,
     },
 });
 

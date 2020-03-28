@@ -2,6 +2,7 @@ import {
     GET_CATEGORIES_START,
     GET_CATEGORIES_SUCCESS,
     GET_CATEGORIES_ERROR,
+    GET_CATEGORIES_RELOAD,
 
     DELETE_CATEGORY_START,
     DELETE_CATEGORY_ERROR,
@@ -17,6 +18,8 @@ import {
     UPDATE_CATEGORY_SUCCESS,
     UPDATE_CATEGORY_ERROR,
     UPDATE_CATEGORY_RELOAD,
+
+    SET_CATEGORY_PRODUCTIDS,
 } from './names';
 
 export const getCategories = () => ({
@@ -35,6 +38,10 @@ export const getCategoriesError = error => ({
     payload: {
         error,
     },
+});
+
+export const getCategoriesReload = () => ({
+    type: GET_CATEGORIES_RELOAD,
 });
 
 export const deleteCategory = id => ({
@@ -111,4 +118,12 @@ export const updateCategoryError = error => ({
 
 export const updateCategoryReload = () => ({
     type: UPDATE_CATEGORY_RELOAD,
+});
+
+export const setCategoryProductIds = (categoryId, productIds) => ({
+    type: SET_CATEGORY_PRODUCTIDS,
+    payload: {
+        categoryId,
+        productIds,
+    },
 });

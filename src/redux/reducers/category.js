@@ -17,6 +17,8 @@ import {
     UPDATE_CATEGORY_SUCCESS,
     UPDATE_CATEGORY_ERROR,
     UPDATE_CATEGORY_RELOAD,
+
+    SET_CATEGORY_PRODUCTIDS,
 } from '@/entities/category/names';
 
 const INITIAL_STATE = {
@@ -181,6 +183,18 @@ export const categoryReducer = (
             categoryUpdatingInProgress: false,
             categoryUpdatingError: null,
             categoryUpdatingSuccess: false,
+        };
+    }
+
+    case SET_CATEGORY_PRODUCTIDS: {
+        const {categoryId, productIds} = payload;
+
+        const categoriesCopy = {...state.categories};
+        categoriesCopy[categoryId] = {...categoriesCopy[categoryId], productIds};
+
+        return {
+            ...state,
+            categories: categoriesCopy,
         };
     }
     default: {
