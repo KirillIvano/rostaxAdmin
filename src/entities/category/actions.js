@@ -120,10 +120,9 @@ export const updateCategoryReload = () => ({
     type: UPDATE_CATEGORY_RELOAD,
 });
 
-export const setCategoryProductIds = (categoryId, productIds) => ({
+export const setCategoryProductIds = category => ({
     type: SET_CATEGORY_PRODUCTIDS,
     payload: {
-        categoryId,
-        productIds,
+        category,
     },
 });

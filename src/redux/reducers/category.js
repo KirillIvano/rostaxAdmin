@@ -187,10 +187,12 @@ export const categoryReducer = (
     }
 
     case SET_CATEGORY_PRODUCTIDS: {
-        const {categoryId, productIds} = payload;
+        const {category} = payload;
 
-        const categoriesCopy = {...state.categories};
-        categoriesCopy[categoryId] = {...categoriesCopy[categoryId], productIds};
+        const categoriesCopy = {
+            ...state.categories,
+            ...category,
+        };
 
         return {
             ...state,

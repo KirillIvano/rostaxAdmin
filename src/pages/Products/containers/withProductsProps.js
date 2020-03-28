@@ -13,12 +13,16 @@ const mapStateToProps = ({product, category}, {match: {params}}) => {
         productsError,
     } = product;
 
-    const categoryProductIds = categories[categoryId].productIds;
+    const selectedCategory = categories[categoryId];
+    let productsArr = [];
 
-    let productsArr;
-    if (!categoryProductIds) productsArr = [];
-    else productsArr = categoryProductIds.map(id => products[id]);
-    console.log(productsArr);
+    console.log(selectedCategory);
+
+    if (selectedCategory){
+        const categoryProductIds = selectedCategory.products;
+        if (categoryProductIds) productsArr = categoryProductIds.map(id => products[id]);
+    }
+
 
     return {
         products: productsArr,

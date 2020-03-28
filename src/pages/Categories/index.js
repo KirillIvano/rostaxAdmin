@@ -60,8 +60,6 @@ const Categories = ({
         deletedId,
     } = useDeleteModalState();
 
-    console.log(categories);
-
     const {
         isCreateModalOpened,
         openCreateModal,

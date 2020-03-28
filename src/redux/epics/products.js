@@ -32,7 +32,7 @@ import {
     showNormalMessage,
     showErrorMessage,
 } from '@/entities/message/actions';
-import {normalizeProducts} from '@/entities/product/normalization';
+import {normalizeCategory} from '@/entities/category/normalization';
 
 import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
@@ -50,18 +50,20 @@ const getProductsObservable = (accessToken, categoryId) =>
         getProducts(accessToken, categoryId),
     ).pipe(
         mergeMap(
-            ({ok, error, products}) => {
+            ({ok, error, category: rawCategory}) => {
                 if (!ok) {
                     return of(
                         getProductsError(error),
                     );
                 }
 
-                const {productIds, products: productsObj} = normalizeProducts(products);
+                const normalizedData = normalizeCategory(rawCategory);
+                const {entities} = normalizedData;
+                const {product, category} = entities;
 
                 return of(
-                    getProductsSuccess(productsObj),
-                    setCategoryProductIds(categoryId, productIds),
+                    getProductsSuccess(product),
+                    setCategoryProductIds(category),
                 );
             },
         ),
@@ -136,7 +138,6 @@ const createProductObservable = (bodyData, accessToken) => {
             ),
         );
 };
-
 
 const createProductEpic =
     (action$, state$) =>
