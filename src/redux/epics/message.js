@@ -4,7 +4,7 @@ import {delay, mapTo} from 'rxjs/operators';
 import {PUSH_MESSAGE} from '@/entities/message/names';
 import {removeLastMessage} from '@/entities/message/actions';
 
-const FADING_TIMEOUT = 5000;
+const FADING_TIMEOUT = 3000;
 
 const messageEpic =
     (action$) =>

@@ -16,7 +16,7 @@ import {
     useUpdateModalState,
     useCreateModalState,
     useDeleteModalState,
-} from './hooks/';
+} from '@/hooks';
 import {withProductsProps} from './containers/withProductsProps';
 
 import {

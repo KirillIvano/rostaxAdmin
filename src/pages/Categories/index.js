@@ -17,7 +17,7 @@ import {
     useDeleteModalState,
     useCreateModalState,
     useUpdateModalState,
-} from './hooks';
+} from '@/hooks';
 
 import {
     DeleteModal,
