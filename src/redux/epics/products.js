@@ -27,7 +27,7 @@ import {
     updateProductError,
     updateProductSuccess,
 } from '@/entities/product/actions';
-import {setCategoryProductIds} from '@/entities/category/actions';
+import {setCategoryProductIds, addProductIdAction} from '@/entities/category/actions';
 import {
     showNormalMessage,
     showErrorMessage,
@@ -38,10 +38,10 @@ import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
     deleteCategory,
     updateCategory,
-    createCategory,
 } from '@/services/categories';
 import {
     getProducts,
+    createProduct,
 } from '@/services/products';
 
 // GETTING
@@ -78,7 +78,7 @@ export const getProductsEpic =
 
 // DELETING
 
-const deleteProductObservable = (categoryId, accessToken) =>
+const deleteProductObservable = (accessToken, categoryId) =>
     from(
         deleteCategory(accessToken, categoryId),
     )
@@ -111,18 +111,18 @@ export const deleteProductEpic =
 
 // CREATING
 
-const createProductObservable = (bodyData, accessToken) => {
+const createProductObservable = (accessToken, categoryId, bodyData) => {
     const body = new FormData();
 
     Object.entries(bodyData).forEach(
         ([name, value]) => value && body.append(name, value),
     );
-    const request = createCategory(accessToken, body);
+    const request = createProduct(accessToken, categoryId, body);
 
     return from(request)
         .pipe(
             mergeMap(
-                ({ok, error, category}) => {
+                ({ok, error, product}) => {
                     if (!ok) {
                         return of(
                             createProductError(error),
@@ -131,7 +131,8 @@ const createProductObservable = (bodyData, accessToken) => {
                     }
 
                     return of(
-                        createProductSuccess(category),
+                        createProductSuccess(product),
+                        addProductIdAction(categoryId, product.id),
                         showNormalMessage('Создание категории', 'Категория успешно создана'),
                     );
                 },
@@ -145,9 +146,16 @@ const createProductEpic =
             ofType(CREATE_PRODUCT_START),
             switchMap(
                 ({payload}) => {
-                    const {formData} = payload;
+                    const {
+                        categoryId,
+                        formData,
+                    } = payload;
 
-                    return createProductObservable(formData, selectAccessJwt(state$.value));
+                    return createProductObservable(
+                        selectAccessJwt(state$.value),
+                        categoryId,
+                        formData,
+                    );
                 },
             ),
         );

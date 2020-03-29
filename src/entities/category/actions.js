@@ -20,6 +20,7 @@ import {
     UPDATE_CATEGORY_RELOAD,
 
     SET_CATEGORY_PRODUCTIDS,
+    ADD_PRODUCT_ID,
 } from './names';
 
 export const getCategories = () => ({
@@ -124,5 +125,13 @@ export const setCategoryProductIds = category => ({
     type: SET_CATEGORY_PRODUCTIDS,
     payload: {
         category,
+    },
+});
+
+export const addProductIdAction = (categoryId, productId) => ({
+    type: ADD_PRODUCT_ID,
+    payload: {
+        categoryId,
+        productId,
     },
 });

@@ -10,6 +10,7 @@ import {
 import {
     CardBox,
     Controls,
+    PageHeadline,
 } from '@/parts';
 import {useDataLoadingStart} from '@/hooks/useDataLoadingStart';
 
@@ -24,7 +25,7 @@ import {
     CreateModal,
     UpdateModal,
 } from './components';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 const Cards = ({
     categories,
@@ -95,6 +96,10 @@ const Categories = ({
 
     return (
         <ContentWrapper>
+            <PageHeadline>
+                Категории
+            </PageHeadline>
+
             <CardBox>
                 <Cards
                     categories={categories}

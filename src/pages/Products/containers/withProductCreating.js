@@ -21,7 +21,7 @@ const mapStateToProps = ({product}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    createProduct: body => dispatch(withAuthentication(createProduct(body))),
+    createProduct: (categoryId, body) => dispatch(withAuthentication(createProduct(categoryId, body))),
     reloadProductCreating: () => dispatch(createProductReload()),
 });
 

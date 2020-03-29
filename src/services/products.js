@@ -15,8 +15,8 @@ export const deleteCategory = (accessToken, categoryId) => fetch(
         },
     }).then(res => res.json());
 
-export const createCategory = (accessToken, body) => fetch(
-    `${SERVER_ORIGIN}/admin/products`,
+export const createProduct = (accessToken, categoryId, body) => fetch(
+    `${SERVER_ORIGIN}/admin/products/${categoryId}`,
     {
         method: 'POST',
         headers: {

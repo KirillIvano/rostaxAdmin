@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {useEffect, useCallback} from 'react';
+import {useParams, useHistory} from 'react-router-dom';
 
 import {
     ContentWrapper,
@@ -10,6 +10,7 @@ import {
 import {
     CardBox,
     Controls,
+    PageHeadline,
 } from '@/parts';
 
 import {
@@ -48,6 +49,8 @@ const ProductsPage = ({
     productsLoadingError,
 }) => {
     const {categoryId} = useParams();
+    const history = useHistory();
+
     useEffect(() => {
         getProducts(categoryId);
     }, []);
@@ -72,6 +75,13 @@ const ProductsPage = ({
         updatedId,
     } = useUpdateModalState();
 
+    const handleGoBack = useCallback(
+        () => {
+            history.push('/categories');
+        },
+        [],
+    );
+
     if (productsLoading) {
         return (
             <div>
@@ -84,6 +94,10 @@ const ProductsPage = ({
 
     return (
         <ContentWrapper>
+            <PageHeadline>
+                Продукты
+            </PageHeadline>
+
             <CardBox>
                 <ProductCards
                     products={products}
@@ -93,6 +107,7 @@ const ProductsPage = ({
             </CardBox>
 
             <Controls
+                handleGoBack={handleGoBack}
                 handleCreating={openCreateModal}
             />
 
@@ -102,6 +117,7 @@ const ProductsPage = ({
                 deletedId={deletedId}
             />
             <CreateModal
+                categoryId={categoryId}
                 isOpen={isCreateModalOpened}
                 handleClose={closeCreateModal}
             />

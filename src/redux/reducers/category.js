@@ -19,6 +19,7 @@ import {
     UPDATE_CATEGORY_RELOAD,
 
     SET_CATEGORY_PRODUCTIDS,
+    ADD_PRODUCT_ID,
 } from '@/entities/category/names';
 
 const INITIAL_STATE = {
@@ -199,6 +200,25 @@ export const categoryReducer = (
             categories: categoriesCopy,
         };
     }
+
+    case ADD_PRODUCT_ID: {
+        const {categoryId, productId} = payload;
+        const {categories} = state;
+
+        const updatedCategory = {...categories[categoryId]};
+        const updatedProducts = [...updatedCategory.products, productId];
+
+        updatedCategory.products = updatedProducts;
+
+        return {
+            ...state,
+            categories: {
+                ...state.categories,
+                [categoryId]: updatedCategory,
+            },
+        };
+    }
+
     default: {
         return state;
     }

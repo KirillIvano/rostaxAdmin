@@ -65,17 +65,18 @@ export const deleteProductReload = () => ({
     type: DELETE_PRODUCT_RELOAD,
 });
 
-export const createProduct = formData => ({
+export const createProduct = (categoryId, formData) => ({
     type: CREATE_PRODUCT_START,
     payload: {
+        categoryId,
         formData,
     },
 });
 
-export const createProductSuccess = category => ({
+export const createProductSuccess = product => ({
     type: CREATE_PRODUCT_SUCCESS,
     payload: {
-        category,
+        product,
     },
 });
 

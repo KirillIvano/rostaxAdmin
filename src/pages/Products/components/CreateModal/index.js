@@ -18,16 +18,20 @@ import {withProductCreating} from '../../containers/withProductCreating';
 const CreateModal = ({
     isOpen,
     handleClose,
+    categoryId,
 
-    categoryCreatingInProgress,
-    categoryCreatingError,
-    categoryCreatingSuccess,
-
-    createCategory,
-    reloadCategoryCreating,
+    productCreatingInProgress,
+    productCreatingError,
+    productCreatingSuccess,
+    createProduct,
+    reloadProductCreating,
 }) => {
     const [name, setName] = useState('');
+    const [shortDescription, setShortDescription] = useState('');
+    const [productType, setProductType] = useState('');
+
     const {imageUrl, file, setFile} = useImagePreview();
+    const {imageUrl: certificateUrl, file: certificate, setFile: setCertificate} = useImagePreview();
 
     const resetData = useCallback(() => {
         setName('');
@@ -35,28 +39,33 @@ const CreateModal = ({
     });
 
     useEffect(() => {
-        if (categoryCreatingSuccess) {
-            reloadCategoryCreating();
+        if (productCreatingSuccess) {
+            reloadProductCreating();
             resetData();
             handleClose();
         }
-    }, [categoryCreatingSuccess]);
+    }, [productCreatingSuccess]);
 
     useEffect(() => {
-        if (categoryCreatingError) {
-            reloadCategoryCreating();
-            handleClose();
+        if (productCreatingError) {
+            reloadProductCreating();
         }
-    }, [categoryCreatingError]);
+    }, [productCreatingError]);
 
-    const handleSubmit = useCallback(
-        e => {
-            e.preventDefault();
-            // TODO: validation
-            createCategory({name, image: file});
-        },
-        [name, file],
-    );
+    const handleSubmit = e => {
+        e.preventDefault();
+        // TODO: validation
+        createProduct(
+            categoryId,
+            {
+                name,
+                type: productType,
+                image: file,
+                certificate,
+                shortDescription,
+            },
+        );
+    };
 
     return (
         <Modal
@@ -68,7 +77,25 @@ const CreateModal = ({
                     className={styles.input}
                     labelText={'Название категории'}
                     name={'name'}
+                    value={name}
+
                     onChange={e => setName(e.currentTarget.value)}
+                />
+                <Input
+                    className={styles.input}
+                    labelText={'Краткое описание продукта'}
+                    name={'shortDescription'}
+                    value={shortDescription}
+
+                    onChange={e => setShortDescription(e.currentTarget.value)}
+                />
+                <Input
+                    className={styles.input}
+                    labelText={'Тип продукта'}
+                    name={'type'}
+                    value={productType}
+
+                    onChange={e => setProductType(e.currentTarget.value)}
                 />
 
                 <FileInput
@@ -80,13 +107,24 @@ const CreateModal = ({
                     onChange={e => setFile(e.currentTarget.files[0])}
                 />
 
-                <Button
-                    className={styles.saveButton}
-                    disabled={categoryCreatingInProgress}
-                    type="submit"
-                >
-                    Сохранить
-                </Button>
+                <FileInput
+                    className={styles.input}
+                    labelText={'Загрузить сертификат'}
+                    background={certificateUrl}
+
+                    name={'image'}
+                    onChange={e => setCertificate(e.currentTarget.files[0])}
+                />
+
+                <div className={styles.saveBtnContainer}>
+                    <Button
+                        className={styles.saveButton}
+                        disabled={productCreatingInProgress}
+                        type="submit"
+                    >
+                        Сохранить
+                    </Button>
+                </div>
             </form>
         </Modal>
     );
