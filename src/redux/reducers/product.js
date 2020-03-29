@@ -78,12 +78,12 @@ export const productReducer = (
         const {id} = payload;
         const {products} = state;
 
-        const newCategories = products;
-        delete newCategories[id];
+        const newProducts = {...products};
+        delete newProducts[id];
 
         return {
             ...state,
-            products: newCategories,
+            products: newProducts,
             productDeletingInProgress: false,
             productDeletingSuccess: true,
         };

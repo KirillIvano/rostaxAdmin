@@ -14,15 +14,15 @@ const mapStateToProps = ({product}) => {
     } = product;
 
     return {
-        productDeletingInProgress,
-        productDeletingError,
-        productDeletingSuccess,
+        deletingInProgress: productDeletingInProgress,
+        deletingError: productDeletingError,
+        deletingSuccess: productDeletingSuccess,
     };
 };
 
 const mapDispatchToProps = dispatch => ({
-    deleteProduct: id => dispatch(withAuthentication(deleteProduct(id))),
-    reloadProductDeleting: () => dispatch(deleteProductReload()),
+    startDeleting: (categoryId, productId) => dispatch(withAuthentication(deleteProduct(categoryId, productId))),
+    reloadDeleting: () => dispatch(deleteProductReload()),
 });
 
 export const withProductDeleting = connect(mapStateToProps, mapDispatchToProps);

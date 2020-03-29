@@ -6,8 +6,8 @@ export const getProducts = (accessToken, categoryId) => fetch(
         },
     }).then(res => res.json());
 
-export const deleteCategory = (accessToken, categoryId) => fetch(
-    `${SERVER_ORIGIN}/admin/products/${categoryId}`,
+export const deleteProduct = (accessToken, categoryId, productId) => fetch(
+    `${SERVER_ORIGIN}/admin/products/${categoryId}/${productId}`,
     {
         method: 'DELETE',
         headers: {

@@ -21,6 +21,7 @@ import {
 
     SET_CATEGORY_PRODUCTIDS,
     ADD_PRODUCT_ID,
+    REMOVE_PRODUCT_ID,
 } from './names';
 
 export const getCategories = () => ({
@@ -130,6 +131,14 @@ export const setCategoryProductIds = category => ({
 
 export const addProductIdAction = (categoryId, productId) => ({
     type: ADD_PRODUCT_ID,
+    payload: {
+        categoryId,
+        productId,
+    },
+});
+
+export const removeProductIdAction = (categoryId, productId) => ({
+    type: REMOVE_PRODUCT_ID,
     payload: {
         categoryId,
         productId,

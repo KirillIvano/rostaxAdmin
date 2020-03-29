@@ -5,7 +5,6 @@ import {
     ContentWrapper,
     EntityCard,
     Preloader,
-    DeleteModal,
 } from '@/components';
 import {
     CardBox,
@@ -23,6 +22,7 @@ import {withProductsProps} from './containers/withProductsProps';
 import {
     CreateModal,
     UpdateModal,
+    DeleteModal,
 } from './components';
 
 const ProductCards = ({
@@ -101,7 +101,7 @@ const ProductsPage = ({
             <CardBox>
                 <ProductCards
                     products={products}
-                    handleDelete={openDeleteModal}
+                    handleDelete={productId => openDeleteModal(productId)}
                     handleUpdate={openUpdateModal}
                 />
             </CardBox>
@@ -114,7 +114,8 @@ const ProductsPage = ({
             <DeleteModal
                 isOpen={isDeleteModalOpened}
                 handleClose={closeDeleteModal}
-                deletedId={deletedId}
+                categoryId={categoryId}
+                productId={deletedId}
             />
             <CreateModal
                 categoryId={categoryId}

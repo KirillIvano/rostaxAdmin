@@ -40,17 +40,18 @@ export const getProductsError = error => ({
     },
 });
 
-export const deleteProduct = id => ({
+export const deleteProduct = (categoryId, productId) => ({
     type: DELETE_PRODUCT_START,
     payload: {
-        id,
+        categoryId,
+        productId,
     },
 });
 
-export const deleteProductSuccess = id => ({
+export const deleteProductSuccess = productId => ({
     type: DELETE_PRODUCT_SUCCESS,
     payload: {
-        id,
+        productId,
     },
 });
 

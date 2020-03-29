@@ -27,7 +27,11 @@ import {
     updateProductError,
     updateProductSuccess,
 } from '@/entities/product/actions';
-import {setCategoryProductIds, addProductIdAction} from '@/entities/category/actions';
+import {
+    setCategoryProductIds,
+    addProductIdAction,
+    removeProductIdAction,
+} from '@/entities/category/actions';
 import {
     showNormalMessage,
     showErrorMessage,
@@ -36,12 +40,12 @@ import {normalizeCategory} from '@/entities/category/normalization';
 
 import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
-    deleteCategory,
     updateCategory,
 } from '@/services/categories';
 import {
     getProducts,
     createProduct,
+    deleteProduct,
 } from '@/services/products';
 
 // GETTING
@@ -78,9 +82,9 @@ export const getProductsEpic =
 
 // DELETING
 
-const deleteProductObservable = (accessToken, categoryId) =>
+const deleteProductObservable = (accessToken, categoryId, productId) =>
     from(
-        deleteCategory(accessToken, categoryId),
+        deleteProduct(accessToken, categoryId, productId),
     )
         .pipe(
             mergeMap(
@@ -88,13 +92,14 @@ const deleteProductObservable = (accessToken, categoryId) =>
                     if (!ok) {
                         return of(
                             deleteProductError(error),
-                            showErrorMessage('Удаление категории', error),
+                            showErrorMessage('Удаление продукта', error),
                         );
                     }
 
                     return of(
-                        deleteProductSuccess(categoryId),
-                        showNormalMessage('Удаление категории', 'Удаление прошло успешно'),
+                        deleteProductSuccess(productId),
+                        removeProductIdAction(categoryId, productId),
+                        showNormalMessage('Удаление продукта', 'Удаление прошло успешно'),
                     );
                 },
             ),
@@ -105,7 +110,8 @@ export const deleteProductEpic =
         action$.pipe(
             ofType(DELETE_PRODUCT_START),
             switchMap(
-                ({accessToken, payload: {id}}) => deleteProductObservable(id, accessToken),
+                ({accessToken, payload: {categoryId, productId}}) =>
+                    deleteProductObservable(accessToken, categoryId, productId),
             ),
         );
 
@@ -126,14 +132,14 @@ const createProductObservable = (accessToken, categoryId, bodyData) => {
                     if (!ok) {
                         return of(
                             createProductError(error),
-                            showErrorMessage('Создание категории', error),
+                            showErrorMessage('Создание продукта', error),
                         );
                     }
 
                     return of(
                         createProductSuccess(product),
                         addProductIdAction(categoryId, product.id),
-                        showNormalMessage('Создание категории', 'Категория успешно создана'),
+                        showNormalMessage('Создание продукта', 'Категория успешно создана'),
                     );
                 },
             ),
@@ -180,13 +186,13 @@ const updateProductObservable = (
                     if (!ok) {
                         return of(
                             updateProductError(error),
-                            showErrorMessage('Редактирование категории', error),
+                            showErrorMessage('Редактирование продукта', error),
                         );
                     }
 
                     return of(
                         updateProductSuccess(category),
-                        showNormalMessage('Редактирование категории', 'Категория успешно отредактирована'),
+                        showNormalMessage('Редактирование продукта', 'Категория успешно отредактирована'),
                     );
                 },
             ),
