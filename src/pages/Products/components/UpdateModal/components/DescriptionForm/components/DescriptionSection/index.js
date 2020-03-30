@@ -27,7 +27,6 @@ const DescriptionSection = ({
                     className={styles.deleteSectionBtn}
                     onClick={() => deleteSection(name)}
                     styling={'danger'}
-                    type={'button'}
                 >
                     {'удалить'}
                 </Button>

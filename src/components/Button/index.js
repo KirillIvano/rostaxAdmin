@@ -11,6 +11,7 @@ const Button = ({
 }) => (
     // eslint-disable-next-line react/button-has-type
     <button
+        type="button"
         {...props}
         className={
             classnames(

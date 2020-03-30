@@ -13,6 +13,7 @@ import mock from './mock';
 
 const DescriptionForm = ({
     sections=mock,
+    saveDescription,
 }) => {
 
     const {
@@ -23,14 +24,49 @@ const DescriptionForm = ({
         deleteItem,
     } = useSectionsState(sections);
 
-    const handleSubmit = e => {
+    const handleSave = e => {
         e.preventDefault();
+        const form = e.currentTarget;
+        const elements = [...form.elements];
+        // получаю все инпуты
+        const inputs = elements.filter(el => el.tagName === 'INPUT');
+        const sectionLengths = Object.values(state).map(section => Object.keys(section).length);
+
+        const inputsLen = inputs.length;
+
+        // начальное состояние цикла
+        let pos = 0;
+        let sectionPos = 0;
+        const result = {};
+
+        // пока по всем инпутам не пройдёмся
+        while (pos < inputsLen) {
+            const sectionName = inputs[pos].value;
+            pos++;
+
+            const section = {};
+            const sectionInputsCount = sectionLengths[sectionPos] * 2;
+
+            // добавляем значимые инпуты
+            for (let i = 0; i < sectionInputsCount; i += 2) {
+                const name = inputs[pos + i].value;
+                const value = inputs[pos + i + 1].value;
+
+                section[name] = value;
+            }
+
+            // отступ в 2 для пустых инпутов
+            pos += sectionInputsCount + 2;
+
+            result[sectionName] = section;
+            sectionPos++;
+        }
     };
 
     return (
         <>
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSave}
             >
                 {
                     Object.entries(state).map(
@@ -49,7 +85,7 @@ const DescriptionForm = ({
                     <Button className={styles.controlBtn}>
                         {'К основным'}
                     </Button>
-                    <Button className={styles.controlBtn}>
+                    <Button type="submit" className={styles.controlBtn}>
                         {'Сохранить'}
                     </Button>
                 </div>
