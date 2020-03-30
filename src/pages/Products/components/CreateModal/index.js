@@ -7,8 +7,9 @@ import React, {
 import {
     Modal,
     Button,
-    Input,
+    LabeledInput,
     FileInput,
+    ConfirmationModal,
 } from '@/components';
 import {useImagePreview} from '@/hooks/useImagePreview';
 
@@ -73,7 +74,7 @@ const CreateModal = ({
             close={handleClose}
         >
             <form onSubmit={handleSubmit}>
-                <Input
+                <LabeledInput
                     className={styles.input}
                     labelText={'Название категории'}
                     name={'name'}
@@ -81,7 +82,7 @@ const CreateModal = ({
 
                     onChange={e => setName(e.currentTarget.value)}
                 />
-                <Input
+                <LabeledInput
                     className={styles.input}
                     labelText={'Краткое описание продукта'}
                     name={'shortDescription'}
@@ -89,7 +90,7 @@ const CreateModal = ({
 
                     onChange={e => setShortDescription(e.currentTarget.value)}
                 />
-                <Input
+                <LabeledInput
                     className={styles.input}
                     labelText={'Тип продукта'}
                     name={'type'}

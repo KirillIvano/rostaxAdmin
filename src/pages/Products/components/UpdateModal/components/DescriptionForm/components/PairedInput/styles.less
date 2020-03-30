@@ -1,0 +1,27 @@
+.pairedInput {
+    display: flex;
+    width: 100%;
+    margin-top: 6px;
+    vertical-align: middle;
+    .nameInput, .valueInput {
+        transition: background-color .5s;
+    }
+
+    .nameInput.changed, .valueInput.changed {
+        background: rgb(228, 255, 237);
+    }
+
+    .nameInput {
+        flex: 0 0 200px;
+    }
+
+    .valueInput {
+        flex: 1 1 auto;
+        margin-left: 10px;
+    }
+
+    .deleteButton {
+        margin-left: 8px;
+        padding: 2px 8px;
+    }
+}

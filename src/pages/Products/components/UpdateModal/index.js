@@ -15,6 +15,8 @@ import {useImagePreview} from '@/hooks/useImagePreview';
 import styles from './styles.less';
 import {withProductUpdating} from '../../containers/withProductUpdating';
 
+import {DescriptionForm} from './components';
+
 const UpdateModal = ({
     updatedId,
 
@@ -64,31 +66,8 @@ const UpdateModal = ({
             isOpen={isOpen}
             close={handleClose}
         >
-            <form onSubmit={handleSubmit}>
-                <Input
-                    className={styles.input}
-                    labelText={'Название категории'}
-                    name={'name'}
-                    onChange={e => setName(e.currentTarget.value)}
-                />
+            <DescriptionForm />
 
-                <FileInput
-                    className={styles.input}
-                    labelText={'Загрузить фото'}
-                    background={imageUrl}
-
-                    name={'image'}
-                    onChange={e => setFile(e.currentTarget.files[0])}
-                />
-
-                <Button
-                    className={styles.saveButton}
-                    disabled={categoryUpdatingInProgress}
-                    type="submit"
-                >
-                    Применить
-                </Button>
-            </form>
         </Modal>
     );
 };
