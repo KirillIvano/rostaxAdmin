@@ -1,11 +1,10 @@
 import React, {useRef} from 'react';
-import classnames from 'classnames';
 
+import {InputLabel, Input} from '..';
 import {getLabelId} from '@/helpers/labelId';
 
-import styles from './styles.less';
-
 const LabeledInput = ({
+    labelText,
     name,
     className,
 
@@ -14,12 +13,12 @@ const LabeledInput = ({
     const {current: formId} = useRef(getLabelId());
 
     return (
-        <input
-            {...props}
-            className={classnames(styles.input, {[className]: !!className})}
-            id={formId}
-            name={name}
-        />
+        <div className={className}>
+            <InputLabel name={formId}>
+                {labelText}
+            </InputLabel>
+            <Input {...props} id={formId} name={name} />
+        </div>
     );
 };
 

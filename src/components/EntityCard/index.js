@@ -24,9 +24,12 @@ const EntityCard = ({
                 <Button className={styles.button} onClick={handleUpdate}>
                     Редактировать
                 </Button>
-                <Button className={styles.button} onClick={handleRedirect}>
-                    Перейти
-                </Button>
+                {
+                    redirectHandler &&
+                     <Button className={styles.button} onClick={handleRedirect}>
+                            Подробнее
+                     </Button>
+                }
                 <Button className={styles.button} onClick={handleDelete} styling='danger'>
                     Удалить
                 </Button>

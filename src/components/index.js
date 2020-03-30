@@ -8,6 +8,8 @@ export {default as ConfirmationModal} from './ConfirmationModal';
 export {default as InformationModal} from './InformationModal';
 export {default as DeleteModal} from './DeleteModal';
 export {default as InputLabel} from './InputLabel';
-export {default as Input} from './Input';
+export {default as LabeledInput} from './LabeledInput';
 export {default as FileInput} from './FileInput';
+export {default as Input} from './Input';
+
 export {default as Preloader} from './Preloader';
