@@ -7,7 +7,7 @@ import React, {
 import {
     Modal,
     Button,
-    Input,
+    LabeledInput,
     FileInput,
 } from '@/components';
 import {useImagePreview} from '@/hooks/useImagePreview';
@@ -64,7 +64,7 @@ const CreateModal = ({
             close={handleClose}
         >
             <form onSubmit={handleSubmit}>
-                <Input
+                <LabeledInput
                     className={styles.input}
                     labelText={'Название категории'}
                     name={'name'}

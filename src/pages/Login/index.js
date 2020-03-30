@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Redirect} from 'react-router-dom';
 
 import {ContentWrapper} from '@/components';
+import {PageHeadline} from '@/parts';
 
 import {withLoginProps} from './containers/withLoginProps';
 import {
@@ -47,6 +48,9 @@ const Login = ({
 
     return (
         <ContentWrapper>
+            <PageHeadline>
+                {'Вход'}
+            </PageHeadline>
             <form onSubmit={handleSubmit} action="">
                 <Inputs
                     {...{
