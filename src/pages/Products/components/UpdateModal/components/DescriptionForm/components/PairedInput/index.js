@@ -10,6 +10,7 @@ const PairedInput = ({
     name,
     value,
     isAdditional=false,
+    isNew,
     addItem,
     deleteItem,
 }) => {
@@ -28,7 +29,7 @@ const PairedInput = ({
                     classnames(
                         styles.nameInput,
                         {
-                            [styles.changed]: isNameChanged,
+                            [styles.changed]: isNameChanged || isNew,
                         },
                     )
                 }
@@ -41,7 +42,7 @@ const PairedInput = ({
                     classnames(
                         styles.valueInput,
                         {
-                            [styles.changed]: isValueChanged,
+                            [styles.changed]: isValueChanged || isNew,
                         },
                     )
                 }

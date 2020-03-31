@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import {
     Button,
@@ -15,7 +15,6 @@ const DescriptionForm = ({
     sections=mock,
     saveDescription,
 }) => {
-
     const {
         state,
         deleteSection,
@@ -24,13 +23,20 @@ const DescriptionForm = ({
         deleteItem,
     } = useSectionsState(sections);
 
+    const defaultItemsLen = useMemo(
+        () => {
+            return Object.values(sections).map(section => Object.keys(section).length);
+        },
+        [sections],
+    );
+
     const handleSave = e => {
         e.preventDefault();
         const form = e.currentTarget;
         const elements = [...form.elements];
         // получаю все инпуты
         const inputs = elements.filter(el => el.tagName === 'INPUT');
-        const sectionLengths = Object.values(state).map(section => Object.keys(section).length);
+        const defaultItemsLen = Object.values(state).map(section => Object.keys(section).length);
 
         const inputsLen = inputs.length;
 
@@ -45,7 +51,7 @@ const DescriptionForm = ({
             pos++;
 
             const section = {};
-            const sectionInputsCount = sectionLengths[sectionPos] * 2;
+            const sectionInputsCount = defaultItemsLen[sectionPos] * 2;
 
             // добавляем значимые инпуты
             for (let i = 0; i < sectionInputsCount; i += 2) {
@@ -68,16 +74,25 @@ const DescriptionForm = ({
             <form
                 onSubmit={handleSave}
             >
-                {
-                    Object.entries(state).map(
-                        ([name, items]) => (
-                            <DescriptionSection
-                                key={name}
-                                {...{deleteSection, addItem, deleteItem, name, items}}
-                            />
-                        ),
-                    )
-                }
+                <div className={styles.sections}>
+                    {
+                        Object.entries(state).map(
+                            ([name, items], index) => (
+                                <DescriptionSection
+                                    key={name}
+                                    {...{
+                                        deleteSection,
+                                        addItem,
+                                        deleteItem,
+                                        name,
+                                        items,
+                                        defaultLen: defaultItemsLen[index],
+                                    }}
+                                />
+                            ),
+                        )
+                    }
+                </div>
                 <div className={styles.controlsSection}>
                     <Button onClick={addSection} className={styles.controlBtn}>
                         {'Новая категория'}

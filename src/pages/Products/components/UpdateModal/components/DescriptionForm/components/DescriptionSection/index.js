@@ -8,6 +8,7 @@ import {PairedInput} from '..';
 const DescriptionSection = ({
     name,
     items,
+    defaultLen,
     deleteSection,
     addItem,
     deleteItem,
@@ -34,13 +35,14 @@ const DescriptionSection = ({
 
             {
                 Object.entries(items).map(
-                    ([name, value]) =>
+                    ([name, value], index) =>
                         (
                             <PairedInput
                                 key={name}
                                 name={name}
                                 value={value}
                                 deleteItem={handleDeleteItem}
+                                isNew={defaultLen <= index}
                             />
                         ),
                 )
