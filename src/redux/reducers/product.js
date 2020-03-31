@@ -209,8 +209,8 @@ export const productReducer = (
         const {id} = product;
 
         const productsCopy = {...state.products};
-        productsCopy[id] = product;
 
+        productsCopy[id] = product;
         return {
             ...state,
             products: productsCopy,

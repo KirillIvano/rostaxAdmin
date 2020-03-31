@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 
 import {
     Button,
-    ConfirmationModal,
 } from '@/components';
 
 import {withDescriptionUpating} from './containers/withDescriptionUpdating';
@@ -11,45 +10,51 @@ import {DescriptionSection} from './components';
 import styles from './styles.less';
 
 const DescriptionForm = ({
-    sections={},
+    sections,
     updateDescription,
 }) => {
     const {
         state,
+        resetState,
         deleteSection,
         addSection,
         addItem,
         deleteItem,
     } = useSectionsState(sections);
 
+    useEffect(() => {
+        resetState(sections);
+    }, [sections]);
+
     const defaultItemsLen = useMemo(
         () => {
-            return Object.values(sections).map(section => Object.keys(section).length);
+            return sections.map(section => section.items.length);
         },
         [sections],
     );
+    const defaultSectionsCount = useMemo(() => sections.length, [sections]);
 
     const handleSave = e => {
         e.preventDefault();
         const form = e.currentTarget;
         const elements = [...form.elements];
+
         // получаю все инпуты
         const inputs = elements.filter(el => el.tagName === 'INPUT');
-        const itemsLengths = Object.values(state).map(section => Object.keys(section).length);
+        const itemsLengths = state.map(section => section.items.length);
 
         const inputsLen = inputs.length;
 
         // начальное состояние цикла
         let pos = 0;
         let sectionPos = 0;
-        const result = {};
+        const result = [];
 
-        // пока по всем инпутам не пройдёмся
-        while (pos < inputsLen) {
+        while (pos < inputsLen - 1) {
             const sectionName = inputs[pos].value;
             pos++;
 
-            const section = {};
+            const section = {name: sectionName, items: []};
             const sectionInputsCount = itemsLengths[sectionPos] * 2;
 
             // добавляем значимые инпуты
@@ -57,13 +62,13 @@ const DescriptionForm = ({
                 const name = inputs[pos + i].value;
                 const value = inputs[pos + i + 1].value;
 
-                section[name] = value;
+                section.items.push({name, value});
             }
 
             // отступ в 2 для пустых инпутов
             pos += sectionInputsCount + 2;
 
-            result[sectionName] = section;
+            result.push(section);
             sectionPos++;
         }
 
@@ -75,10 +80,13 @@ const DescriptionForm = ({
             <form
                 onSubmit={handleSave}
             >
+                <p>
+Описание
+                </p>
                 <div className={styles.sections}>
                     {
-                        Object.entries(state).map(
-                            ([name, items], index) => (
+                        state.map(
+                            ({name, items}, index) => (
                                 <DescriptionSection
                                     key={name}
                                     {...{
@@ -88,6 +96,7 @@ const DescriptionForm = ({
                                         name,
                                         items,
                                         defaultLen: defaultItemsLen[index],
+                                        isNew: !(index < defaultSectionsCount),
                                     }}
                                 />
                             ),
@@ -100,7 +109,7 @@ const DescriptionForm = ({
                             addSection,
                             addItem,
                             deleteItem,
-                            name,
+                            name: '',
                             isAdditional: true,
                         }}
                     />

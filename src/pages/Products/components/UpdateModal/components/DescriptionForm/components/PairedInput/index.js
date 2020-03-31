@@ -58,6 +58,7 @@ const PairedInput = ({
                         {'x'}
                     </Button> :
                     <Button
+                        disabled={!newName}
                         onClick={() => {
                             addItem(newName, newValue);
                             setValue('');

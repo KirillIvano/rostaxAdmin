@@ -1,4 +1,5 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
+import classnames from 'classnames';
 
 import {Button, Input} from '@/components';
 
@@ -13,20 +14,26 @@ const DescriptionSection = ({
     addItem,
     deleteItem,
 
-    items={},
+    items=[],
     isAdditional=false,
+    isNew=false,
     defaultLen=0,
 }) => {
     const handleAddItem = useCallback((itemName, itemValue) => addItem(name, itemName, itemValue), [name]);
     const handleDeleteItem = useCallback(itemName => deleteItem(name, itemName), [name]);
 
-    const [newName, setNewName] = useState(name);
+    const [newName, isNameChanged, setNewName] = useStateChange(name);
 
     return (
         <div className={styles.descriptionSection}>
             <div className={styles.sectionHeadlineContainer}>
                 <Input
-                    className={styles.sectionHeadline}
+                    className={
+                        classnames(
+                            styles.sectionHeadline,
+                            {[styles.changed]: isNameChanged || isNew},
+                        )
+                    }
                     onChange={e => setNewName(e.target.value)}
                     value={newName}
                 />
@@ -35,6 +42,7 @@ const DescriptionSection = ({
                     isAdditional ?
                         <Button
                             className={styles.deleteSectionBtn}
+                            disabled={!newName}
                             onClick={() => {
                                 addSection(newName);
                                 setNewName('');
@@ -53,8 +61,8 @@ const DescriptionSection = ({
             </div>
 
             {
-                Object.entries(items).map(
-                    ([name, value], index) =>
+                items.map(
+                    ({name, value}, index) =>
                         (
                             <PairedInput
                                 key={name}
@@ -67,13 +75,13 @@ const DescriptionSection = ({
                 )
             }
 
-            <PairedInput
+            {!isAdditional && <PairedInput
                 key={''}
                 name={''}
                 value={''}
                 addItem={handleAddItem}
                 isAdditional={true}
-            />
+            />}
         </div>
     );
 };

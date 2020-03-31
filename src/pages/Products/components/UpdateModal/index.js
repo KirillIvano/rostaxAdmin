@@ -6,7 +6,6 @@ import React, {
 import {Modal} from '@/components';
 
 import {withProductUpdating} from '../../containers/withProductUpdating';
-
 import {DescriptionForm} from './components';
 
 const UpdateModal = ({
@@ -21,7 +20,6 @@ const UpdateModal = ({
             close={handleClose}
         >
             <DescriptionForm {...{categoryId, productId}} />
-
         </Modal>
     );
 };

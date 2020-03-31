@@ -21,9 +21,8 @@ export const createProduct = (accessToken, categoryId, body) => fetch(
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
+        body,
     }).then(res => res.json());
 
 export const updateProductDescription = (
@@ -42,10 +41,6 @@ export const updateProductDescription = (
         body: JSON.stringify({
             description,
         }),
-        q: {
-            productId,
-            categoryId,
-        },
     }).then(res => res.json());
 
 export const updateProduct = (
@@ -60,5 +55,5 @@ export const updateProduct = (
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
+        body,
     }).then(res => res.json());
