@@ -17,6 +17,11 @@ import {
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_ERROR,
     UPDATE_PRODUCT_RELOAD,
+
+    UPDATE_PRODUCT_DESCRIPTION,
+    UPDATE_PRODUCT_DESCRIPTION_SUCCESS,
+    UPDATE_PRODUCT_DESCRIPTION_ERROR,
+    UPDATE_PRODUCT_DESCRIPTION_RELOAD,
 } from './names';
 
 export const getProducts = id => ({
@@ -116,4 +121,25 @@ export const updateProductError = error => ({
 
 export const updateProductReload = () => ({
     type: UPDATE_PRODUCT_RELOAD,
+});
+
+export const updateProductDescription = (categoryId, productId, description) => ({
+    type: UPDATE_PRODUCT_DESCRIPTION,
+    payload: {
+        categoryId,
+        productId,
+        description,
+    },
+});
+export const updateProductDescriptionSuccess = product => ({
+    type: UPDATE_PRODUCT_DESCRIPTION_SUCCESS,
+    payload: {
+        product,
+    },
+});
+export const updateProductDescriptionError = () => ({
+    type: UPDATE_PRODUCT_DESCRIPTION_ERROR,
+});
+export const updateProductDescriptionReload = () => ({
+    type: UPDATE_PRODUCT_DESCRIPTION_RELOAD,
 });

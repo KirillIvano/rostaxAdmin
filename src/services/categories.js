@@ -21,8 +21,9 @@ export const createCategory = (accessToken, body) => fetch(
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
         },
-        body,
+        body: JSON.stringify(body),
     }).then(res => res.json());
 
 export const updateCategory = (
@@ -35,6 +36,7 @@ export const updateCategory = (
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
         },
-        body,
+        body: JSON.stringify(body),
     }).then(res => res.json());

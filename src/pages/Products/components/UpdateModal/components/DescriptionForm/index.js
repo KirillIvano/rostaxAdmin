@@ -5,15 +5,15 @@ import {
     ConfirmationModal,
 } from '@/components';
 
+import {withDescriptionUpating} from './containers/withDescriptionUpdating';
 import {useSectionsState} from './hooks/useSectionsState';
 import {DescriptionSection} from './components';
 import styles from './styles.less';
 import mock from './mock';
 
-
 const DescriptionForm = ({
     sections=mock,
-    saveDescription,
+    updateDescription,
 }) => {
     const {
         state,
@@ -67,6 +67,8 @@ const DescriptionForm = ({
             result[sectionName] = section;
             sectionPos++;
         }
+
+        updateDescription(result);
     };
 
     return (
@@ -108,6 +110,6 @@ const DescriptionForm = ({
             {/* <ConfirmationModal isOpen={true} /> */}
         </>
     );
-
 };
-export default DescriptionForm;
+
+export default withDescriptionUpating(DescriptionForm);

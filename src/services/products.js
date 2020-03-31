@@ -21,8 +21,31 @@ export const createProduct = (accessToken, categoryId, body) => fetch(
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
         },
-        body,
+        body: JSON.stringify(body),
+    }).then(res => res.json());
+
+export const updateProductDescription = (
+    accessToken,
+    categoryId,
+    productId,
+    description,
+) => fetch(
+    `${SERVER_ORIGIN}/admin/products/description?` + new URLSearchParams({categoryId, productId}),
+    {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            description,
+        }),
+        q: {
+            productId,
+            categoryId,
+        },
     }).then(res => res.json());
 
 export const updateProduct = (
@@ -35,6 +58,7 @@ export const updateProduct = (
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
         },
-        body,
+        body: JSON.stringify(body),
     }).then(res => res.json());

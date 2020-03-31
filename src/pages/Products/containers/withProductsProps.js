@@ -21,7 +21,6 @@ const mapStateToProps = ({product, category}, {match: {params}}) => {
         if (categoryProductIds) productsArr = categoryProductIds.map(id => products[id]);
     }
 
-
     return {
         products: productsArr,
         productsLoading,

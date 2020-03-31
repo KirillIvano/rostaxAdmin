@@ -11,5 +11,4 @@ export {default as InputLabel} from './InputLabel';
 export {default as LabeledInput} from './LabeledInput';
 export {default as FileInput} from './FileInput';
 export {default as Input} from './Input';
-
 export {default as Preloader} from './Preloader';

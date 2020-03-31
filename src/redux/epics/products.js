@@ -13,6 +13,7 @@ import {
     DELETE_PRODUCT_START,
     CREATE_PRODUCT_START,
     UPDATE_PRODUCT_START,
+    UPDATE_PRODUCT_DESCRIPTION,
 } from '@/entities/product/names';
 import {
     getProductsError,
@@ -26,6 +27,9 @@ import {
 
     updateProductError,
     updateProductSuccess,
+
+    updateProductDescriptionSuccess,
+    updateProductDescriptionError,
 } from '@/entities/product/actions';
 import {
     setCategoryProductIds,
@@ -46,6 +50,7 @@ import {
     getProducts,
     createProduct,
     deleteProduct,
+    updateProductDescription,
 } from '@/services/products';
 
 // GETTING
@@ -166,6 +171,8 @@ const createProductEpic =
             ),
         );
 
+// UPDATING
+
 const updateProductObservable = (
     categoryId,
     bodyData,
@@ -212,9 +219,65 @@ const updateProductEpic =
             ),
         );
 
+const updateProductDescriptionObservable = (
+    accessToken,
+    categoryId,
+    productId,
+    description,
+) => {
+    const request = updateProductDescription(
+        accessToken,
+        categoryId,
+        productId,
+        description,
+    );
+
+    return from(request)
+        .pipe(
+            mergeMap(
+                ({ok, error, product}) => {
+                    if (!ok) {
+                        return of(
+                            updateProductDescriptionError(error),
+                            showErrorMessage('Редактирование описания', error),
+                        );
+                    }
+
+                    return of(
+                        updateProductDescriptionSuccess(product),
+                        showNormalMessage('Редактирование описания', 'Категория успешно отредактирована'),
+                    );
+                },
+            ),
+        );
+};
+
+const updateProductDescriptionEpic =
+    action$ =>
+        action$.pipe(
+            ofType(UPDATE_PRODUCT_DESCRIPTION),
+            switchMap(
+                ({payload, accessToken}) => {
+                    const {
+                        categoryId,
+                        productId,
+                        description,
+                    } = payload;
+
+                    return updateProductDescriptionObservable(
+                        accessToken,
+                        categoryId,
+                        productId,
+                        description,
+                    );
+                },
+            ),
+        );
+
 export default combineEpics(
     getProductsEpic,
     deleteProductEpic,
     createProductEpic,
     updateProductEpic,
+    updateProductDescriptionEpic,
 );

@@ -125,7 +125,8 @@ const ProductsPage = ({
             <UpdateModal
                 isOpen={isUpdateModalOpened}
                 handleClose={closeUpdateModal}
-                updatedId={updatedId}
+                categoryId={categoryId}
+                productId={updatedId}
             />
         </ContentWrapper>
     );

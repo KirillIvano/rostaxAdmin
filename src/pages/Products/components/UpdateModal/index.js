@@ -12,13 +12,15 @@ import {DescriptionForm} from './components';
 const UpdateModal = ({
     isOpen,
     handleClose,
+    categoryId,
+    productId,
 }) => {
     return (
         <Modal
             isOpen={isOpen}
             close={handleClose}
         >
-            <DescriptionForm />
+            <DescriptionForm {...{categoryId, productId}} />
 
         </Modal>
     );

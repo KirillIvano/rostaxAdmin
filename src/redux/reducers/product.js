@@ -17,6 +17,11 @@ import {
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_ERROR,
     UPDATE_PRODUCT_RELOAD,
+
+    UPDATE_PRODUCT_DESCRIPTION,
+    UPDATE_PRODUCT_DESCRIPTION_SUCCESS,
+    UPDATE_PRODUCT_DESCRIPTION_ERROR,
+    UPDATE_PRODUCT_DESCRIPTION_RELOAD,
 } from '@/entities/product/names';
 
 const INITIAL_STATE = {
@@ -35,6 +40,10 @@ const INITIAL_STATE = {
     productUpdatingInProgress: false,
     productUpdatingError: null,
     productUpdatingSuccess: false,
+
+    productDescriptionUpdatingInProgress: false,
+    productDescriptionUpdatingError: null,
+    productDescriptionUpdatingSuccess: false,
 };
 
 export const productReducer = (
@@ -151,6 +160,7 @@ export const productReducer = (
             productUpdatingSuccess: false,
         };
     }
+
     case UPDATE_PRODUCT_SUCCESS: {
         const {product} = payload;
         const {products} = state;
@@ -166,6 +176,7 @@ export const productReducer = (
             productUpdatingSuccess: true,
         };
     }
+
     case UPDATE_PRODUCT_ERROR: {
         const {error} = payload;
 
@@ -175,6 +186,7 @@ export const productReducer = (
             productUpdatingError: error,
         };
     }
+
     case UPDATE_PRODUCT_RELOAD: {
         return {
             ...state,
@@ -183,6 +195,45 @@ export const productReducer = (
             productUpdatingSuccess: false,
         };
     }
+
+    case UPDATE_PRODUCT_DESCRIPTION: {
+        return {
+            ...state,
+            productDescriptionUpdatingInProgress: true,
+            productDescriptionUpdatingError: null,
+            productDescriptionUpdatingSuccess: false,
+        };
+    }
+    case UPDATE_PRODUCT_DESCRIPTION_SUCCESS: {
+        const {product} = payload;
+        const {id} = product;
+
+        const productsCopy = {...state.products};
+        productsCopy[id] = product;
+
+        return {
+            ...state,
+            products: productsCopy,
+            productDescriptionUpdatingInProgress: false,
+            productDescriptionUpdatingSuccess: true,
+        };
+    }
+    case UPDATE_PRODUCT_DESCRIPTION_ERROR: {
+        return {
+            ...state,
+            productDescriptionUpdatingInProgress: false,
+            productDescriptionUpdatingError: true,
+        };
+    }
+    case UPDATE_PRODUCT_DESCRIPTION_RELOAD: {
+        return {
+            ...state,
+            productDescriptionUpdatingInProgress: false,
+            productDescriptionUpdatingError: null,
+            productDescriptionUpdatingSuccess: false,
+        };
+    }
+
     default: {
         return state;
     }
