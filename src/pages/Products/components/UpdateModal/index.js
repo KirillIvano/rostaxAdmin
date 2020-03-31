@@ -6,7 +6,7 @@ import React, {
 import {Modal} from '@/components';
 
 import {withProductUpdating} from '../../containers/withProductUpdating';
-import {DescriptionForm} from './components';
+import {DescriptionForm, MainPropsForm} from './components';
 
 const UpdateModal = ({
     isOpen,
@@ -19,7 +19,8 @@ const UpdateModal = ({
             isOpen={isOpen}
             close={handleClose}
         >
-            <DescriptionForm {...{categoryId, productId}} />
+            <MainPropsForm {...{categoryId, productId}} />
+            {/* <DescriptionForm {...{categoryId, productId}} /> */}
         </Modal>
     );
 };

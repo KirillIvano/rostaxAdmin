@@ -30,6 +30,7 @@ const CreateModal = ({
     const [name, setName] = useState('');
     const [shortDescription, setShortDescription] = useState('');
     const [productType, setProductType] = useState('');
+    const [price, setPrice] = useState('');
 
     const {imageUrl, file, setFile} = useImagePreview();
     const {imageUrl: certificateUrl, file: certificate, setFile: setCertificate} = useImagePreview();
@@ -60,6 +61,7 @@ const CreateModal = ({
             categoryId,
             {
                 name,
+                price,
                 type: productType,
                 image: file,
                 certificate,
@@ -81,6 +83,14 @@ const CreateModal = ({
                     value={name}
 
                     onChange={e => setName(e.currentTarget.value)}
+                />
+                <LabeledInput
+                    className={styles.input}
+                    labelText={'Цена продукта'}
+                    name={'price'}
+                    value={price}
+
+                    onChange={e => setPrice(e.currentTarget.value)}
                 />
                 <LabeledInput
                     className={styles.input}
