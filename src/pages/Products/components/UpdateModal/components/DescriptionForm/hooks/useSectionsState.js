@@ -13,9 +13,11 @@ export const useSectionsState = defaultState => {
             return sectionsCopy;
         }
         case 'ADD_SECTION': {
+            const {sectionName} = payload;
+
             return {
                 ...state,
-                'Новая секция': '',
+                [sectionName]: {},
             };
         }
 
@@ -57,7 +59,7 @@ export const useSectionsState = defaultState => {
     const [state, dispatch] = useReducer(reducer, defaultState);
 
     const deleteSection = sectionName => dispatch({type: 'DELETE_SECTION', payload: {sectionName}});
-    const addSection = () => dispatch({type: 'ADD_SECTION'});
+    const addSection = sectionName => dispatch({type: 'ADD_SECTION', payload: {sectionName}});
     const addItem = (sectionName, name, value) => dispatch({type: 'ADD_FIELD', payload: {sectionName, name, value}});
     const deleteItem = (sectionName, name) => dispatch({type: 'DELETE_FIELD', payload: {sectionName, name}});
 
