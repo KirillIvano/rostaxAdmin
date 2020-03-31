@@ -12,6 +12,8 @@ import styles from './styles.less';
 const DescriptionForm = ({
     sections,
     updateDescription,
+    className,
+    changeForm,
 }) => {
     const {
         state,
@@ -79,9 +81,10 @@ const DescriptionForm = ({
         <>
             <form
                 onSubmit={handleSave}
+                className={className}
             >
                 <p>
-Описание
+                    Описание
                 </p>
                 <div className={styles.sections}>
                     {
@@ -115,7 +118,10 @@ const DescriptionForm = ({
                     />
                 </div>
                 <div className={styles.controlsSection}>
-                    <Button className={styles.controlBtn}>
+                    <Button
+                        className={styles.controlBtn}
+                        onClick={changeForm}
+                    >
                         {'К основным'}
                     </Button>
                     <Button type="submit" className={styles.controlBtn}>

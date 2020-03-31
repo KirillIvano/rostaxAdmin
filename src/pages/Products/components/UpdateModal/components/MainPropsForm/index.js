@@ -14,6 +14,8 @@ const MainPropsForm = ({
     categoryId,
     productId,
 
+    className,
+
     productUpdatingInProgress,
     productUpdatingError,
     productUpdatingSuccess,
@@ -27,6 +29,7 @@ const MainPropsForm = ({
 
     updateProduct,
     reloadProductUpdating,
+    changeForm,
 }) => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -36,10 +39,26 @@ const MainPropsForm = ({
     const {imageUrl, file, setFile} = useImagePreview();
     const {imageUrl: certificateUrl, file: certificate, setFile: setCertificate} = useImagePreview();
 
-    const handleSubmit = () => {};
+    const handleSubmit = () => {
+        updateProduct(
+            categoryId,
+            productId,
+            {
+                name,
+                price,
+                shortDescription,
+                productType,
+                file,
+                certificate,
+            },
+        );
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            onSubmit={handleSubmit}
+            className={className}
+        >
             <LabeledInput
                 className={styles.input}
                 labelText={'Название категории'}
@@ -85,7 +104,6 @@ const MainPropsForm = ({
                 name={'image'}
                 onChange={e => setFile(e.currentTarget.files[0])}
             />
-
             <FileInput
                 className={styles.input}
                 labelText={'Загрузить сертификат'}
@@ -99,7 +117,7 @@ const MainPropsForm = ({
                 <Button
                     className={styles.controlBtn}
                     disabled={productUpdatingInProgress}
-                    type="submit"
+                    onClick={changeForm}
                 >
                     {'К описаниям'}
                 </Button>

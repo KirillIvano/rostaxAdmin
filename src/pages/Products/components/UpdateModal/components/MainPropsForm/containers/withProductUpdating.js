@@ -24,8 +24,6 @@ const mapStateToProps = ({product}, {productId}) => {
         certificate,
     } = selectedProduct;
 
-    console.log(selectedProduct, productId, products);
-
     return {
         productUpdatingInProgress,
         productUpdatingError,
