@@ -8,6 +8,7 @@ import {withDescriptionUpating} from './containers/withDescriptionUpdating';
 import {useSectionsState} from './hooks/useSectionsState';
 import {DescriptionSection} from './components';
 import styles from './styles.less';
+import {ScrollWrapper} from './../../../';
 
 const DescriptionForm = ({
     sections,
@@ -86,7 +87,7 @@ const DescriptionForm = ({
                 <p>
                     Описание
                 </p>
-                <div className={styles.sections}>
+                <ScrollWrapper>
                     {
                         state.map(
                             ({name, items}, index) => (
@@ -116,7 +117,7 @@ const DescriptionForm = ({
                             isAdditional: true,
                         }}
                     />
-                </div>
+                </ScrollWrapper>
                 <div className={styles.controlsSection}>
                     <Button
                         className={styles.controlBtn}
