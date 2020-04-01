@@ -17,10 +17,10 @@ const Navbar = ({
                 {[styles.opened]: isMenuOpened},
             )}
     >
-        <Link to={'/main'} className={styles.navitem}>
+        <Link to={'/adminPanel/'} className={styles.navitem}>
             ГЛАВНАЯ
         </Link>
-        <Link to={'/categories'} className={styles.navitem}>
+        <Link to={'/adminPanel/categories'} className={styles.navitem}>
             КАТЕГОРИИ
         </Link>
         {
@@ -34,7 +34,7 @@ const Navbar = ({
                     </p>
                 ) :
                 (
-                    <Link to={'/login'} className={styles.navitem}>
+                    <Link to={'/adminPanel/login'} className={styles.navitem}>
                         ЛОГИН
                     </Link>
                 )

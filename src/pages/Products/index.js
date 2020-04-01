@@ -77,7 +77,7 @@ const ProductsPage = ({
 
     const handleGoBack = useCallback(
         () => {
-            history.push('/categories');
+            history.push('/adminPanel/categories');
         },
         [],
     );

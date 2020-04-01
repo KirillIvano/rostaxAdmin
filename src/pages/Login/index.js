@@ -22,7 +22,7 @@ const Login = ({
 }) => {
     if (success) {
         setTimeout(loginForget, 0);
-        return <Redirect to='/categories' />;
+        return <Redirect to='/adminPanel/categories' />;
     }
 
     const [validationError, setValidationError] = useState('');

@@ -75,12 +75,12 @@ const Categories = ({
     } = useUpdateModalState();
 
     const handleRedirect = useCallback(
-        id => {history.push(`/products/${id}`);},
+        id => {history.push(`/adminPanel/products/${id}`);},
         [],
     );
 
     const handleGoBack = useCallback(
-        () => {history.push('/');},
+        () => {history.push('/adminPanel/');},
         [],
     );
 

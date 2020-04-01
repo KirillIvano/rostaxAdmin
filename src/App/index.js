@@ -47,8 +47,8 @@ const App = ({
         return <Preloader />;
     }
 
-    if (!isUserAuthenticated && history.location.pathname !== '/login') {
-        return <Redirect to={'/login'} />;
+    if (!isUserAuthenticated && history.location.pathname !== '/adminPanel/login') {
+        return <Redirect to={'/adminPanel/login'} />;
     }
 
     return (
@@ -59,23 +59,23 @@ const App = ({
             <PageWrapper>
                 <Switch>
                     <Route exact
-                        path="/categories"
+                        path="/adminPanel/categories"
                         component={CategoriesPage}
                     />
                     <Route exact
-                        path="/products/:categoryId"
+                        path="/adminPanel/products/:categoryId"
                         component={ProductsPage}
                     />
                     <Route exact
-                        path="/register/:hash"
+                        path="/adminPanel/register/:hash"
                         component={RegisterPage}
                     />
                     <Route exact
-                        path="/login"
+                        path="/adminPanel/login"
                         component={LoginPage}
                     />
                     <Route exact
-                        path="/"
+                        path="/adminPanel/"
                         component={MainPage}
                     />
                 </Switch>
