@@ -4,6 +4,12 @@ const merge = require('webpack-merge');
 const CleanObsoleteChunks = require('webpack-clean-obsolete-chunks');
 
 const dev = {
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
+        filename: 'bundle.js',
+        chunkFilename: '[name].bundle.js',
+    },
     devServer: {
         contentBase: path.resolve(__dirname, 'dist'),
         port: '8080',

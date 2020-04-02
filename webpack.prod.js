@@ -9,7 +9,11 @@ const webpack = require('webpack');
 
 const prod = {
     entry: './src/index.js',
-
+    output: {
+        path: path.resolve(__dirname, '..', 'simros', 'static', 'admin'),
+        publicPath: '/admin/',
+        filename: 'bundle.js',
+    },
     optimization: {
         minimizer: [
             new OptimizeCssAssetsPlugin(),
@@ -25,6 +29,7 @@ const prod = {
         }),
     ],
     mode: 'production',
+    watch: true,
     module: {
 
         rules: [
