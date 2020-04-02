@@ -5,6 +5,7 @@ import {
     updateProductReload,
 } from '@/entities/product/actions';
 import {withAuthentication} from '@/redux/highOrderActions/withAuthentication';
+import {getImageUrl} from '@/helpers/getImageUrl';
 
 const mapStateToProps = ({product}, {productId}) => {
     const {
@@ -32,13 +33,13 @@ const mapStateToProps = ({product}, {productId}) => {
         prevPrice: price,
         prevDescription: shortDescription,
         prevType: type,
-        prevImage: image,
-        prevCertificate: certificate,
+        prevImage: getImageUrl(image),
+        prevCertificate: getImageUrl(certificate),
     };
 };
 
-const mapDispatchToProps = dispatch => ({
-    updateProduct: (id, body) => dispatch(withAuthentication(updateProduct(id, body))),
+const mapDispatchToProps = (dispatch, {categoryId, productId}) => ({
+    updateProduct: body => dispatch(withAuthentication(updateProduct(categoryId, productId, body))),
     reloadProductUpdating: () => dispatch(updateProductReload()),
 });
 

@@ -166,12 +166,12 @@ export const productReducer = (
         const {products} = state;
         const {id} = product;
 
-        const newCategories = {...products};
-        newCategories[id] = product;
+        const newProducts = {...products};
+        newProducts[id] = product;
 
         return {
             ...state,
-            products: newCategories,
+            products: newProducts,
             productUpdatingInProgress: false,
             productUpdatingSuccess: true,
         };

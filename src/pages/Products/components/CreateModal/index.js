@@ -15,6 +15,7 @@ import {useImagePreview} from '@/hooks/useImagePreview';
 
 import styles from './styles.less';
 import {withProductCreating} from '../../containers/withProductCreating';
+import {ScrollWrapper} from './../';
 
 const CreateModal = ({
     isOpen,
@@ -37,7 +38,11 @@ const CreateModal = ({
 
     const resetData = useCallback(() => {
         setName('');
+        setShortDescription('');
+        setProductType('');
+        setPrice('');
         setFile(null);
+        setCertificate(null);
     });
 
     useEffect(() => {
@@ -56,7 +61,7 @@ const CreateModal = ({
 
     const handleSubmit = e => {
         e.preventDefault();
-        // TODO: validation
+
         createProduct(
             categoryId,
             {
@@ -76,57 +81,58 @@ const CreateModal = ({
             close={handleClose}
         >
             <form onSubmit={handleSubmit}>
-                <LabeledInput
-                    className={styles.input}
-                    labelText={'Название категории'}
-                    name={'name'}
-                    value={name}
+                <ScrollWrapper>
+                    <LabeledInput
+                        className={styles.input}
+                        labelText={'Название продукта'}
+                        name={'name'}
+                        value={name}
 
-                    onChange={e => setName(e.currentTarget.value)}
-                />
-                <LabeledInput
-                    className={styles.input}
-                    labelText={'Цена продукта'}
-                    name={'price'}
-                    value={price}
+                        onChange={e => setName(e.currentTarget.value)}
+                    />
+                    <LabeledInput
+                        className={styles.input}
+                        labelText={'Цена продукта'}
+                        name={'price'}
+                        value={price}
 
-                    onChange={e => setPrice(e.currentTarget.value)}
-                />
-                <LabeledInput
-                    className={styles.input}
-                    labelText={'Краткое описание продукта'}
-                    name={'shortDescription'}
-                    value={shortDescription}
+                        onChange={e => setPrice(e.currentTarget.value)}
+                    />
+                    <LabeledInput
+                        className={styles.input}
+                        labelText={'Краткое описание продукта'}
+                        name={'shortDescription'}
+                        value={shortDescription}
 
-                    onChange={e => setShortDescription(e.currentTarget.value)}
-                />
-                <LabeledInput
-                    className={styles.input}
-                    labelText={'Тип продукта'}
-                    name={'type'}
-                    value={productType}
+                        onChange={e => setShortDescription(e.currentTarget.value)}
+                    />
+                    <LabeledInput
+                        className={styles.input}
+                        labelText={'Тип продукта'}
+                        name={'type'}
+                        value={productType}
 
-                    onChange={e => setProductType(e.currentTarget.value)}
-                />
+                        onChange={e => setProductType(e.currentTarget.value)}
+                    />
 
-                <FileInput
-                    className={styles.input}
-                    labelText={'Загрузить фото'}
-                    background={imageUrl}
+                    <FileInput
+                        className={styles.input}
+                        labelText={'Загрузить фото'}
+                        background={imageUrl}
 
-                    name={'image'}
-                    onChange={e => setFile(e.currentTarget.files[0])}
-                />
+                        name={'image'}
+                        onChange={e => setFile(e.currentTarget.files[0])}
+                    />
 
-                <FileInput
-                    className={styles.input}
-                    labelText={'Загрузить сертификат'}
-                    background={certificateUrl}
+                    <FileInput
+                        className={styles.input}
+                        labelText={'Загрузить сертификат'}
+                        background={certificateUrl}
 
-                    name={'image'}
-                    onChange={e => setCertificate(e.currentTarget.files[0])}
-                />
-
+                        name={'image'}
+                        onChange={e => setCertificate(e.currentTarget.files[0])}
+                    />
+                </ScrollWrapper>
                 <div className={styles.saveBtnContainer}>
                     <Button
                         className={styles.saveButton}

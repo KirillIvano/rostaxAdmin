@@ -46,14 +46,14 @@ export const updateProductDescription = (
 export const updateProduct = (
     accessToken,
     categoryId,
+    productId,
     body,
 ) => fetch(
-    `${SERVER_ORIGIN}/admin/categories/${categoryId}`,
+    `${SERVER_ORIGIN}/admin/products/main?` + new URLSearchParams({categoryId, productId}),
     {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json',
         },
         body,
     }).then(res => res.json());

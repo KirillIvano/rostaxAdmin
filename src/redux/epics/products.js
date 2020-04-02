@@ -44,12 +44,10 @@ import {normalizeCategory} from '@/entities/category/normalization';
 
 import {selectAccessJwt} from '@/redux/selectors/auth';
 import {
-    updateCategory,
-} from '@/services/categories';
-import {
     getProducts,
     createProduct,
     deleteProduct,
+    updateProduct,
     updateProductDescription,
 } from '@/services/products';
 
@@ -174,9 +172,10 @@ const createProductEpic =
 // UPDATING
 
 const updateProductObservable = (
-    categoryId,
-    bodyData,
     accessToken,
+    categoryId,
+    productId,
+    bodyData,
 ) => {
     const body = new FormData();
 
@@ -184,12 +183,12 @@ const updateProductObservable = (
         ([name, value]) => value && body.append(name, value),
     );
 
-    const request = updateCategory(accessToken, categoryId, body);
+    const request = updateProduct(accessToken, categoryId, productId, body);
 
     return from(request)
         .pipe(
             mergeMap(
-                ({ok, error, category}) => {
+                ({ok, error, product}) => {
                     if (!ok) {
                         return of(
                             updateProductError(error),
@@ -198,8 +197,8 @@ const updateProductObservable = (
                     }
 
                     return of(
-                        updateProductSuccess(category),
-                        showNormalMessage('Редактирование продукта', 'Категория успешно отредактирована'),
+                        updateProductSuccess(product),
+                        showNormalMessage('Редактирование продукта', 'Продукт успешно отредактирован'),
                     );
                 },
             ),
@@ -212,9 +211,9 @@ const updateProductEpic =
             ofType(UPDATE_PRODUCT_START),
             switchMap(
                 ({payload, accessToken}) => {
-                    const {id, formData} = payload;
+                    const {categoryId, productId, formData} = payload;
 
-                    return updateProductObservable(id, formData, accessToken);
+                    return updateProductObservable(accessToken, categoryId, productId, formData);
                 },
             ),
         );

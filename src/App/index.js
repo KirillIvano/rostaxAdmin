@@ -47,7 +47,13 @@ const App = ({
         return <Preloader />;
     }
 
-    if (!isUserAuthenticated && history.location.pathname !== '/adminPanel/login') {
+    if (
+        !isUserAuthenticated &&
+        !history.location.pathname.startsWith('/adminPanel/register') &&
+         (
+             history.location.pathname !== '/adminPanel/login'
+         )
+    ) {
         return <Redirect to={'/adminPanel/login'} />;
     }
 

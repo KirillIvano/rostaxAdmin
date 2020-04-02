@@ -97,18 +97,19 @@ export const createProductReload = () => ({
     type: CREATE_PRODUCT_RELOAD,
 });
 
-export const updateProduct = (id, formData) => ({
+export const updateProduct = (categoryId, productId, formData) => ({
     type: UPDATE_PRODUCT_START,
     payload: {
+        categoryId,
+        productId,
         formData,
-        id,
     },
 });
 
-export const updateProductSuccess = category => ({
+export const updateProductSuccess = product => ({
     type: UPDATE_PRODUCT_SUCCESS,
     payload: {
-        category,
+        product,
     },
 });
 

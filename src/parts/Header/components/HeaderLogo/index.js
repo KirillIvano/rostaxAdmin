@@ -5,7 +5,7 @@ import styles from './styles.less';
 import logourl from '@/images/logo.svg';
 
 const HeaderLogo = () => (
-    <Link to={'/admin/main'}>
+    <Link to={'/adminPanel/'}>
         <img
             className={styles.logo}
             src={logourl}
