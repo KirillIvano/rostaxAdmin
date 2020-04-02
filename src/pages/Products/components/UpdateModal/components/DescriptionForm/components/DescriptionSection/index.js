@@ -1,11 +1,10 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import classnames from 'classnames';
 
 import {Button, Input} from '@/components';
 
 import styles from './styles.less';
 import {PairedInput} from '..';
-import {useStateChange} from './../../hooks/useStateChange';
 
 const DescriptionSection = ({
     name,
@@ -22,7 +21,7 @@ const DescriptionSection = ({
     const handleAddItem = useCallback((itemName, itemValue) => addItem(name, itemName, itemValue), [name]);
     const handleDeleteItem = useCallback(itemName => deleteItem(name, itemName), [name]);
 
-    const [newName, isNameChanged, setNewName] = useStateChange(name);
+    const [newName, setNewName] = useState(name);
 
     return (
         <div className={styles.descriptionSection}>
@@ -31,7 +30,7 @@ const DescriptionSection = ({
                     className={
                         classnames(
                             styles.sectionHeadline,
-                            {[styles.changed]: isNameChanged || isNew},
+                            {[styles.changed]: newName !== name || isNew},
                         )
                     }
                     onChange={e => setNewName(e.target.value)}

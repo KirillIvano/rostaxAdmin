@@ -1,9 +1,8 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import classnames from 'classnames';
 
 import {Input, Button} from '@/components';
 
-import {useStateChange} from './../../hooks/useStateChange';
 import styles from './styles.less';
 
 const PairedInput = ({
@@ -14,8 +13,8 @@ const PairedInput = ({
     addItem,
     deleteItem,
 }) => {
-    const [newName, isNameChanged, setName] = useStateChange(name);
-    const [newValue, isValueChanged, setValue] = useStateChange(value);
+    const [newName, setName] = useState(name);
+    const [newValue, setValue] = useState(value);
 
     const handleNameChange = useCallback(e => setName(e.currentTarget.value), []);
     const handleValueChange = useCallback(e => setValue(e.currentTarget.value), []);
@@ -29,7 +28,7 @@ const PairedInput = ({
                     classnames(
                         styles.nameInput,
                         {
-                            [styles.changed]: isNameChanged || isNew,
+                            [styles.changed]: newName !== name || isNew,
                         },
                     )
                 }
@@ -42,7 +41,7 @@ const PairedInput = ({
                     classnames(
                         styles.valueInput,
                         {
-                            [styles.changed]: isValueChanged || isNew,
+                            [styles.changed]: newValue !== value || isNew,
                         },
                     )
                 }
