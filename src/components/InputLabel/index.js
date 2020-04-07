@@ -1,14 +1,27 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
-import styles from './styles.less';
+import {InputLabel, Input} from '..';
+import {getLabelId} from '@/helpers/labelId';
 
-const InputLabel = ({
+const LabeledInput = ({
+    labelText,
     name,
-    children,
-}) => (
-    <label className={styles.label} htmlFor={name}>
-        {children}
-    </label>
-);
+    className,
 
-export default InputLabel;
+    ...props
+}) => {
+    const formId = useMemo(() => getLabelId(), []);
+
+    return (
+        <div className={className}>
+            <InputLabel id={formId} name={name}>
+                {labelText}
+            </InputLabel>
+            <Input {...props} id={formId} name={name} />
+        </div>
+    );
+};
+
+const enchancedInput = React.memo(LabeledInput);
+
+export default enchancedInput;

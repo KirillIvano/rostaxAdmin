@@ -132,7 +132,6 @@ const createCategoryObservable = (accessToken, {name, image}) => {
         );
 };
 
-
 export const createCategoryEpic =
     (action$, state$) =>
         action$.pipe(
