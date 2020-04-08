@@ -15,6 +15,7 @@ const DescriptionForm = ({
     updateDescription,
     className,
     changeForm,
+    showErrorMessage,
 }) => {
     const {
         state,
@@ -55,6 +56,11 @@ const DescriptionForm = ({
 
         while (pos < inputsLen - 1) {
             const sectionName = inputs[pos].value;
+            if (!sectionName) {
+                showErrorMessage('Сохранение', 'Имя секции не должно быть пустым');
+                return;
+            }
+
             pos++;
 
             const section = {name: sectionName, items: []};
@@ -64,6 +70,10 @@ const DescriptionForm = ({
             for (let i = 0; i < sectionInputsCount; i += 2) {
                 const name = inputs[pos + i].value;
                 const value = inputs[pos + i + 1].value;
+                if (!name || !value) {
+                    showErrorMessage('Сохранение', 'Поле описания не должно быть пустым');
+                    return;
+                }
 
                 section.items.push({name, value});
             }
