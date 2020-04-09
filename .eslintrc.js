@@ -25,7 +25,7 @@ module.exports = {
             version: require('./package.json').dependencies.react,
         },
     },
-    'parser': 'babel-eslint',
+    "parser": "@typescript-eslint/parser",
     'parserOptions': {
         'ecmaVersion': 2019,
         'sourceType': 'module',
@@ -73,5 +73,7 @@ module.exports = {
         'react/jsx-uses-react': 'error',
         'react/jsx-uses-vars': 'error',
         'react/jsx-wrap-multilines': 'error',
+
+        '@typescript-eslint/explicit-function-return-type': 'off',
     }
 };

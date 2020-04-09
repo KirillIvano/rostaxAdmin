@@ -20,11 +20,10 @@ module.exports = {
                             exclude: [
                                 /node_modules/,
                             ],
-                            'presets': ['@babel/env', '@babel/react'],
+                            'presets': ['@babel/env', '@babel/react', '@babel/typescript'],
                             'plugins': ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-transform-object-assign'],
                         },
                     },
-                    'awesome-typescript-loader',
                 ],
             },
         ],
