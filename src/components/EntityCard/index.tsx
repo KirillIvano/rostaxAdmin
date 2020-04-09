@@ -1,9 +1,18 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import styles from './styles.less';
 
 import {Button} from '@/components';
 
-const EntityCard = ({
+interface EntityCardProps {
+    children: React.ReactNode;
+    updateHandler: (string) => void;
+    deleteHandler: (string) => void;
+    redirectHandler: (string) => void;
+
+    entityId: string;
+}
+
+const EntityCard: React.FC<EntityCardProps> = ({
     children,
     updateHandler,
     deleteHandler,
@@ -26,9 +35,9 @@ const EntityCard = ({
                 </Button>
                 {
                     redirectHandler &&
-                     <Button className={styles.button} onClick={handleRedirect}>
-                            Подробнее
-                     </Button>
+                    <Button className={styles.button} onClick={handleRedirect}>
+                        Подробнее
+                    </Button>
                 }
                 <Button className={styles.button} onClick={handleDelete} styling='danger'>
                     Удалить

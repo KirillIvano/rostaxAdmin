@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './styles.less';
 
-const CloseIcon = ({close}) => (
+interface CloseIconProps {
+    close: () => void;
+}
+
+const CloseIcon: React.FC<CloseIconProps> = ({close}) => (
     <div className={styles.closeIconContainer}>
         <div
             onClick={close}

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.less';
 
-const Preloader = () => (
+const Preloader: React.FC<{}> = () => (
     <svg
         width="75"
         height="75"

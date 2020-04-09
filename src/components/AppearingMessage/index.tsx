@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import classnames from 'classnames';
 
 import styles from './styles.less';
 
-const AppearingMessage = ({
+type AppearingMessageProps = {
+    children: ReactNode;
+    className?: string;
+    styling?: 'normal' | 'error'; 
+};
+
+const AppearingMessage: React.FC<AppearingMessageProps> = ({
     children,
     className,
     styling='normal',

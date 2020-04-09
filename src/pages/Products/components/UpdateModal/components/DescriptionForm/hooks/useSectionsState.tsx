@@ -1,5 +1,9 @@
 import {useReducer} from 'react';
 
+type SectionsEditActions = {
+    
+};
+
 export const useSectionsState = defaultState => {
     const reducer = (state, action) => {
         const {type, payload} = action;

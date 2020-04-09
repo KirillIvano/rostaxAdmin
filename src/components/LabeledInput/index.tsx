@@ -3,7 +3,13 @@ import React, {useRef} from 'react';
 import {InputLabel, Input} from '..';
 import {getLabelId} from '@/helpers/labelId';
 
-const LabeledInput = ({
+interface LabeledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    labelText: string;
+    name: string;
+    className: string;
+}
+
+const LabeledInput: React.FC<LabeledInputProps> = ({
     labelText,
     name,
     className,

@@ -2,7 +2,12 @@ import React from 'react';
 
 import styles from './styles.less';
 
-const InputLabel = ({
+interface InputLabelProps {
+    name: string;
+    children: React.ReactNode;
+}
+
+const InputLabel: React.FC<InputLabelProps> = ({
     name,
     children,
 }) => (

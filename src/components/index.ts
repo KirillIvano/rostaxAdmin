@@ -1,4 +1,4 @@
-export {default as ContentWrapper} from './ContentWrapper';
+export {default as ContentWrapper} from './ContentWrapper/index';
 export {default as PageWrapper} from './PageWrapper';
 export {default as Button} from './Button';
 export {default as AppearingMessage} from './AppearingMessage';

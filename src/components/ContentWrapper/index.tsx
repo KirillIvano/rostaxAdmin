@@ -3,7 +3,12 @@ import classnames from 'classnames';
 
 import styles from './styles.less';
 
-const ContentWrapper = ({
+interface ContentWrapperProps {
+    children: React.ReactElement;
+    className: string;
+}
+
+const ContentWrapper:React.FC<ContentWrapperProps> = ({
     children,
     className,
 }) => (

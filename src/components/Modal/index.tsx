@@ -6,6 +6,15 @@ import classnames from 'classnames';
 import styles from './styles.less';
 import {CloseIcon} from './components';
 
+type ModalProps = {
+    className?: string;
+    width?: number;
+    closeable?: boolean;
+    children: React.ReactNode;
+    close?: () => void;
+    isOpen: boolean;
+};
+
 const Modal = ({
     className,
     width=600,
@@ -16,7 +25,7 @@ const Modal = ({
     isOpen,
 
     ...extraProps
-}) => (
+}: ModalProps) => (
     <ReactModal
         {...extraProps}
 

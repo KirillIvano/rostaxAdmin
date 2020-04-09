@@ -59,6 +59,12 @@ const App = ({
 
     return (
         <>
+            <div>
+                {'asdas'}
+            </div>
+            <div>
+                {'asadgsadg'}
+            </div>
             <Header toggleMenu={toggleMenu} />
             <Navbar isMenuOpened={isMenuOpened} />
             <MessageBox />

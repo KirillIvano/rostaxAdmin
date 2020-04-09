@@ -3,7 +3,13 @@ import classnames from 'classnames';
 
 import styles from './styles.less';
 
-const Input = ({
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    name: string;
+    className?: string;
+    id: string;
+}
+
+const Input: React.FC<InputProps> = ({
     name,
     className,
     id,

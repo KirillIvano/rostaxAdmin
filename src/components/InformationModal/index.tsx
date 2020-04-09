@@ -1,7 +1,13 @@
 import React from 'react';
-import {Modal} from '@/components';
+import { Modal } from '@/components';
 
-const InformationModal = ({
+interface InformationModalProps {
+    children: React.ReactNode;
+    isOpen: boolean;
+    handleClose: () => void;
+}
+
+const InformationModal: React.FC<InformationModalProps> = ({
     children,
     isOpen,
     handleClose,

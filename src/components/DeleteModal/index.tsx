@@ -1,8 +1,19 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
-import {ConfirmationModal} from '@/components';
+import { ConfirmationModal } from '@/components';
 
-const DeleteModal = ({
+interface DeleteModalProps {
+    deletedId: string;
+    handleClose: () => void;
+    isOpen: boolean;
+    deletingInProgress: boolean;
+    deletingError?: string;
+    deletingSuccess: boolean;
+    startDeleting: (string) => void;
+    reloadDeleting: () => void;
+}
+
+const DeleteModal: React.FC<DeleteModalProps> = ({
     deletedId,
 
     handleClose,
@@ -37,7 +48,7 @@ const DeleteModal = ({
             handleReject={handleClose}
             areControlsDisabled={deletingInProgress}
         >
-            Вы уверены, что хотите удалить это?
+            {'Вы уверены, что хотите удалить это?'}
         </ConfirmationModal>
     );
 };

@@ -4,11 +4,17 @@ import {getLabelId} from '@/helpers/labelId';
 
 import styles from './styles.less';
 
-const FileInput = ({
+interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    labelText: string;
+    className?: string;
+    name: string;
+    background: string;
+}
+
+const FileInput: React.FC<FileInputProps> = ({
     labelText,
     className,
     name,
-
     background,
 
     ...extraProps

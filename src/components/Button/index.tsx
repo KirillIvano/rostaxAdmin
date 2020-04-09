@@ -2,10 +2,18 @@ import React from 'react';
 import classnames from 'classnames';
 import styles from './styles.less';
 
-const Button = ({
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    children: React.ReactNode;
+    className: string;
+    styling?: 'normal' | 'danger' | 'success';
+    disabled?: boolean,
+};
+
+const Button: React.FC<ButtonProps> = ({
     children,
     className,
     styling='normal',
+    disabled=false,
 
     ...props
 }) => (
@@ -13,6 +21,8 @@ const Button = ({
     <button
         type="button"
         {...props}
+
+        disabled={disabled}
         className={
             classnames(
                 styles.button,
